@@ -1,5 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.*;
 import javax.swing.*;
 /*
  * Created by JFormDesigner on Wed Apr 28 22:24:46 CST 2021
@@ -16,7 +19,46 @@ public class RigisterFrom extends JFrame {
     }
 
     private void button1MouseClicked(MouseEvent e) {
-        // TODO add your code here
+        String userName = textField1.getText();
+        String passWord = textField2.getText();
+        String conFirmPassWord = textField3.getText();
+        if (passWord.equals(conFirmPassWord)){
+            Connection conn=null;
+            String url="jdbc:oracle:thin:@120.77.203.216:1521:orcl";
+            Statement stmt=null;
+            ResultSet rs=null;
+            try {
+                Class.forName("oracle.jdbc.driver.OracleDriver");
+                conn= DriverManager.getConnection(url,"daming1","dm1234");
+                stmt=conn.createStatement();
+                rs=stmt.executeQuery("SELECT * FROM users WHERE rownum=1 ORDER BY userid DESC");
+                if (rs.next()){
+                    int ID=rs.getInt("userid");
+                    ID++;
+                    try {
+                        stmt.executeUpdate("INSERT INTO users values('"+ID+"','"+userName+"','"+MD5.encoderByMd5(passWord)+"')");
+                        System.out.println("×¢²á³É¹¦");
+                    } catch (NoSuchAlgorithmException ex) {
+                        ex.printStackTrace();
+                    } catch (UnsupportedEncodingException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            } catch (ClassNotFoundException ee) {
+                ee.printStackTrace();
+            } catch (SQLException ee) {
+                ee.printStackTrace();
+            }finally{
+                try {
+                    conn.close();
+                    stmt.close();
+                } catch (SQLException ee) {
+                    ee.printStackTrace();
+                }
+            }
+        }else{
+            System.out.println("×¢²áÊ§°Ü");
+        }
     }
 
     private void button2MouseClicked(MouseEvent e) {
@@ -45,25 +87,25 @@ public class RigisterFrom extends JFrame {
         contentPane.add(textField3);
         textField3.setBounds(150, 155, 195, textField3.getPreferredSize().height);
 
-        //---- label1 ----
+        //---- ÓÃ»§Ãû ----
         label1.setText("\u7528\u6237\u540d\uff1a");
         label1.setFont(label1.getFont().deriveFont(label1.getFont().getSize() + 7f));
         contentPane.add(label1);
         label1.setBounds(new Rectangle(new Point(65, 55), label1.getPreferredSize()));
 
-        //---- label2 ----
+        //---- ÃÜÂë ----
         label2.setText("\u5bc6\u7801\uff1a");
         label2.setFont(label2.getFont().deriveFont(label2.getFont().getSize() + 7f));
         contentPane.add(label2);
         label2.setBounds(80, 100, label2.getPreferredSize().width, 30);
 
-        //---- label3 ----
+        //---- È·ÈÏÃÜÂë ----
         label3.setText("\u786e\u8ba4\u5bc6\u7801\uff1a");
         label3.setFont(label3.getFont().deriveFont(label3.getFont().getSize() + 7f));
         contentPane.add(label3);
         label3.setBounds(new Rectangle(new Point(50, 155), label3.getPreferredSize()));
 
-        //---- button1 ----
+        //---- ×¢²á ----
         button1.setText("\u6ce8\u518c");
         button1.setFont(button1.getFont().deriveFont(button1.getFont().getSize() + 6f));
         button1.addMouseListener(new MouseAdapter() {
@@ -75,7 +117,7 @@ public class RigisterFrom extends JFrame {
         contentPane.add(button1);
         button1.setBounds(new Rectangle(new Point(155, 235), button1.getPreferredSize()));
 
-        //---- button2 ----
+        //---- ·µ»ØµÇÂ¼ ----
         button2.setText("\u8fd4\u56de\u767b\u9646");
         button2.setFont(button2.getFont().deriveFont(button2.getFont().getSize() + 6f));
         button2.addMouseListener(new MouseAdapter() {

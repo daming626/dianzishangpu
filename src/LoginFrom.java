@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import javax.swing.*;
 /*
@@ -28,23 +30,26 @@ public class LoginFrom extends JFrame {
         Connection conn=null;
         String url="jdbc:oracle:thin:@120.77.203.216:1521:orcl";
         Statement stmt=null;
-        String sql="SELECT * FROM USERS WHERE USERNAME='"+username+"' AND PASSWORD='"+password+"'";
         ResultSet rs=null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            conn= DriverManager.getConnection(url,"scott","tiger");
+            conn= DriverManager.getConnection(url,"daming1","dm1234");
             stmt=conn.createStatement();
-            rs=stmt.executeQuery(sql);
+            rs=stmt.executeQuery("SELECT * FROM USERS WHERE USERNAME='"+username+"' AND PASSWORD='"+MD5.encoderByMd5(password)+"'");
             if(rs.next()){
-                System.out.println("ÁôªÈôÜÊàêÂäü");
+                System.out.println("µ«¬Ω≥…π¶");
             }else{
-                System.out.println("ÁôªÂΩïÂ§±Ë¥•");
+                System.out.println("µ«¬º ß∞‹");
             }
         } catch (ClassNotFoundException ee) {
             ee.printStackTrace();
         } catch (SQLException ee) {
             ee.printStackTrace();
-        }finally{
+        } catch (NoSuchAlgorithmException ex) {
+            ex.printStackTrace();
+        } catch (UnsupportedEncodingException ex) {
+            ex.printStackTrace();
+        } finally{
             try {
                 conn.close();
                 stmt.close();
@@ -73,12 +78,12 @@ public class LoginFrom extends JFrame {
         Container contentPane = getContentPane();
         contentPane.setLayout(null);
 
-        //---- Áî®Êà∑Âêç ----
+        //---- ”√ªß√˚ ----
         label1.setText("\u7528\u6237\u540d\uff1a");
         contentPane.add(label1);
         label1.setBounds(new Rectangle(new Point(40, 40), label1.getPreferredSize()));
 
-        //---- ÂØÜÁ†Å ----
+        //---- √‹¬Î ----
         label2.setText("\u5bc6\u7801\uff1a");
         contentPane.add(label2);
         label2.setBounds(45, 70, label2.getPreferredSize().width, 20);
@@ -87,7 +92,7 @@ public class LoginFrom extends JFrame {
         contentPane.add(textField2);
         textField2.setBounds(95, 75, 175, textField2.getPreferredSize().height);
 
-        //---- ÁôªÂΩïÊåâÈíÆ ----
+        //---- µ«¬º∞¥≈• ----
         button1.setText("\u767b\u5f55");
         button1.addMouseListener(new MouseAdapter() {
             @Override
@@ -98,7 +103,7 @@ public class LoginFrom extends JFrame {
         contentPane.add(button1);
         button1.setBounds(new Rectangle(new Point(100, 135), button1.getPreferredSize()));
 
-        //---- Ê≥®ÂÜåÊåâÈíÆ ----
+        //---- ◊¢≤·∞¥≈• ----
         button2.setText("\u6ce8\u518c\u8d26\u6237");
         button2.addMouseListener(new MouseAdapter() {
             @Override

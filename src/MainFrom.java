@@ -28,6 +28,7 @@ public class MainFrom extends JFrame {
         menu3 = new JMenu();
         menuItem8 = new JMenuItem();
         menuItem9 = new JMenuItem();
+        label1 = new JLabel();
 
         //======== this ========
         Container contentPane = getContentPane();
@@ -88,7 +89,12 @@ public class MainFrom extends JFrame {
         }
         setJMenuBar(menuBar1);
 
-        contentPane.setPreferredSize(new Dimension(625, 445));
+        //---- label1 ----
+        label1.setText("asas ");
+        contentPane.add(label1);
+        label1.setBounds(new Rectangle(new Point(330, -60), label1.getPreferredSize()));
+
+        contentPane.setPreferredSize(new Dimension(625, 440));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -107,5 +113,6 @@ public class MainFrom extends JFrame {
     private JMenu menu3;
     private JMenuItem menuItem8;
     private JMenuItem menuItem9;
+    private JLabel label1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
