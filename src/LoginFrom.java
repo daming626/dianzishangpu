@@ -11,7 +11,6 @@ import javax.swing.*;
  */
 
 
-
 /**
  * @author 1
  */
@@ -19,26 +18,29 @@ public class LoginFrom extends JFrame {
     public static void main(String[] args) {
         new LoginFrom();
     }
+
     public LoginFrom() {
         initComponents();
     }
 
     private void button1MouseClicked(MouseEvent e) {
-        String username=textField1.getText();
-        String password=textField2.getText();
+        String username = textField1.getText();
+        String password = textField2.getText();
 
-        Connection conn=null;
-        String url="jdbc:oracle:thin:@120.77.203.216:1521:orcl";
-        Statement stmt=null;
-        ResultSet rs=null;
+        Connection conn = null;
+        String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";
+        Statement stmt = null;
+        ResultSet rs = null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            conn= DriverManager.getConnection(url,"daming1","dm1234");
-            stmt=conn.createStatement();
-            rs=stmt.executeQuery("SELECT * FROM USERS WHERE USERNAME='"+username+"' AND PASSWORD='"+MD5.encoderByMd5(password)+"'");
-            if(rs.next()){
+            conn = DriverManager.getConnection(url, "daming1", "dm1234");
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT * FROM USERS WHERE USERNAME='" + username + "' AND PASSWORD='" + MD5.encoderByMd5(password) + "'");
+            if (rs.next()) {
                 System.out.println("µÇÂ½³É¹¦");
-            }else{
+                new MainFrom();
+                this.setVisible(false);
+            } else {
                 System.out.println("µÇÂ¼Ê§°Ü");
             }
         } catch (ClassNotFoundException ee) {
@@ -49,7 +51,7 @@ public class LoginFrom extends JFrame {
             ex.printStackTrace();
         } catch (UnsupportedEncodingException ex) {
             ex.printStackTrace();
-        } finally{
+        } finally {
             try {
                 conn.close();
                 stmt.close();

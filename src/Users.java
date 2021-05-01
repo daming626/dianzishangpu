@@ -1,14 +1,14 @@
 public class Users {
-    private int id;
+    private int userid;
     private String username;
     private String password;
 
-    public int getId() {
-        return id;
+    public int getUserid() {
+        return userid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 
     public String getUsername() {

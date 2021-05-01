@@ -9,7 +9,6 @@ import javax.swing.*;
  */
 
 
-
 /**
  * @author 1
  */
@@ -21,43 +20,47 @@ public class RigisterFrom extends JFrame {
     private void button1MouseClicked(MouseEvent e) {
         String userName = textField1.getText();
         String passWord = textField2.getText();
-        String conFirmPassWord = textField3.getText();
-        if (passWord.equals(conFirmPassWord)){
-            Connection conn=null;
-            String url="jdbc:oracle:thin:@120.77.203.216:1521:orcl";
-            Statement stmt=null;
-            ResultSet rs=null;
-            try {
-                Class.forName("oracle.jdbc.driver.OracleDriver");
-                conn= DriverManager.getConnection(url,"daming1","dm1234");
-                stmt=conn.createStatement();
-                rs=stmt.executeQuery("SELECT * FROM users WHERE rownum=1 ORDER BY userid DESC");
-                if (rs.next()){
-                    int ID=rs.getInt("userid");
-                    ID++;
-                    try {
-                        stmt.executeUpdate("INSERT INTO users values('"+ID+"','"+userName+"','"+MD5.encoderByMd5(passWord)+"')");
-                        System.out.println("×¢²á³É¹¦");
-                    } catch (NoSuchAlgorithmException ex) {
-                        ex.printStackTrace();
-                    } catch (UnsupportedEncodingException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            } catch (ClassNotFoundException ee) {
-                ee.printStackTrace();
-            } catch (SQLException ee) {
-                ee.printStackTrace();
-            }finally{
+        String confirmPassWord = textField3.getText();
+        if (passWord.length() != 0 && confirmPassWord.length() != 0) {
+            if (passWord.equals(confirmPassWord)) {
+                Connection conn = null;
+                String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";
+                Statement stmt = null;
+                ResultSet rs = null;
                 try {
-                    conn.close();
-                    stmt.close();
+                    Class.forName("oracle.jdbc.driver.OracleDriver");
+                    conn = DriverManager.getConnection(url, "daming1", "dm1234");
+                    stmt = conn.createStatement();
+                    rs = stmt.executeQuery("SELECT * FROM users WHERE rownum=1 ORDER BY userid DESC");
+                    if (rs.next()) {
+                        int ID = rs.getInt("userid");
+                        ID++;
+                        try {
+                            stmt.executeUpdate("INSERT INTO users values('" + ID + "','" + userName + "','" + MD5.encoderByMd5(passWord) + "')");
+                            System.out.println("×¢²á³É¹¦");
+                        } catch (NoSuchAlgorithmException ex) {
+                            ex.printStackTrace();
+                        } catch (UnsupportedEncodingException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                } catch (ClassNotFoundException ee) {
+                    ee.printStackTrace();
                 } catch (SQLException ee) {
                     ee.printStackTrace();
+                } finally {
+                    try {
+                        conn.close();
+                        stmt.close();
+                    } catch (SQLException ee) {
+                        ee.printStackTrace();
+                    }
                 }
+            } else {
+                System.out.println("×¢²áÊ§°Ü");
             }
-        }else{
-            System.out.println("×¢²áÊ§°Ü");
+        } else {
+            System.out.println("ÃÜÂë²»ÄÜÎª¿Õ");
         }
     }
 
