@@ -195,6 +195,15 @@ public class MainFrom extends JFrame {
         panel4.setVisible(false);
     }
 
+    private void button1MousePressed(MouseEvent e) {
+        DefaultTableModel tableModel = new DefaultTableModel(queryData(), head) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table1.setModel(tableModel);
+    }
+
     private void initComponents() {
 
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -322,7 +331,7 @@ public class MainFrom extends JFrame {
                 scrollPane1.setViewportView(table1);
             }
             panel1.add(scrollPane1);
-            scrollPane1.setBounds(5, 5, 565, 235);
+            scrollPane1.setBounds(35, 25, 630, 235);
 
             //---- button1 ----
             button1.setText("\u5237\u65b0");
@@ -333,7 +342,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel1.add(button1);
-            button1.setBounds(new Rectangle(new Point(70, 280), button1.getPreferredSize()));
+            button1.setBounds(new Rectangle(new Point(80, 305), button1.getPreferredSize()));
 
             //---- button2 ----
             button2.setText("\u6dfb\u52a0\u7528\u6237");
@@ -344,7 +353,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel1.add(button2);
-            button2.setBounds(new Rectangle(new Point(185, 280), button2.getPreferredSize()));
+            button2.setBounds(new Rectangle(new Point(230, 305), button2.getPreferredSize()));
 
             //---- button3 ----
             button3.setText("\u5220\u9664\u7528\u6237");
@@ -355,7 +364,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel1.add(button3);
-            button3.setBounds(new Rectangle(new Point(315, 280), button3.getPreferredSize()));
+            button3.setBounds(new Rectangle(new Point(385, 305), button3.getPreferredSize()));
 
             //---- button4 ----
             button4.setText("\u4fee\u6539\u7528\u6237");
@@ -366,10 +375,10 @@ public class MainFrom extends JFrame {
                 }
             });
             panel1.add(button4);
-            button4.setBounds(new Rectangle(new Point(440, 280), button4.getPreferredSize()));
+            button4.setBounds(new Rectangle(new Point(535, 305), button4.getPreferredSize()));
         }
         contentPane.add(panel1);
-        panel1.setBounds(25, 20, 575, 330);
+        panel1.setBounds(0, 0, 700, 400);
 
         //======== panel2 ========
         {
@@ -378,23 +387,23 @@ public class MainFrom extends JFrame {
             //---- label1 ----
             label1.setText("\u7528\u6237\u540d\uff1a");
             panel2.add(label1);
-            label1.setBounds(120, 55, 65, 30);
+            label1.setBounds(200, 75, 65, 30);
 
             //---- label2 ----
             label2.setText("\u5bc6\u7801\uff1a");
             panel2.add(label2);
-            label2.setBounds(135, 115, 65, 30);
+            label2.setBounds(210, 130, 50, 30);
 
             //---- label3 ----
             label3.setText("\u786e\u8ba4\u5bc6\u7801\uff1a");
             panel2.add(label3);
-            label3.setBounds(120, 175, 70, 30);
+            label3.setBounds(190, 195, 70, 30);
             panel2.add(textField1);
-            textField1.setBounds(200, 60, 145, textField1.getPreferredSize().height);
+            textField1.setBounds(290, 80, 145, textField1.getPreferredSize().height);
             panel2.add(textField2);
-            textField2.setBounds(205, 120, 140, textField2.getPreferredSize().height);
+            textField2.setBounds(290, 135, 145, textField2.getPreferredSize().height);
             panel2.add(textField3);
-            textField3.setBounds(205, 180, 140, textField3.getPreferredSize().height);
+            textField3.setBounds(290, 195, 145, textField3.getPreferredSize().height);
 
             //---- button5 ----
             button5.setText("\u786e\u8ba4\u6dfb\u52a0");
@@ -405,10 +414,10 @@ public class MainFrom extends JFrame {
                 }
             });
             panel2.add(button5);
-            button5.setBounds(210, 245, 135, button5.getPreferredSize().height);
+            button5.setBounds(290, 260, 145, button5.getPreferredSize().height);
         }
         contentPane.add(panel2);
-        panel2.setBounds(60, 10, 480, 330);
+        panel2.setBounds(0, 0, 700, 385);
 
         //======== panel3 ========
         {
@@ -417,23 +426,23 @@ public class MainFrom extends JFrame {
             //---- label4 ----
             label4.setText("\u9700\u8981\u4fee\u6539\u5bc6\u7801\u7684\u7528\u6237\u540d\uff1a");
             panel3.add(label4);
-            label4.setBounds(35, 75, label4.getPreferredSize().width, 15);
+            label4.setBounds(125, 100, label4.getPreferredSize().width, 25);
 
             //---- label5 ----
             label5.setText("\u65b0\u5bc6\u7801\uff1a");
             panel3.add(label5);
-            label5.setBounds(115, 125, 55, label5.getPreferredSize().height);
+            label5.setBounds(205, 145, 55, label5.getPreferredSize().height);
 
             //---- label6 ----
             label6.setText("\u786e\u8ba4\u65b0\u5bc6\u7801\uff1a");
             panel3.add(label6);
-            label6.setBounds(90, 170, 85, label6.getPreferredSize().height);
+            label6.setBounds(180, 190, 80, label6.getPreferredSize().height);
             panel3.add(textField4);
-            textField4.setBounds(175, 75, 160, textField4.getPreferredSize().height);
+            textField4.setBounds(295, 100, 155, textField4.getPreferredSize().height);
             panel3.add(textField5);
-            textField5.setBounds(180, 125, 155, textField5.getPreferredSize().height);
+            textField5.setBounds(295, 140, 155, textField5.getPreferredSize().height);
             panel3.add(textField6);
-            textField6.setBounds(180, 170, 155, textField6.getPreferredSize().height);
+            textField6.setBounds(295, 185, 155, textField6.getPreferredSize().height);
 
             //---- button6 ----
             button6.setText("\u786e\u8ba4\u4fee\u6539");
@@ -444,10 +453,10 @@ public class MainFrom extends JFrame {
                 }
             });
             panel3.add(button6);
-            button6.setBounds(120, 230, 160, button6.getPreferredSize().height);
+            button6.setBounds(295, 255, 155, button6.getPreferredSize().height);
         }
         contentPane.add(panel3);
-        panel3.setBounds(0, 0, 625, 375);
+        panel3.setBounds(0, 0, 700, 400);
 
         //======== panel4 ========
         {
@@ -457,12 +466,12 @@ public class MainFrom extends JFrame {
             label7.setText("\u963f\u4e03\u7535\u5b50\u5546\u94fa");
             label7.setFont(label7.getFont().deriveFont(label7.getFont().getSize() + 35f));
             panel4.add(label7);
-            label7.setBounds(90, 110, 320, 75);
+            label7.setBounds(205, 160, 320, 75);
         }
         contentPane.add(panel4);
-        panel4.setBounds(70, 30, 500, 300);
+        panel4.setBounds(0, 0, 700, 400);
 
-        contentPane.setPreferredSize(new Dimension(625, 440));
+        contentPane.setPreferredSize(new Dimension(700, 460));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
