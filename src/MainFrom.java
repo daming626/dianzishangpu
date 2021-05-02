@@ -1,3 +1,6 @@
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+import org.w3c.dom.ls.LSOutput;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.UnsupportedEncodingException;
@@ -20,8 +23,59 @@ public class MainFrom extends JFrame {
         initComponents();
     }
 
+    private void menuItem2MousePressed(MouseEvent e) {
+        panel1.setVisible(true);
+        panel2.setVisible(false);
+        panel3.setVisible(false);
+        panel4.setVisible(false);
+        DefaultTableModel tableModel = new DefaultTableModel(queryData1(), head1) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table1.setModel(tableModel);
+    }
+
+    private void menuItem3MousePressed(MouseEvent e) {
+        panel1.setVisible(false);
+        panel2.setVisible(true);
+        panel3.setVisible(false);
+        panel4.setVisible(false);
+    }
+
+    private void menuItem4MousePressed(MouseEvent e) {
+        panel1.setVisible(false);
+        panel2.setVisible(false);
+        panel3.setVisible(true);
+        panel4.setVisible(false);
+    }
+
+    private void menuItem5MousePressed(MouseEvent e) {
+        // TODO add your code here
+    }
+
+    private void menuItem6MousePressed(MouseEvent e) {
+        // TODO add your code here
+    }
+
+    private void menuItem7MousePressed(MouseEvent e) {
+        // TODO add your code here
+    }
+
+    private void menuItem8MousePressed(MouseEvent e) {
+        // TODO add your code here
+    }
+
+    private void menuItem9MousePressed(MouseEvent e) {
+        panel1.setVisible(false);
+        panel2.setVisible(false);
+        panel3.setVisible(false);
+        panel4.setVisible(false);
+        panel8.setVisible(true);
+    }
+
     private void button1MouseClicked(MouseEvent e) {
-        DefaultTableModel tableModel = new DefaultTableModel(queryData(), head) {
+        DefaultTableModel tableModel = new DefaultTableModel(queryData1(), head1) {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -168,40 +222,62 @@ public class MainFrom extends JFrame {
         }
     }
 
-    private void menuItem2MousePressed(MouseEvent e) {
-        panel1.setVisible(true);
-        panel2.setVisible(false);
-        panel3.setVisible(false);
-        panel4.setVisible(false);
-        DefaultTableModel tableModel = new DefaultTableModel(queryData(), head) {
+    private void button7MouseClicked(MouseEvent e) {
+        // TODO add your code here
+    }
+
+    private void button8MouseClicked(MouseEvent e) {
+        // TODO add your code here
+    }
+
+    private void button9MouseClicked(MouseEvent e) {
+        // TODO add your code here
+    }
+
+    private void button10MouseClicked(MouseEvent e) {
+        // TODO add your code here
+    }
+
+    private void button11MouseClicked(MouseEvent e) {
+        // TODO add your code here
+    }
+
+    private void button12MouseClicked(MouseEvent e) {
+        // TODO add your code here
+    }
+
+    private void button13MouseClicked(MouseEvent e) {
+        String sql=null;
+        String year= textField16.getText();
+        String month= textField17.getText();
+        String day= textField18.getText();
+        if(year.length()!=0&&month.length()==0&&day.length()==0){
+            sql="SELECT * \n" +
+                    "FROM(SELECT product_id id,product_name name,SUM(NVL(amount,0))totalamount,SUM(NVL(total_price,0))totalprice \n" +
+                    "FROM(SELECT p.product_id,p.product_name,s.amount,s.total_price\n" +
+                    "FROM products p LEFT JOIN sales s ON p.product_id=s.product_id AND to_char(sale_date,'yyyy')=to_char(to_date('"+year+"','yyyy'),'yyyy')) \n" +
+                    "GROUP BY product_id,product_name) ORDER BY totalprice desc";
+        }else if(year.length()!=0&&month.length()!=0&&day.length()==0){
+            sql="SELECT * \n" +
+                    "FROM(SELECT product_id id,product_name name,SUM(NVL(amount,0))totalamount,SUM(NVL(total_price,0))totalprice \n" +
+                    "FROM(SELECT p.product_id,p.product_name,s.amount,s.total_price\n" +
+                    "FROM products p LEFT JOIN sales s ON p.product_id=s.product_id AND to_char(sale_date,'yyyy-mm')=to_char(to_date('"+year+"/"+month+"','yyyy-mm'),'yyyy-mm')) \n" +
+                    "GROUP BY product_id,product_name) ORDER BY totalprice desc\n";
+        }else if(year.length()!=0&&month.length()!=0&&day.length()!=0){
+            sql="SELECT * \n" +
+                    "FROM(SELECT product_id id,product_name name,SUM(NVL(amount,0))totalamount,SUM(NVL(total_price,0))totalprice \n" +
+                    "FROM(SELECT p.product_id,p.product_name,s.amount,s.total_price\n" +
+                    "FROM products p LEFT JOIN sales s ON p.product_id=s.product_id AND to_char(sale_date,'yyyy-mm-dd')=to_char(to_date('"+year+"/"+month+"/"+day+"','yyyy-mm-dd'),'yyyy-mm-dd')) \n" +
+                    "GROUP BY product_id,product_name) ORDER BY totalprice desc";
+        }else{
+            System.out.println("请输入日期");
+        }
+        DefaultTableModel tableModel = new DefaultTableModel(queryData3(sql), head3) {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        table1.setModel(tableModel);
-    }
-
-    private void menuItem3MousePressed(MouseEvent e) {
-        panel1.setVisible(false);
-        panel2.setVisible(true);
-        panel3.setVisible(false);
-        panel4.setVisible(false);
-    }
-
-    private void menuItem4MousePressed(MouseEvent e) {
-        panel1.setVisible(false);
-        panel2.setVisible(false);
-        panel3.setVisible(true);
-        panel4.setVisible(false);
-    }
-
-    private void button1MousePressed(MouseEvent e) {
-        DefaultTableModel tableModel = new DefaultTableModel(queryData(), head) {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        table1.setModel(tableModel);
+        table3.setModel(tableModel);
     }
 
     private void initComponents() {
@@ -244,6 +320,43 @@ public class MainFrom extends JFrame {
         button6 = new JButton();
         panel4 = new JPanel();
         label7 = new JLabel();
+        panel5 = new JPanel();
+        scrollPane2 = new JScrollPane();
+        table2 = new JTable();
+        button7 = new JButton();
+        button8 = new JButton();
+        button9 = new JButton();
+        button10 = new JButton();
+        panel6 = new JPanel();
+        label8 = new JLabel();
+        label9 = new JLabel();
+        label10 = new JLabel();
+        label11 = new JLabel();
+        textField7 = new JTextField();
+        textField8 = new JTextField();
+        textField9 = new JTextField();
+        textField10 = new JTextField();
+        button11 = new JButton();
+        panel7 = new JPanel();
+        label12 = new JLabel();
+        label13 = new JLabel();
+        label14 = new JLabel();
+        label15 = new JLabel();
+        textField11 = new JTextField();
+        textField12 = new JTextField();
+        textField13 = new JTextField();
+        textField14 = new JTextField();
+        button12 = new JButton();
+        panel8 = new JPanel();
+        label17 = new JLabel();
+        label18 = new JLabel();
+        label19 = new JLabel();
+        textField16 = new JTextField();
+        textField17 = new JTextField();
+        textField18 = new JTextField();
+        scrollPane3 = new JScrollPane();
+        table3 = new JTable();
+        button13 = new JButton();
 
         //======== this ========
         Container contentPane = getContentPane();
@@ -290,18 +403,36 @@ public class MainFrom extends JFrame {
 
             //======== menu2 ========
             {
-                menu2.setText("\u5546\u54c1\u7ba1\u7406");
+                menu2.setText("\u5546\u54c1\u5e93\u5b58\u7ba1\u7406");
 
                 //---- menuItem5 ----
                 menuItem5.setText("\u67e5\u770b\u5546\u54c1");
+                menuItem5.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        menuItem5MousePressed(e);
+                    }
+                });
                 menu2.add(menuItem5);
 
                 //---- menuItem6 ----
                 menuItem6.setText("\u6dfb\u52a0\u5546\u54c1");
+                menuItem6.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        menuItem6MousePressed(e);
+                    }
+                });
                 menu2.add(menuItem6);
 
                 //---- menuItem7 ----
                 menuItem7.setText("\u4fee\u6539\u5546\u54c1");
+                menuItem7.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        menuItem7MousePressed(e);
+                    }
+                });
                 menu2.add(menuItem7);
             }
             menuBar1.add(menu2);
@@ -312,10 +443,22 @@ public class MainFrom extends JFrame {
 
                 //---- menuItem8 ----
                 menuItem8.setText("\u9500\u552e\u754c\u9762");
+                menuItem8.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        menuItem8MousePressed(e);
+                    }
+                });
                 menu3.add(menuItem8);
 
                 //---- menuItem9 ----
                 menuItem9.setText("\u67e5\u770b\u5229\u6da6");
+                menuItem9.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        menuItem9MousePressed(e);
+                    }
+                });
                 menu3.add(menuItem9);
             }
             menuBar1.add(menu3);
@@ -378,7 +521,7 @@ public class MainFrom extends JFrame {
             button4.setBounds(new Rectangle(new Point(535, 305), button4.getPreferredSize()));
         }
         contentPane.add(panel1);
-        panel1.setBounds(0, 0, 700, 400);
+        panel1.setBounds(0, 1000, 700, 400);
 
         //======== panel2 ========
         {
@@ -417,7 +560,7 @@ public class MainFrom extends JFrame {
             button5.setBounds(290, 260, 145, button5.getPreferredSize().height);
         }
         contentPane.add(panel2);
-        panel2.setBounds(0, 0, 700, 385);
+        panel2.setBounds(0, 1000, 700, 385);
 
         //======== panel3 ========
         {
@@ -456,7 +599,7 @@ public class MainFrom extends JFrame {
             button6.setBounds(295, 255, 155, button6.getPreferredSize().height);
         }
         contentPane.add(panel3);
-        panel3.setBounds(0, 0, 700, 400);
+        panel3.setBounds(0, 1000, 700, 400);
 
         //======== panel4 ========
         {
@@ -469,7 +612,203 @@ public class MainFrom extends JFrame {
             label7.setBounds(205, 160, 320, 75);
         }
         contentPane.add(panel4);
-        panel4.setBounds(0, 0, 700, 400);
+        panel4.setBounds(0, 1000, 700, 400);
+
+        //======== panel5 ========
+        {
+            panel5.setLayout(null);
+
+            //======== scrollPane2 ========
+            {
+                scrollPane2.setViewportView(table2);
+            }
+            panel5.add(scrollPane2);
+            scrollPane2.setBounds(30, 15, 640, 305);
+
+            //---- button7 ----
+            button7.setText("\u5237\u65b0");
+            button7.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    button7MouseClicked(e);
+                }
+            });
+            panel5.add(button7);
+            button7.setBounds(new Rectangle(new Point(75, 350), button7.getPreferredSize()));
+
+            //---- button8 ----
+            button8.setText("\u5220\u9664\u5546\u54c1");
+            button8.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    button8MouseClicked(e);
+                }
+            });
+            panel5.add(button8);
+            button8.setBounds(new Rectangle(new Point(210, 350), button8.getPreferredSize()));
+
+            //---- button9 ----
+            button9.setText("\u6dfb\u52a0\u5546\u54c1");
+            button9.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    button9MouseClicked(e);
+                }
+            });
+            panel5.add(button9);
+            button9.setBounds(new Rectangle(new Point(350, 350), button9.getPreferredSize()));
+
+            //---- button10 ----
+            button10.setText("\u4fee\u6539\u5546\u54c1");
+            button10.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    button10MouseClicked(e);
+                }
+            });
+            panel5.add(button10);
+            button10.setBounds(new Rectangle(new Point(510, 350), button10.getPreferredSize()));
+        }
+        contentPane.add(panel5);
+        panel5.setBounds(0, 1000, 700, 400);
+
+        //======== panel6 ========
+        {
+            panel6.setLayout(null);
+
+            //---- label8 ----
+            label8.setText("\u5546\u54c1\u53f7\uff1a");
+            panel6.add(label8);
+            label8.setBounds(new Rectangle(new Point(210, 55), label8.getPreferredSize()));
+
+            //---- label9 ----
+            label9.setText("\u5546\u54c1\u540d\uff1a");
+            panel6.add(label9);
+            label9.setBounds(new Rectangle(new Point(210, 95), label9.getPreferredSize()));
+
+            //---- label10 ----
+            label10.setText("\u5e93\u5b58\uff1a");
+            panel6.add(label10);
+            label10.setBounds(220, 140, 45, label10.getPreferredSize().height);
+
+            //---- label11 ----
+            label11.setText("\u5355\u4ef7\uff1a");
+            panel6.add(label11);
+            label11.setBounds(new Rectangle(new Point(220, 180), label11.getPreferredSize()));
+            panel6.add(textField7);
+            textField7.setBounds(290, 50, 140, textField7.getPreferredSize().height);
+            panel6.add(textField8);
+            textField8.setBounds(290, 90, 140, textField8.getPreferredSize().height);
+            panel6.add(textField9);
+            textField9.setBounds(290, 135, 140, textField9.getPreferredSize().height);
+            panel6.add(textField10);
+            textField10.setBounds(290, 175, 140, textField10.getPreferredSize().height);
+
+            //---- button11 ----
+            button11.setText("\u786e\u8ba4\u6dfb\u52a0");
+            button11.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    button11MouseClicked(e);
+                }
+            });
+            panel6.add(button11);
+            button11.setBounds(295, 225, 135, button11.getPreferredSize().height);
+        }
+        contentPane.add(panel6);
+        panel6.setBounds(0, 1000, 700, 400);
+
+        //======== panel7 ========
+        {
+            panel7.setLayout(null);
+
+            //---- label12 ----
+            label12.setText("\u9700\u8981\u4fee\u6539\u7684\u5546\u54c1\u53f7\uff1a");
+            panel7.add(label12);
+            label12.setBounds(new Rectangle(new Point(130, 45), label12.getPreferredSize()));
+
+            //---- label13 ----
+            label13.setText("\u5546\u54c1\u540d\uff1a");
+            panel7.add(label13);
+            label13.setBounds(new Rectangle(new Point(190, 90), label13.getPreferredSize()));
+
+            //---- label14 ----
+            label14.setText("\u5e93\u5b58\uff1a");
+            panel7.add(label14);
+            label14.setBounds(200, 135, label14.getPreferredSize().width, 25);
+
+            //---- label15 ----
+            label15.setText("\u5355\u4ef7\uff1a");
+            panel7.add(label15);
+            label15.setBounds(200, 185, 45, label15.getPreferredSize().height);
+            panel7.add(textField11);
+            textField11.setBounds(285, 45, 155, textField11.getPreferredSize().height);
+            panel7.add(textField12);
+            textField12.setBounds(285, 90, 155, textField12.getPreferredSize().height);
+            panel7.add(textField13);
+            textField13.setBounds(285, 135, 155, textField13.getPreferredSize().height);
+            panel7.add(textField14);
+            textField14.setBounds(285, 185, 155, textField14.getPreferredSize().height);
+
+            //---- button12 ----
+            button12.setText("\u786e\u8ba4\u4fee\u6539");
+            button12.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    button12MouseClicked(e);
+                }
+            });
+            panel7.add(button12);
+            button12.setBounds(290, 245, 150, button12.getPreferredSize().height);
+        }
+        contentPane.add(panel7);
+        panel7.setBounds(0, 1000, 700, 400);
+
+        //======== panel8 ========
+        {
+            panel8.setLayout(null);
+
+            //---- label17 ----
+            label17.setText("\u8f93\u5165\u5e74\u4efd\uff1a");
+            panel8.add(label17);
+            label17.setBounds(50, 330, label17.getPreferredSize().width, 22);
+
+            //---- label18 ----
+            label18.setText("\u8f93\u5165\u6708\u4efd\uff1a");
+            panel8.add(label18);
+            label18.setBounds(new Rectangle(new Point(195, 335), label18.getPreferredSize()));
+
+            //---- label19 ----
+            label19.setText("\u8f93\u5165\u65e5\u671f\uff1a");
+            panel8.add(label19);
+            label19.setBounds(new Rectangle(new Point(335, 335), label19.getPreferredSize()));
+            panel8.add(textField16);
+            textField16.setBounds(120, 330, 50, textField16.getPreferredSize().height);
+            panel8.add(textField17);
+            textField17.setBounds(260, 330, 55, textField17.getPreferredSize().height);
+            panel8.add(textField18);
+            textField18.setBounds(400, 330, 65, textField18.getPreferredSize().height);
+
+            //======== scrollPane3 ========
+            {
+                scrollPane3.setViewportView(table3);
+            }
+            panel8.add(scrollPane3);
+            scrollPane3.setBounds(40, 20, 620, 258);
+
+            //---- button13 ----
+            button13.setText("\u67e5\u8be2");
+            button13.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    button13MouseClicked(e);
+                }
+            });
+            panel8.add(button13);
+            button13.setBounds(new Rectangle(new Point(510, 330), button13.getPreferredSize()));
+        }
+        contentPane.add(panel8);
+        panel8.setBounds(0, 0, 700, 400);
 
         contentPane.setPreferredSize(new Dimension(700, 460));
         pack();
@@ -484,7 +823,7 @@ public class MainFrom extends JFrame {
     }
 
     //显示用户
-    public Object[][] queryData() {
+    public Object[][] queryData1() {
 
         java.util.List<Users> list=new ArrayList<Users>();
         Connection conn = null;
@@ -520,16 +859,63 @@ public class MainFrom extends JFrame {
             }
 
         }
-        data = new Object[list.size()][head.length];
+        data1 = new Object[list.size()][head1.length];
         //把集合里的数据放入Obejct这个二维数组
         for (int i = 0; i < list.size(); i++) {
-            for (int j = 0; j < head.length; j++) {
-                data[i][0] = list.get(i).getUserid();
-                data[i][1] = list.get(i).getUsername();
-                data[i][2] = list.get(i).getPassword();
-            }
+                data1[i][0] = list.get(i).getUserid();
+                data1[i][1] = list.get(i).getUsername();
+                data1[i][2] = list.get(i).getPassword();
         }
-        return data;
+        return data1;
+    }
+
+    //显示流水
+    public Object[][] queryData3(String sql) {
+
+        java.util.List<Sales> list=new ArrayList<Sales>();
+        Connection conn = null;
+        String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";
+        Statement stmt = null;//SQL语句对象，拼SQL
+        ResultSet rs = null;
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");//
+            conn = DriverManager.getConnection(url, "daming1", "dm1234");
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //每循环一次就是一个对象，把这个对象放入容器（List（有序可重复）、Set（无序不可重复）、Map（key、value结构）
+                Sales sales=new Sales();
+                sales.setID(rs.getString("ID"));
+                sales.setName(rs.getString("NAME"));
+                sales.setTotalAmount(rs.getInt("TOTALAMOUNT"));
+                sales.setTotalPrice(rs.getFloat("TOTALPRICE"));
+                list.add(sales);
+            }
+        } catch (ClassNotFoundException ee) {
+            ee.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            //释放资源：数据库连接很昂贵
+            try {
+                rs.close();
+                stmt.close();
+                conn.close();//关连接
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+        }
+        data3 = new Object[list.size()][head3.length];
+        //把集合里的数据放入Obejct这个二维数组
+        for (int i = 0; i < list.size(); i++) {
+                data3[i][0] = list.get(i).getID();
+                data3[i][1] = list.get(i).getName();
+                data3[i][2] = list.get(i).getTotalAmount();
+                data3[i][3] = list.get(i).getTotalPrice();
+                allprice=allprice+(float)data3[i][3];
+        }
+        return data3;
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
@@ -570,7 +956,49 @@ public class MainFrom extends JFrame {
     private JButton button6;
     private JPanel panel4;
     private JLabel label7;
+    private JPanel panel5;
+    private JScrollPane scrollPane2;
+    private JTable table2;
+    private JButton button7;
+    private JButton button8;
+    private JButton button9;
+    private JButton button10;
+    private JPanel panel6;
+    private JLabel label8;
+    private JLabel label9;
+    private JLabel label10;
+    private JLabel label11;
+    private JTextField textField7;
+    private JTextField textField8;
+    private JTextField textField9;
+    private JTextField textField10;
+    private JButton button11;
+    private JPanel panel7;
+    private JLabel label12;
+    private JLabel label13;
+    private JLabel label14;
+    private JLabel label15;
+    private JTextField textField11;
+    private JTextField textField12;
+    private JTextField textField13;
+    private JTextField textField14;
+    private JButton button12;
+    private JPanel panel8;
+    private JLabel label17;
+    private JLabel label18;
+    private JLabel label19;
+    private JTextField textField16;
+    private JTextField textField17;
+    private JTextField textField18;
+    private JScrollPane scrollPane3;
+    private JTable table3;
+    private JButton button13;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
-    private Object[][] data = null;
-    private String head[] = {"id", "username", "password"};
+    private float allprice=0;
+    private Object[][] data1 = null;
+    private String head1[] = {"id", "username", "password"};
+    private Object[][] data2 = null;
+    private String head2[] = {"id", "username", "password"};
+    private Object[][] data3 = null;
+    private String head3[] = {"product_id", "product_name", "amount","totalPrice"};
 }
