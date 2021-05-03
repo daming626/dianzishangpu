@@ -23,11 +23,29 @@ public class MainFrom extends JFrame {
         initComponents();
     }
 
+
+    private void menu4MousePressed(MouseEvent e) {
+        panel1.setVisible(false);
+        panel2.setVisible(false);
+        panel3.setVisible(false);
+        panel4.setVisible(true);
+        panel5.setVisible(false);
+        panel6.setVisible(false);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
+    }
+
     private void menuItem2MousePressed(MouseEvent e) {
         panel1.setVisible(true);
         panel2.setVisible(false);
         panel3.setVisible(false);
         panel4.setVisible(false);
+        panel5.setVisible(false);
+        panel6.setVisible(false);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
         DefaultTableModel tableModel = new DefaultTableModel(queryData1(), head1) {
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -41,6 +59,11 @@ public class MainFrom extends JFrame {
         panel2.setVisible(true);
         panel3.setVisible(false);
         panel4.setVisible(false);
+        panel5.setVisible(false);
+        panel6.setVisible(false);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
     }
 
     private void menuItem4MousePressed(MouseEvent e) {
@@ -48,22 +71,59 @@ public class MainFrom extends JFrame {
         panel2.setVisible(false);
         panel3.setVisible(true);
         panel4.setVisible(false);
+        panel5.setVisible(false);
+        panel6.setVisible(false);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
     }
 
     private void menuItem5MousePressed(MouseEvent e) {
-        // TODO add your code here
+        panel1.setVisible(false);
+        panel2.setVisible(false);
+        panel3.setVisible(false);
+        panel4.setVisible(false);
+        panel5.setVisible(true);
+        panel6.setVisible(false);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
     }
 
     private void menuItem6MousePressed(MouseEvent e) {
-        // TODO add your code here
+        panel1.setVisible(false);
+        panel2.setVisible(false);
+        panel3.setVisible(false);
+        panel4.setVisible(false);
+        panel5.setVisible(false);
+        panel6.setVisible(true);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
     }
 
     private void menuItem7MousePressed(MouseEvent e) {
-        // TODO add your code here
+        panel1.setVisible(false);
+        panel2.setVisible(false);
+        panel3.setVisible(false);
+        panel4.setVisible(false);
+        panel5.setVisible(false);
+        panel6.setVisible(false);
+        panel7.setVisible(true);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
     }
 
     private void menuItem8MousePressed(MouseEvent e) {
-        // TODO add your code here
+        panel1.setVisible(false);
+        panel2.setVisible(false);
+        panel3.setVisible(false);
+        panel4.setVisible(false);
+        panel5.setVisible(false);
+        panel6.setVisible(false);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(true);
     }
 
     private void menuItem9MousePressed(MouseEvent e) {
@@ -71,7 +131,11 @@ public class MainFrom extends JFrame {
         panel2.setVisible(false);
         panel3.setVisible(false);
         panel4.setVisible(false);
+        panel5.setVisible(false);
+        panel6.setVisible(false);
+        panel7.setVisible(false);
         panel8.setVisible(true);
+        panel9.setVisible(false);
     }
 
     private void button1MouseClicked(MouseEvent e) {
@@ -88,6 +152,11 @@ public class MainFrom extends JFrame {
         panel2.setVisible(true);
         panel3.setVisible(false);
         panel4.setVisible(false);
+        panel5.setVisible(false);
+        panel6.setVisible(false);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
     }
 
     private void button3MouseClicked(MouseEvent e) {
@@ -126,6 +195,11 @@ public class MainFrom extends JFrame {
         panel2.setVisible(false);
         panel3.setVisible(true);
         panel4.setVisible(false);
+        panel5.setVisible(false);
+        panel6.setVisible(false);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
     }
 
     private void button5MouseClicked(MouseEvent e) {
@@ -231,11 +305,27 @@ public class MainFrom extends JFrame {
     }
 
     private void button9MouseClicked(MouseEvent e) {
-        // TODO add your code here
+        panel1.setVisible(false);
+        panel2.setVisible(false);
+        panel3.setVisible(false);
+        panel4.setVisible(false);
+        panel5.setVisible(false);
+        panel6.setVisible(true);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
     }
 
     private void button10MouseClicked(MouseEvent e) {
-        // TODO add your code here
+        panel1.setVisible(false);
+        panel2.setVisible(false);
+        panel3.setVisible(false);
+        panel4.setVisible(false);
+        panel5.setVisible(false);
+        panel6.setVisible(false);
+        panel7.setVisible(true);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
     }
 
     private void button11MouseClicked(MouseEvent e) {
@@ -276,6 +366,7 @@ public class MainFrom extends JFrame {
 
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         menuBar1 = new JMenuBar();
+        menu4 = new JMenu();
         menu1 = new JMenu();
         menuItem2 = new JMenuItem();
         menuItem3 = new JMenuItem();
@@ -349,6 +440,8 @@ public class MainFrom extends JFrame {
         scrollPane3 = new JScrollPane();
         table3 = new JTable();
         button13 = new JButton();
+        panel9 = new JPanel();
+        button14 = new JButton();
 
         //======== this ========
         Container contentPane = getContentPane();
@@ -356,6 +449,18 @@ public class MainFrom extends JFrame {
 
         //======== menuBar1 ========
         {
+
+            //======== menu4 ========
+            {
+                menu4.setText("\u9996\u9875");
+                menu4.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        menu4MousePressed(e);
+                    }
+                });
+            }
+            menuBar1.add(menu4);
 
             //======== menu1 ========
             {
@@ -513,7 +618,7 @@ public class MainFrom extends JFrame {
             button4.setBounds(new Rectangle(new Point(535, 305), button4.getPreferredSize()));
         }
         contentPane.add(panel1);
-        panel1.setBounds(0, 1000, 700, 400);
+        panel1.setBounds(0, 0, 700, 400);
 
         //======== panel2 ========
         {
@@ -552,7 +657,7 @@ public class MainFrom extends JFrame {
             button5.setBounds(290, 260, 145, button5.getPreferredSize().height);
         }
         contentPane.add(panel2);
-        panel2.setBounds(0, 1000, 700, 385);
+        panel2.setBounds(0, 0, 700, 400);
 
         //======== panel3 ========
         {
@@ -591,7 +696,7 @@ public class MainFrom extends JFrame {
             button6.setBounds(295, 255, 155, button6.getPreferredSize().height);
         }
         contentPane.add(panel3);
-        panel3.setBounds(0, 1000, 700, 400);
+        panel3.setBounds(0, 0, 700, 400);
 
         //======== panel4 ========
         {
@@ -604,7 +709,7 @@ public class MainFrom extends JFrame {
             label7.setBounds(205, 160, 320, 75);
         }
         contentPane.add(panel4);
-        panel4.setBounds(0, 1000, 700, 400);
+        panel4.setBounds(0, 0, 700, 400);
 
         //======== panel5 ========
         {
@@ -662,7 +767,7 @@ public class MainFrom extends JFrame {
             button10.setBounds(new Rectangle(new Point(510, 350), button10.getPreferredSize()));
         }
         contentPane.add(panel5);
-        panel5.setBounds(0, 1000, 700, 400);
+        panel5.setBounds(0, 0, 700, 400);
 
         //======== panel6 ========
         {
@@ -708,7 +813,7 @@ public class MainFrom extends JFrame {
             button11.setBounds(295, 225, 135, button11.getPreferredSize().height);
         }
         contentPane.add(panel6);
-        panel6.setBounds(0, 1000, 700, 400);
+        panel6.setBounds(0, 0, 700, 400);
 
         //======== panel7 ========
         {
@@ -754,7 +859,7 @@ public class MainFrom extends JFrame {
             button12.setBounds(290, 245, 150, button12.getPreferredSize().height);
         }
         contentPane.add(panel7);
-        panel7.setBounds(0, 1000, 700, 400);
+        panel7.setBounds(0, 0, 700, 400);
 
         //======== panel8 ========
         {
@@ -802,6 +907,18 @@ public class MainFrom extends JFrame {
         contentPane.add(panel8);
         panel8.setBounds(0, 0, 700, 400);
 
+        //======== panel9 ========
+        {
+            panel9.setLayout(null);
+
+            //---- button14 ----
+            button14.setText("\u67e5\u8be2");
+            panel9.add(button14);
+            button14.setBounds(new Rectangle(new Point(275, 165), button14.getPreferredSize()));
+        }
+        contentPane.add(panel9);
+        panel9.setBounds(0, 0, 700, 400);
+
         contentPane.setPreferredSize(new Dimension(700, 460));
         pack();
         setLocationRelativeTo(getOwner());
@@ -812,6 +929,11 @@ public class MainFrom extends JFrame {
         panel2.setVisible(false);
         panel3.setVisible(false);
         panel4.setVisible(true);
+        panel5.setVisible(false);
+        panel6.setVisible(false);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
     }
 
     //显示用户
@@ -821,7 +943,7 @@ public class MainFrom extends JFrame {
         Connection conn = null;
         String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";
         Statement stmt = null;//SQL语句对象，拼SQL
-        String sql = "SELECT * FROM users";
+        String sql = "SELECT * FROM users ORDER BY userid";
         ResultSet rs = null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");//
@@ -875,7 +997,7 @@ public class MainFrom extends JFrame {
         PreparedStatement pstmt = null;//SQL语句对象，拼SQL
         ResultSet rs = null;
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Class.forName("oracle.jdbc.driver.OracleDriver");//
             conn = DriverManager.getConnection(url, "daming1", "dm1234");
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,date);
@@ -921,6 +1043,7 @@ public class MainFrom extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JMenuBar menuBar1;
+    private JMenu menu4;
     private JMenu menu1;
     private JMenuItem menuItem2;
     private JMenuItem menuItem3;
@@ -994,6 +1117,8 @@ public class MainFrom extends JFrame {
     private JScrollPane scrollPane3;
     private JTable table3;
     private JButton button13;
+    private JPanel panel9;
+    private JButton button14;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     private Object[][] data = null;
     private String head1[] = {"id", "username", "password"};
