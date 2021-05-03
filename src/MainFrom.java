@@ -246,33 +246,25 @@ public class MainFrom extends JFrame {
         // TODO add your code here
     }
 
-    private void button13MouseClicked(MouseEvent e) {
-        String sql=null;
+    private void button13MouseClicked(MouseEvent e) {//按年月日查询流水
+        String time=null;
+        String date=null;
         String year= textField16.getText();
         String month= textField17.getText();
         String day= textField18.getText();
-        if(year.length()!=0&&month.length()==0&&day.length()==0){
-            sql="SELECT * \n" +
-                    "FROM(SELECT product_id id,product_name name,SUM(NVL(amount,0))totalamount,SUM(NVL(total_price,0))totalprice \n" +
-                    "FROM(SELECT p.product_id,p.product_name,s.amount,s.total_price\n" +
-                    "FROM products p LEFT JOIN sales s ON p.product_id=s.product_id AND to_char(sale_date,'yyyy')=to_char(to_date('"+year+"','yyyy'),'yyyy')) \n" +
-                    "GROUP BY product_id,product_name) ORDER BY totalprice desc";
-        }else if(year.length()!=0&&month.length()!=0&&day.length()==0){
-            sql="SELECT * \n" +
-                    "FROM(SELECT product_id id,product_name name,SUM(NVL(amount,0))totalamount,SUM(NVL(total_price,0))totalprice \n" +
-                    "FROM(SELECT p.product_id,p.product_name,s.amount,s.total_price\n" +
-                    "FROM products p LEFT JOIN sales s ON p.product_id=s.product_id AND to_char(sale_date,'yyyy-mm')=to_char(to_date('"+year+"/"+month+"','yyyy-mm'),'yyyy-mm')) \n" +
-                    "GROUP BY product_id,product_name) ORDER BY totalprice desc\n";
-        }else if(year.length()!=0&&month.length()!=0&&day.length()!=0){
-            sql="SELECT * \n" +
-                    "FROM(SELECT product_id id,product_name name,SUM(NVL(amount,0))totalamount,SUM(NVL(total_price,0))totalprice \n" +
-                    "FROM(SELECT p.product_id,p.product_name,s.amount,s.total_price\n" +
-                    "FROM products p LEFT JOIN sales s ON p.product_id=s.product_id AND to_char(sale_date,'yyyy-mm-dd')=to_char(to_date('"+year+"/"+month+"/"+day+"','yyyy-mm-dd'),'yyyy-mm-dd')) \n" +
-                    "GROUP BY product_id,product_name) ORDER BY totalprice desc";
+        if(year.length()!=0&&month.length()==0&&day.length()==0){//输入年份
+            time=year;
+            date="yyyy";
+        }else if(year.length()!=0&&month.length()!=0&&day.length()==0){//输入年份、月份
+            time=year+"/"+month;
+            date="yyyy-mm";
+        }else if(year.length()!=0&&month.length()!=0&&day.length()!=0){//输入年月日
+            time=year+"/"+month+"/"+day;
+            date="yyyy-mm-dd";
         }else{
             System.out.println("请输入日期");
         }
-        DefaultTableModel tableModel = new DefaultTableModel(queryData3(sql), head3) {
+        DefaultTableModel tableModel = new DefaultTableModel(queryData3(time,date), head3) {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -859,30 +851,40 @@ public class MainFrom extends JFrame {
             }
 
         }
-        data1 = new Object[list.size()][head1.length];
+        data = new Object[list.size()][head1.length];
         //把集合里的数据放入Obejct这个二维数组
         for (int i = 0; i < list.size(); i++) {
-                data1[i][0] = list.get(i).getUserid();
-                data1[i][1] = list.get(i).getUsername();
-                data1[i][2] = list.get(i).getPassword();
+                data[i][0] = list.get(i).getUserid();
+                data[i][1] = list.get(i).getUsername();
+                data[i][2] = list.get(i).getPassword();
         }
-        return data1;
+        return data;
     }
 
     //显示流水
-    public Object[][] queryData3(String sql) {
+    public Object[][] queryData3(String time,String date) {
 
         java.util.List<Sales> list=new ArrayList<Sales>();
         Connection conn = null;
         String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";
-        Statement stmt = null;//SQL语句对象，拼SQL
+        String sql="SELECT * \n" +
+                "FROM(SELECT product_id id,product_name name,SUM(NVL(amount,0))totalamount,SUM(NVL(total_price,0))totalprice \n" +
+                "FROM(SELECT p.product_id,p.product_name,s.amount,s.total_price\n" +
+                "FROM products p LEFT JOIN sales s ON p.product_id=s.product_id AND to_char(sale_date,?)=to_char(to_date(?,?),?)) \n" +
+                "GROUP BY product_id,product_name) ORDER BY totalprice desc\n";
+        PreparedStatement pstmt = null;//SQL语句对象，拼SQL
         ResultSet rs = null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");//
             conn = DriverManager.getConnection(url, "daming1", "dm1234");
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,date);
+            pstmt.setString(2,time);
+            pstmt.setString(3,date);
+            pstmt.setString(4,date);
+            rs = pstmt.executeQuery();
             while (rs.next()) {
+                System.out.println("ccc");
                 //每循环一次就是一个对象，把这个对象放入容器（List（有序可重复）、Set（无序不可重复）、Map（key、value结构）
                 Sales sales=new Sales();
                 sales.setID(rs.getString("ID"));
@@ -899,23 +901,22 @@ public class MainFrom extends JFrame {
             //释放资源：数据库连接很昂贵
             try {
                 rs.close();
-                stmt.close();
+                pstmt.close();
                 conn.close();//关连接
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
 
         }
-        data3 = new Object[list.size()][head3.length];
+        data = new Object[list.size()][head3.length];
         //把集合里的数据放入Obejct这个二维数组
         for (int i = 0; i < list.size(); i++) {
-                data3[i][0] = list.get(i).getID();
-                data3[i][1] = list.get(i).getName();
-                data3[i][2] = list.get(i).getTotalAmount();
-                data3[i][3] = list.get(i).getTotalPrice();
-                allprice=allprice+(float)data3[i][3];
+                data[i][0] = list.get(i).getID();
+                data[i][1] = list.get(i).getName();
+                data[i][2] = list.get(i).getTotalAmount();
+                data[i][3] = list.get(i).getTotalPrice();
         }
-        return data3;
+        return data;
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
@@ -994,11 +995,8 @@ public class MainFrom extends JFrame {
     private JTable table3;
     private JButton button13;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
-    private float allprice=0;
-    private Object[][] data1 = null;
+    private Object[][] data = null;
     private String head1[] = {"id", "username", "password"};
-    private Object[][] data2 = null;
     private String head2[] = {"id", "username", "password"};
-    private Object[][] data3 = null;
     private String head3[] = {"product_id", "product_name", "amount","totalPrice"};
 }

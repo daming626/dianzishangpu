@@ -71,8 +71,8 @@ public class LoginFrom extends JFrame {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         label1 = new JLabel();
         label2 = new JLabel();
-        textField1 = new JTextField();
-        textField2 = new JTextField();
+        textField1 = new JTextField("lisi");
+        textField2 = new JTextField("ls1234");
         button1 = new JButton();
         button2 = new JButton();
 
