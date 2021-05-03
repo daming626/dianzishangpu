@@ -875,7 +875,7 @@ public class MainFrom extends JFrame {
         PreparedStatement pstmt = null;//SQL”Ôæ‰∂‘œÛ£¨∆¥SQL
         ResultSet rs = null;
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");//
+            Class.forName("oracle.jdbc.driver.OracleDriver");
             conn = DriverManager.getConnection(url, "daming1", "dm1234");
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,date);
