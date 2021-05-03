@@ -14,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
  */
 
 
-
 /**
  * @author 1
  */
@@ -88,6 +87,12 @@ public class MainFrom extends JFrame {
         panel7.setVisible(false);
         panel8.setVisible(false);
         panel9.setVisible(false);
+        DefaultTableModel tableModel = new DefaultTableModel(queryData2(), head2) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table2.setModel(tableModel);
     }
 
     private void menuItem6MousePressed(MouseEvent e) {
@@ -160,34 +165,10 @@ public class MainFrom extends JFrame {
     }
 
     private void button3MouseClicked(MouseEvent e) {
-        int count=table1.getSelectedRow();//选中的行数
-        int userid= (int) table1.getValueAt(count,0);//选中行数第一列的数据
-        System.out.println(userid);
+        int count = table1.getSelectedRow();//选中的行数
+        String userID = String.valueOf(table1.getValueAt(count, 0));//选中行数第一列的数据
 
-        Connection conn=null;
-        String url="jdbc:oracle:thin:@120.77.203.216:1521:orcl";
-        Statement stmt=null;//SQL语句对象
-        String sql="DELETE FROM users WHERE userid="+userid;
-        try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");//
-            conn= DriverManager.getConnection(url,"daming1","dm1234");
-            stmt=conn.createStatement();
-            stmt.executeUpdate(sql);//a=1
-            System.out.println("删除成功");
-        } catch (ClassNotFoundException ee) {
-            ee.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        finally {
-            //释放资源：数据库连接很昂贵
-            try {
-                stmt.close();
-                conn.close();//关连接
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
+        deleteData("USERS", "USERID", userID);//调用自定义的方法，删除数据
     }
 
     private void button4MouseClicked(MouseEvent e) {
@@ -216,10 +197,10 @@ public class MainFrom extends JFrame {
                     Class.forName("oracle.jdbc.driver.OracleDriver");
                     conn = DriverManager.getConnection(url, "daming1", "dm1234");
                     stmt = conn.createStatement();
-                    rs = stmt.executeQuery("SELECT * FROM users WHERE rownum=1 ORDER BY userid DESC");
+                    rs = stmt.executeQuery("SELECT * FROM users WHERE rownum=1 ORDER BY userid DESC");//将用户ID最大的元组选出
                     if (rs.next()) {
-                        int ID = rs.getInt("userid");
-                        ID++;
+                        int ID = rs.getInt("userid");//拿到最大的用户ID
+                        ID++;//用户ID+1，然将其作为添加用户的ID
                         try {
                             stmt.executeUpdate("INSERT INTO users values('" + ID + "','" + userName + "','" + MD5.encoderByMd5(passWord) + "')");
                             System.out.println("添加成功");
@@ -250,31 +231,31 @@ public class MainFrom extends JFrame {
     }
 
     private void button6MouseClicked(MouseEvent e) {
-        String userName=textField4.getText();
-        String newPassWord=textField5.getText();
-        String confirmNewPassWord=textField6.getText();
+        String userName = textField4.getText();
+        String newPassWord = textField5.getText();
+        String confirmNewPassWord = textField6.getText();
 
-        Connection conn=null;
-        String url="jdbc:oracle:thin:@120.77.203.216:1521:orcl";
-        Statement stmt=null;
-        ResultSet rs=null;
+        Connection conn = null;
+        String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";
+        Statement stmt = null;
+        ResultSet rs = null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            conn= DriverManager.getConnection(url,"daming1","dm1234");
-            stmt=conn.createStatement();
-            rs=stmt.executeQuery("SELECT * FROM USERS WHERE USERNAME='"+userName+"'");
-            if(rs.next()){
-                if(newPassWord.length()!=0&&confirmNewPassWord.length()!=0) {
+            conn = DriverManager.getConnection(url, "daming1", "dm1234");
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT * FROM USERS WHERE USERNAME='" + userName + "'");//根据输入的username查询数据库中是否有这个人
+            if (rs.next()) {
+                if (newPassWord.length() != 0 && confirmNewPassWord.length() != 0) {
                     if (newPassWord.equals(confirmNewPassWord)) {
                         stmt.executeUpdate("UPDATE users set password='" + MD5.encoderByMd5(newPassWord) + "' WHERE username='" + userName + "'");
                         System.out.println("修改成功");
                     } else {
                         System.out.println("用户名或密码错误");
                     }
-                }else{
+                } else {
                     System.out.println("密码不能为空");
                 }
-            }else{
+            } else {
                 System.out.println("用户名或密码错误");
             }
         } catch (ClassNotFoundException ex) {
@@ -285,7 +266,7 @@ public class MainFrom extends JFrame {
             ex.printStackTrace();
         } catch (UnsupportedEncodingException ex) {
             ex.printStackTrace();
-        } finally{
+        } finally {
             try {
                 conn.close();
                 stmt.close();
@@ -297,11 +278,19 @@ public class MainFrom extends JFrame {
     }
 
     private void button7MouseClicked(MouseEvent e) {
-        // TODO add your code here
+        DefaultTableModel tableModel = new DefaultTableModel(queryData2(), head2) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table2.setModel(tableModel);
     }
 
     private void button8MouseClicked(MouseEvent e) {
-        // TODO add your code here
+        int count = table2.getSelectedRow();//获取选中行数
+        String product_id = (String) table2.getValueAt(count, 0);//获取选中行的第一个数据
+
+        deleteData("PRODUCTS", "product_id", product_id);//调用自定义的删除数据的方法
     }
 
     private void button9MouseClicked(MouseEvent e) {
@@ -329,7 +318,41 @@ public class MainFrom extends JFrame {
     }
 
     private void button11MouseClicked(MouseEvent e) {
-        // TODO add your code here
+        String product_id = textField7.getText();
+        String product_name = textField8.getText();
+        String st = textField9.getText();
+        String pr = textField10.getText();
+        if (product_id.length() != 0 && product_name.length() != 0 && st.length() != 0 && pr.length() != 0) {
+            int stock = Integer.valueOf(st);
+            float price = Float.valueOf(pr);
+            Connection conn = null;
+            String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";
+            PreparedStatement pstmt = null;
+            try {
+                Class.forName("oracle.jdbc.driver.OracleDriver");
+                conn = DriverManager.getConnection(url, "daming1", "dm1234");
+                pstmt = conn.prepareStatement("INSERT INTO products VALUES(?,?,?,?)");
+                pstmt.setString(1, product_id);
+                pstmt.setString(2, product_name);
+                pstmt.setInt(3, stock);
+                pstmt.setFloat(4, price);
+                pstmt.executeUpdate();
+                System.out.println("添加成功");
+            } catch (ClassNotFoundException ee) {
+                ee.printStackTrace();
+            } catch (SQLException ee) {
+                ee.printStackTrace();
+            } finally {
+                try {
+                    conn.close();
+                    pstmt.close();
+                } catch (SQLException ee) {
+                    ee.printStackTrace();
+                }
+            }
+        } else {
+            System.out.println("请输入商品信息");
+        }
     }
 
     private void button12MouseClicked(MouseEvent e) {
@@ -337,24 +360,24 @@ public class MainFrom extends JFrame {
     }
 
     private void button13MouseClicked(MouseEvent e) {//按年月日查询流水
-        String time=null;
-        String date=null;
-        String year= textField16.getText();
-        String month= textField17.getText();
-        String day= textField18.getText();
-        if(year.length()!=0&&month.length()==0&&day.length()==0){//输入年份
-            time=year;
-            date="yyyy";
-        }else if(year.length()!=0&&month.length()!=0&&day.length()==0){//输入年份、月份
-            time=year+"/"+month;
-            date="yyyy-mm";
-        }else if(year.length()!=0&&month.length()!=0&&day.length()!=0){//输入年月日
-            time=year+"/"+month+"/"+day;
-            date="yyyy-mm-dd";
-        }else{
-            System.out.println("请输入日期");
+        String time = null;
+        String date = null;
+        String year = textField16.getText();
+        String month = textField17.getText();
+        String day = textField18.getText();
+        if (year.length() != 0 && month.length() == 0 && day.length() == 0) {//输入年份
+            time = year;
+            date = "yyyy";
+        } else if (year.length() != 0 && month.length() != 0 && day.length() == 0) {//输入年份、月份
+            time = year + "/" + month;
+            date = "yyyy-mm";
+        } else if (year.length() != 0 && month.length() != 0 && day.length() != 0) {//输入年月日
+            time = year + "/" + month + "/" + day;
+            date = "yyyy-mm-dd";
+        } else {
+            System.out.println("请输入日期,由年月日的顺序");
         }
-        DefaultTableModel tableModel = new DefaultTableModel(queryData3(time,date), head3) {
+        DefaultTableModel tableModel = new DefaultTableModel(queryData3(time, date), head3) {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -936,10 +959,37 @@ public class MainFrom extends JFrame {
         panel9.setVisible(false);
     }
 
-    //显示用户
+    //删除数据
+    public void deleteData(String tableName, String tableID, String ID) {
+        Connection conn = null;
+        String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";
+        Statement stmt = null;//SQL语句对象
+        String sql = "DELETE FROM " + tableName + " WHERE " + tableID + "=" + ID;
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            conn = DriverManager.getConnection(url, "daming1", "dm1234");
+            stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+            System.out.println("删除成功");
+        } catch (ClassNotFoundException ee) {
+            ee.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            //释放资源：数据库连接很昂贵
+            try {
+                stmt.close();
+                conn.close();//关连接
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
+    //table显示用户
     public Object[][] queryData1() {
 
-        java.util.List<Users> list=new ArrayList<Users>();
+        java.util.List<Users> list = new ArrayList<Users>();
         Connection conn = null;
         String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";
         Statement stmt = null;//SQL语句对象，拼SQL
@@ -952,7 +1002,7 @@ public class MainFrom extends JFrame {
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 //每循环一次就是一个对象，把这个对象放入容器（List（有序可重复）、Set（无序不可重复）、Map（key、value结构）
-                Users user=new Users();
+                Users user = new Users();
                 user.setUserid(rs.getInt("USERID"));
                 user.setUsername(rs.getString("USERNAME"));
                 user.setPassword(rs.getString("PASSWORD"));
@@ -976,20 +1026,69 @@ public class MainFrom extends JFrame {
         data = new Object[list.size()][head1.length];
         //把集合里的数据放入Obejct这个二维数组
         for (int i = 0; i < list.size(); i++) {
-                data[i][0] = list.get(i).getUserid();
-                data[i][1] = list.get(i).getUsername();
-                data[i][2] = list.get(i).getPassword();
+            data[i][0] = list.get(i).getUserid();
+            data[i][1] = list.get(i).getUsername();
+            data[i][2] = list.get(i).getPassword();
         }
         return data;
     }
 
-    //显示流水
-    public Object[][] queryData3(String time,String date) {
+    //table显示商品
+    public Object[][] queryData2() {
 
-        java.util.List<Sales> list=new ArrayList<Sales>();
+        java.util.List<Products> list = new ArrayList<Products>();
         Connection conn = null;
         String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";
-        String sql="SELECT * \n" +
+        Statement stmt = null;//SQL语句对象，拼SQL
+        String sql = "SELECT * FROM products ORDER BY product_id";
+        ResultSet rs = null;
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");//
+            conn = DriverManager.getConnection(url, "daming1", "dm1234");
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //每循环一次就是一个对象，把这个对象放入容器（List（有序可重复）、Set（无序不可重复）、Map（key、value结构）
+                Products product = new Products();
+                product.setId(rs.getString("product_id"));
+                product.setName(rs.getString("product_name"));
+                product.setStock(rs.getInt("stock"));
+                product.setPrice(rs.getFloat("price"));
+                list.add(product);
+            }
+        } catch (ClassNotFoundException ee) {
+            ee.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            //释放资源：数据库连接很昂贵
+            try {
+                rs.close();
+                stmt.close();
+                conn.close();//关连接
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+        }
+        data = new Object[list.size()][head2.length];
+        //把集合里的数据放入Obejct这个二维数组
+        for (int i = 0; i < list.size(); i++) {
+            data[i][0] = list.get(i).getId();
+            data[i][1] = list.get(i).getName();
+            data[i][2] = list.get(i).getStock();
+            data[i][3] = list.get(i).getPrice();
+        }
+        return data;
+    }
+
+    //table显示流水
+    public Object[][] queryData3(String time, String date) {
+
+        java.util.List<Sales> list = new ArrayList<Sales>();
+        Connection conn = null;
+        String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";
+        String sql = "SELECT * \n" +
                 "FROM(SELECT product_id id,product_name name,SUM(NVL(amount,0))totalamount,SUM(NVL(total_price,0))totalprice \n" +
                 "FROM(SELECT p.product_id,p.product_name,s.amount,s.total_price\n" +
                 "FROM products p LEFT JOIN sales s ON p.product_id=s.product_id AND to_char(sale_date,?)=to_char(to_date(?,?),?)) \n" +
@@ -1000,15 +1099,15 @@ public class MainFrom extends JFrame {
             Class.forName("oracle.jdbc.driver.OracleDriver");//
             conn = DriverManager.getConnection(url, "daming1", "dm1234");
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,date);
-            pstmt.setString(2,time);
-            pstmt.setString(3,date);
-            pstmt.setString(4,date);
+            pstmt.setString(1, date);
+            pstmt.setString(2, time);
+            pstmt.setString(3, date);
+            pstmt.setString(4, date);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 System.out.println("ccc");
                 //每循环一次就是一个对象，把这个对象放入容器（List（有序可重复）、Set（无序不可重复）、Map（key、value结构）
-                Sales sales=new Sales();
+                Sales sales = new Sales();
                 sales.setID(rs.getString("ID"));
                 sales.setName(rs.getString("NAME"));
                 sales.setTotalAmount(rs.getInt("TOTALAMOUNT"));
@@ -1033,10 +1132,10 @@ public class MainFrom extends JFrame {
         data = new Object[list.size()][head3.length];
         //把集合里的数据放入Obejct这个二维数组
         for (int i = 0; i < list.size(); i++) {
-                data[i][0] = list.get(i).getID();
-                data[i][1] = list.get(i).getName();
-                data[i][2] = list.get(i).getTotalAmount();
-                data[i][3] = list.get(i).getTotalPrice();
+            data[i][0] = list.get(i).getID();
+            data[i][1] = list.get(i).getName();
+            data[i][2] = list.get(i).getTotalAmount();
+            data[i][3] = list.get(i).getTotalPrice();
         }
         return data;
     }
@@ -1121,7 +1220,7 @@ public class MainFrom extends JFrame {
     private JButton button14;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     private Object[][] data = null;
-    private String head1[] = {"id", "username", "password"};
-    private String head2[] = {"id", "username", "password"};
-    private String head3[] = {"product_id", "product_name", "amount","totalPrice"};
+    private String head1[] = {"ID", "用户名", "密码"};
+    private String head2[] = {"商品号", "商品名", "库存", "单价"};
+    private String head3[] = {"商品号", "商品名", "数量", "总价"};
 }

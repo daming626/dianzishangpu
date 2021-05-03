@@ -21,6 +21,7 @@ public class RigisterFrom extends JFrame {
         String userName = textField1.getText();
         String passWord = textField2.getText();
         String confirmPassWord = textField3.getText();
+
         if (passWord.length() != 0 && confirmPassWord.length() != 0) {
             if (passWord.equals(confirmPassWord)) {
                 Connection conn = null;
@@ -31,10 +32,10 @@ public class RigisterFrom extends JFrame {
                     Class.forName("oracle.jdbc.driver.OracleDriver");
                     conn = DriverManager.getConnection(url, "daming1", "dm1234");
                     stmt = conn.createStatement();
-                    rs = stmt.executeQuery("SELECT * FROM users WHERE rownum=1 ORDER BY userid DESC");
+                    rs = stmt.executeQuery("SELECT * FROM users WHERE rownum=1 ORDER BY userid DESC");//将用户ID最大的元组选出
                     if (rs.next()) {
-                        int ID = rs.getInt("userid");
-                        ID++;
+                        int ID = rs.getInt("userid");//拿到最大的用户ID
+                        ID++;//用户ID+1，然将其作为添加用户的ID
                         try {
                             stmt.executeUpdate("INSERT INTO users values('" + ID + "','" + userName + "','" + MD5.encoderByMd5(passWord) + "')");
                             System.out.println("注册成功");
@@ -90,25 +91,25 @@ public class RigisterFrom extends JFrame {
         contentPane.add(textField3);
         textField3.setBounds(150, 155, 195, textField3.getPreferredSize().height);
 
-        //---- 用户名 ----
+        //---- label1 ----
         label1.setText("\u7528\u6237\u540d\uff1a");
         label1.setFont(label1.getFont().deriveFont(label1.getFont().getSize() + 7f));
         contentPane.add(label1);
         label1.setBounds(new Rectangle(new Point(65, 55), label1.getPreferredSize()));
 
-        //---- 密码 ----
+        //---- label2 ----
         label2.setText("\u5bc6\u7801\uff1a");
         label2.setFont(label2.getFont().deriveFont(label2.getFont().getSize() + 7f));
         contentPane.add(label2);
         label2.setBounds(80, 100, label2.getPreferredSize().width, 30);
 
-        //---- 确认密码 ----
+        //---- label3 ----
         label3.setText("\u786e\u8ba4\u5bc6\u7801\uff1a");
         label3.setFont(label3.getFont().deriveFont(label3.getFont().getSize() + 7f));
         contentPane.add(label3);
         label3.setBounds(new Rectangle(new Point(50, 155), label3.getPreferredSize()));
 
-        //---- 注册 ----
+        //---- button1 ----
         button1.setText("\u6ce8\u518c");
         button1.setFont(button1.getFont().deriveFont(button1.getFont().getSize() + 6f));
         button1.addMouseListener(new MouseAdapter() {
@@ -120,7 +121,7 @@ public class RigisterFrom extends JFrame {
         contentPane.add(button1);
         button1.setBounds(new Rectangle(new Point(155, 235), button1.getPreferredSize()));
 
-        //---- 返回登录 ----
+        //---- button2 ----
         button2.setText("\u8fd4\u56de\u767b\u9646");
         button2.setFont(button2.getFont().deriveFont(button2.getFont().getSize() + 6f));
         button2.addMouseListener(new MouseAdapter() {
