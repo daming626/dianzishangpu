@@ -187,6 +187,7 @@ public class MainFrom extends JFrame {
         String userName = textField1.getText();
         String passWord = textField2.getText();
         String confirmPassWord = textField3.getText();
+
         if (passWord.length() != 0 && confirmPassWord.length() != 0) {
             if (passWord.equals(confirmPassWord)) {
                 Connection conn = null;
@@ -320,11 +321,11 @@ public class MainFrom extends JFrame {
     private void button11MouseClicked(MouseEvent e) {
         String product_id = textField7.getText();
         String product_name = textField8.getText();
-        String st = textField9.getText();
-        String pr = textField10.getText();
-        if (product_id.length() != 0 && product_name.length() != 0 && st.length() != 0 && pr.length() != 0) {
-            int stock = Integer.valueOf(st);
-            float price = Float.valueOf(pr);
+        String stock = textField9.getText();
+        String price = textField10.getText();
+        if (product_id.length() != 0 && product_name.length() != 0 && stock.length() != 0 && price.length() != 0) {
+            //int stock = Integer.valueOf(st);
+            //float price = Float.valueOf(pr);
             Connection conn = null;
             String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";
             PreparedStatement pstmt = null;
@@ -334,8 +335,8 @@ public class MainFrom extends JFrame {
                 pstmt = conn.prepareStatement("INSERT INTO products VALUES(?,?,?,?)");
                 pstmt.setString(1, product_id);
                 pstmt.setString(2, product_name);
-                pstmt.setInt(3, stock);
-                pstmt.setFloat(4, price);
+                pstmt.setString(3, stock);
+                pstmt.setString(4, price);
                 pstmt.executeUpdate();
                 System.out.println("添加成功");
             } catch (ClassNotFoundException ee) {
@@ -356,7 +357,39 @@ public class MainFrom extends JFrame {
     }
 
     private void button12MouseClicked(MouseEvent e) {
-        // TODO add your code here
+        String product_id = textField11.getText();
+        String product_name = textField12.getText();
+        String stock = textField13.getText();
+        String price = textField14.getText();
+
+        Connection conn = null;
+        String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            conn = DriverManager.getConnection(url, "daming1", "dm1234");
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT * FROM products WHERE product_id='" + product_id + "'");//根据输入的product_id查询数据库中是否有这个人
+            if (rs.next()) {
+                stmt.executeUpdate("UPDATE products SET product_name='"+product_name+"' ,stock='"+stock+"' , price='"+price+"' WHERE product_id='"+product_id+"'");
+                System.out.println("修改成功");
+            } else {
+                System.out.println("不存在的商品号");
+            }
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+                stmt.close();
+                rs.close();
+            } catch (SQLException ee) {
+                ee.printStackTrace();
+            }
+        }
     }
 
     private void button13MouseClicked(MouseEvent e) {//按年月日查询流水
@@ -383,6 +416,78 @@ public class MainFrom extends JFrame {
             }
         };
         table3.setModel(tableModel);
+    }
+
+    private void button15MouseClicked(MouseEvent e) {
+        panel1.setVisible(true);
+        panel2.setVisible(false);
+        panel3.setVisible(false);
+        panel4.setVisible(false);
+        panel5.setVisible(false);
+        panel6.setVisible(false);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
+        DefaultTableModel tableModel = new DefaultTableModel(queryData1(), head1) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table1.setModel(tableModel);
+    }
+
+    private void button16MouseClicked(MouseEvent e) {
+        panel1.setVisible(true);
+        panel2.setVisible(false);
+        panel3.setVisible(false);
+        panel4.setVisible(false);
+        panel5.setVisible(false);
+        panel6.setVisible(false);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
+        DefaultTableModel tableModel = new DefaultTableModel(queryData1(), head1) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table1.setModel(tableModel);
+    }
+
+    private void button17MouseClicked(MouseEvent e) {
+        panel1.setVisible(false);
+        panel2.setVisible(false);
+        panel3.setVisible(false);
+        panel4.setVisible(false);
+        panel5.setVisible(true);
+        panel6.setVisible(false);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
+        DefaultTableModel tableModel = new DefaultTableModel(queryData1(), head2) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table2.setModel(tableModel);
+    }
+
+    private void button18MouseClicked(MouseEvent e) {
+        panel1.setVisible(false);
+        panel2.setVisible(false);
+        panel3.setVisible(false);
+        panel4.setVisible(false);
+        panel5.setVisible(true);
+        panel6.setVisible(false);
+        panel7.setVisible(false);
+        panel8.setVisible(false);
+        panel9.setVisible(false);
+        DefaultTableModel tableModel = new DefaultTableModel(queryData1(), head2) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table2.setModel(tableModel);
     }
 
     private void initComponents() {
@@ -416,6 +521,7 @@ public class MainFrom extends JFrame {
         textField2 = new JTextField();
         textField3 = new JTextField();
         button5 = new JButton();
+        button15 = new JButton();
         panel3 = new JPanel();
         label4 = new JLabel();
         label5 = new JLabel();
@@ -424,6 +530,7 @@ public class MainFrom extends JFrame {
         textField5 = new JTextField();
         textField6 = new JTextField();
         button6 = new JButton();
+        button16 = new JButton();
         panel4 = new JPanel();
         label7 = new JLabel();
         panel5 = new JPanel();
@@ -443,6 +550,7 @@ public class MainFrom extends JFrame {
         textField9 = new JTextField();
         textField10 = new JTextField();
         button11 = new JButton();
+        button17 = new JButton();
         panel7 = new JPanel();
         label12 = new JLabel();
         label13 = new JLabel();
@@ -453,6 +561,7 @@ public class MainFrom extends JFrame {
         textField13 = new JTextField();
         textField14 = new JTextField();
         button12 = new JButton();
+        button18 = new JButton();
         panel8 = new JPanel();
         label17 = new JLabel();
         label18 = new JLabel();
@@ -616,7 +725,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel1.add(button2);
-            button2.setBounds(new Rectangle(new Point(230, 305), button2.getPreferredSize()));
+            button2.setBounds(new Rectangle(new Point(380, 305), button2.getPreferredSize()));
 
             //---- button3 ----
             button3.setText("\u5220\u9664\u7528\u6237");
@@ -627,7 +736,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel1.add(button3);
-            button3.setBounds(new Rectangle(new Point(385, 305), button3.getPreferredSize()));
+            button3.setBounds(new Rectangle(new Point(230, 305), button3.getPreferredSize()));
 
             //---- button4 ----
             button4.setText("\u4fee\u6539\u7528\u6237");
@@ -678,6 +787,17 @@ public class MainFrom extends JFrame {
             });
             panel2.add(button5);
             button5.setBounds(290, 260, 145, button5.getPreferredSize().height);
+
+            //---- button15 ----
+            button15.setText("\u67e5\u770b\u7528\u6237");
+            button15.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    button15MouseClicked(e);
+                }
+            });
+            panel2.add(button15);
+            button15.setBounds(290, 315, 145, 25);
         }
         contentPane.add(panel2);
         panel2.setBounds(0, 0, 700, 400);
@@ -716,7 +836,18 @@ public class MainFrom extends JFrame {
                 }
             });
             panel3.add(button6);
-            button6.setBounds(295, 255, 155, button6.getPreferredSize().height);
+            button6.setBounds(295, 240, 155, button6.getPreferredSize().height);
+
+            //---- button16 ----
+            button16.setText("\u67e5\u770b\u7528\u6237");
+            button16.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    button16MouseClicked(e);
+                }
+            });
+            panel3.add(button16);
+            button16.setBounds(295, 295, 155, button16.getPreferredSize().height);
         }
         contentPane.add(panel3);
         panel3.setBounds(0, 0, 700, 400);
@@ -833,7 +964,18 @@ public class MainFrom extends JFrame {
                 }
             });
             panel6.add(button11);
-            button11.setBounds(295, 225, 135, button11.getPreferredSize().height);
+            button11.setBounds(290, 225, 140, button11.getPreferredSize().height);
+
+            //---- button17 ----
+            button17.setText("\u67e5\u770b\u5546\u54c1");
+            button17.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    button17MouseClicked(e);
+                }
+            });
+            panel6.add(button17);
+            button17.setBounds(290, 275, 140, button17.getPreferredSize().height);
         }
         contentPane.add(panel6);
         panel6.setBounds(0, 0, 700, 400);
@@ -879,7 +1021,18 @@ public class MainFrom extends JFrame {
                 }
             });
             panel7.add(button12);
-            button12.setBounds(290, 245, 150, button12.getPreferredSize().height);
+            button12.setBounds(285, 245, 155, button12.getPreferredSize().height);
+
+            //---- button18 ----
+            button18.setText("\u67e5\u770b\u5546\u54c1");
+            button18.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    button18MouseClicked(e);
+                }
+            });
+            panel7.add(button18);
+            button18.setBounds(285, 300, 155, button18.getPreferredSize().height);
         }
         contentPane.add(panel7);
         panel7.setBounds(0, 0, 700, 400);
@@ -1169,6 +1322,7 @@ public class MainFrom extends JFrame {
     private JTextField textField2;
     private JTextField textField3;
     private JButton button5;
+    private JButton button15;
     private JPanel panel3;
     private JLabel label4;
     private JLabel label5;
@@ -1177,6 +1331,7 @@ public class MainFrom extends JFrame {
     private JTextField textField5;
     private JTextField textField6;
     private JButton button6;
+    private JButton button16;
     private JPanel panel4;
     private JLabel label7;
     private JPanel panel5;
@@ -1196,6 +1351,7 @@ public class MainFrom extends JFrame {
     private JTextField textField9;
     private JTextField textField10;
     private JButton button11;
+    private JButton button17;
     private JPanel panel7;
     private JLabel label12;
     private JLabel label13;
@@ -1206,6 +1362,7 @@ public class MainFrom extends JFrame {
     private JTextField textField13;
     private JTextField textField14;
     private JButton button12;
+    private JButton button18;
     private JPanel panel8;
     private JLabel label17;
     private JLabel label18;
