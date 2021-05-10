@@ -1,3 +1,5 @@
+package cn.edu.guet.util;
+
 public class Sales {
     private String ID;
     private String name;

@@ -1,3 +1,5 @@
+package cn.edu.guet.util;
+
 public class Products {
     private String id;
     private String name;

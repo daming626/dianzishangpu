@@ -1,3 +1,4 @@
+package cn.edu.guet.util;
 
 import org.apache.commons.codec.binary.Base64;//JDK8中有相应的包，但是JDK12就没有了
 

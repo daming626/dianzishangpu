@@ -1,3 +1,5 @@
+package cn.edu.guet.util;
+
 public class Users {
     private int userid;
     private String username;
