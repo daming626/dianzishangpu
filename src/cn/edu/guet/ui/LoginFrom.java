@@ -74,6 +74,26 @@ public class LoginFrom extends JFrame {
         return textField1.getText();
     }
 
+    private void thisWindowClosing(WindowEvent e) {
+        int option = JOptionPane.showConfirmDialog(this, "确定退出?", "提示",
+                JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION)
+        {
+            if (e.getWindow() == this) {
+                this.dispose();
+                System.exit(0);
+            } else {
+                return;
+            }
+        }
+        else if(option == JOptionPane.NO_OPTION){
+            if (e.getWindow() == this) {
+                return;
+            }
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         label1 = new JLabel();
@@ -86,6 +106,12 @@ public class LoginFrom extends JFrame {
         label4 = new JLabel();
 
         //======== this ========
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                thisWindowClosing(e);
+            }
+        });
         Container contentPane = getContentPane();
         contentPane.setLayout(null);
 
@@ -108,7 +134,6 @@ public class LoginFrom extends JFrame {
         button1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                button1MouseClicked(e);
                 button1MouseClicked(e);
             }
         });
@@ -143,7 +168,8 @@ public class LoginFrom extends JFrame {
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
         this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
 
         label3.setVisible(false);
         label4.setVisible(false);
@@ -156,13 +182,11 @@ public class LoginFrom extends JFrame {
                     @Override
                     public void run() {
                         labelnum.setVisible(true);
-
                         try {
                             Thread.sleep(1500);
                         } catch (InterruptedException ex) {
                             ex.printStackTrace();
                         }
-
                         labelnum.setVisible(false);
                     }
                 }

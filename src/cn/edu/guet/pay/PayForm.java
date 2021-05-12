@@ -1,8 +1,10 @@
 package cn.edu.guet.pay;
 
 
+import cn.edu.guet.ui.MainFrom;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import javax.swing.*;
 /*
@@ -14,10 +16,10 @@ import javax.swing.*;
  * @author 1
  */
 public class PayForm extends JFrame {
-    public PayForm() {
-        initComponents();
 
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    public PayForm() {
+
+        initComponents();
 
         setLocationRelativeTo(null);
 
@@ -29,11 +31,21 @@ public class PayForm extends JFrame {
 
         JPanel panel = new ImagePanel();
 
-        panel.setBounds(0, 0, 500, 500);
+        panel.setBounds(0, 0, 400, 350);
 
         getContentPane().add(panel);
 
-        setVisible(true);
+        this.setVisible(true);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                t=1;
+            }
+        });
+
+
     }
 
 
@@ -41,37 +53,18 @@ public class PayForm extends JFrame {
         public void paint(Graphics g) {
             super.paint(g);
 
-            Thread t1 = new Thread(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            //按时间顺序显示D盘下的所有png的图片
-                            //在t1线程中把最后一个图片路径拿到，然后作为参数传入
-                            java.util.List<File> qrCodeList = ShowQRCode.getFileSort("D:/QR code");//二维码文件夹
-                            System.out.println("最后一个图片的路径：" + qrCodeList.get(qrCodeList.size() - 1).getAbsolutePath());
-                            ImageIcon icon = new ImageIcon(qrCodeList.get(qrCodeList.size() - 1).getAbsolutePath()/*图片路径*/);
-                            g.drawImage(icon.getImage(),0,0,300,300,ImagePanel.this);
+            java.util.List<File> qrCodeList = ShowQRCode.getFileSort("D:/QR code");//二维码文件夹
+            //System.out.println("最后一个图片的路径：" + qrCodeList.get(qrCodeList.size() - 1).getAbsolutePath());
+            ImageIcon icon = new ImageIcon(qrCodeList.get(qrCodeList.size() - 1).getAbsolutePath()/*图片路径*/);
+            g.drawImage(icon.getImage(), 0, 0, 300, 300, ImagePanel.this);
 
-                        }
-                    }
-            );
-            Thread t2 = new Thread(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            //等待二维码生成后，才能调用下面的类去显示二维码
-                            PayForm.this.setVisible(true);
-                        }
-                    }
-            );
-            t1.start();
-            try {
-                t1.join();//必须等t1执行完毕
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-            t2.start();
         }
+
+    }
+
+
+    private void frameWindowClosing (ContainerEvent e) {
+        t = 1;
     }
 
 
@@ -85,11 +78,92 @@ public class PayForm extends JFrame {
         contentPane.setPreferredSize(new Dimension(400, 350));
         pack();
         setLocationRelativeTo(getOwner());
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
+
+
+
+                // JFormDesigner - End of component initialization  //GEN-END:initComponents
+    }
+
+
+    public void paying(Double payTotalPrice){
+        Thread t1 = new Thread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        main.test_trade_precreate(payTotalPrice);
+                        System.out.println("1234");
+
+                    }
+                }
+        );
+        Thread t2 = new Thread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        while(true){
+                            main.test_trade_query(main.outTradeNo);
+                            if (Main.flag == 1) {
+
+                                //==============显示支付成功=====================
+                                Container contentPane1 = getContentPane();
+                                contentPane1.setLayout(null);
+
+                                panel1 = new JPanel();
+                                panel1.setLayout(null);
+
+                                label1 = new JLabel();
+
+                                label1.setText("\u652f\u4ed8\u6210\u529f\uff01");
+                                label1.setFont(label1.getFont().deriveFont(label1.getFont().getSize() + 10f));
+                                label1.setBounds(100, 130, 150, label1.getPreferredSize().height);
+                                panel1.add(label1);
+                                contentPane1.add(panel1);
+                                panel1.setBounds(0, 0, 400, 350);
+
+                                label1.setVisible(true);
+
+                                try {
+                                    Thread.sleep(2000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                                label1.setVisible(false);
+                                setVisible(false);
+
+                                //=========================更新数据库============================
+                                MainFrom mf = new MainFrom();
+                                mf.UPDATESQL();
+
+                                break;
+                            }
+                            if(t == 1){
+
+                                //关闭窗口 停止循环
+                                break;
+                            }
+
+                        }
+                    }
+                }
+        );
+
+        t1.start();
+        try {
+            t1.join();//必须等t1执行完毕
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        t2.start();
+
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // JFormDesigner - End of variables declaration  //GEN-END:variables
+    Main main = new Main();
+    JLabel label1 = new JLabel();
+    JPanel panel1 = new JPanel();
+    int  t;
 }
 
 

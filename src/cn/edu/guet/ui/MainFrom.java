@@ -27,7 +27,6 @@ public class MainFrom extends JFrame {
         initComponents();
     }
 
-
     private void menu4MousePressed(MouseEvent e) {
         panel1.setVisible(false);
         panel2.setVisible(false);
@@ -148,17 +147,23 @@ public class MainFrom extends JFrame {
     private void button3MouseClicked(MouseEvent e) {
         int count = table1.getSelectedRow();//选中的行数
         if(count!=-1){
-            String userID = String.valueOf(table1.getValueAt(count, 0));//选中行数第一列的数据
+            int option = JOptionPane.showConfirmDialog(this, "确定删除?", "提示", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION)
+            {
+                String userID = String.valueOf(table1.getValueAt(count, 0));//选中行数第一列的数据
+                deleteData("USERS", "USERID", userID);//调用自定义的方法，删除数据
 
-            deleteData("USERS", "USERID", userID);//调用自定义的方法，删除数据
-
-            //刷新表1
-            DefaultTableModel tableModel = new DefaultTableModel(queryData1(), head1) {
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
-            table1.setModel(tableModel);
+                //刷新表1
+                DefaultTableModel tableModel = new DefaultTableModel(queryData1(), head1) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                table1.setModel(tableModel);
+            }
+            else if(option == JOptionPane.NO_OPTION){
+                    return;
+            }
         }else{
             Error(label12);
             System.out.println("请选中需要删除的用户信息");
@@ -346,17 +351,22 @@ public class MainFrom extends JFrame {
     private void button10MouseClicked(MouseEvent e) {
         int count = table2.getSelectedRow();//获取选中行数,未选中则count为-1
         if (count!=-1){
-            String product_id = (String) table2.getValueAt(count, 0);//获取选中行的第一个数据
+            int option = JOptionPane.showConfirmDialog(this, "确定删除?", "提示", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION)
+            {
+                String product_id = (String) table2.getValueAt(count, 0);//获取选中行的第一个数据
+                deleteData("PRODUCTS", "product_id", product_id);//调用自定义的删除数据的方法
 
-            deleteData("PRODUCTS", "product_id", product_id);//调用自定义的删除数据的方法
-
-            //刷新表2
-            DefaultTableModel tableModel = new DefaultTableModel(queryData2(), head2) {
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
-            table2.setModel(tableModel);
+                //刷新表2
+                DefaultTableModel tableModel = new DefaultTableModel(queryData2(), head2) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                table2.setModel(tableModel);
+            } else if(option == JOptionPane.NO_OPTION){
+                return;
+            }
         }else{
             Error(label34);
             System.out.println("请选中需要删除的数据");
@@ -516,16 +526,16 @@ public class MainFrom extends JFrame {
     private void button17MouseClicked(MouseEvent e) {//按年月日查询流水
         String time = null;
         String date = null;
-        String year = textField15.getText();
-        String month = textField16.getText();
-        String day = textField17.getText();
-        if (year.length() != 0 && month.length() == 0 && day.length() == 0) {//输入年份
-            time = year;
+        int year = (int)comboBoxYear.getSelectedItem();
+        int month = (int)comboBoxMonth.getSelectedItem();
+        int day = (int)comboBoxDay.getSelectedItem();
+        if (year!= 0 && month == 0 && day == 0) {//输入年份
+            time = String.valueOf(year);
             date = "yyyy";
-        } else if (year.length() != 0 && month.length() != 0 && day.length() == 0) {//输入年份、月份
+        } else if (year != 0 && month!= 0 && day == 0) {//输入年份、月份
             time = year + "/" + month;
             date = "yyyy-mm";
-        } else if (year.length() != 0 && month.length() != 0 && day.length() != 0) {//输入年月日
+        } else if (year != 0 && month!= 0 && day != 0) {//输入年月日
             time = year + "/" + month + "/" + day;
             date = "yyyy-mm-dd";
         } else {
@@ -544,62 +554,67 @@ public class MainFrom extends JFrame {
         String product_id = textField18.getText();//获取商品ID
         String amounts = textField19.getText();//获取购买商品数量
 
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        try {
-            Class.forName(Driver);
-            conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM products WHERE product_id='" + product_id + "'");//根据输入的商品ID查询该商品是否存在
-            if (rs.next()) {
-                rs = stmt.executeQuery("SELECT userid FROM users WHERE username='" + username + "'");//根据当前用户名查询此用户ID
-                if (rs.next()) {
-                    int userid = rs.getInt("userid");
-                    rs = stmt.executeQuery("SELECT * FROM products WHERE product_id='" + product_id + "' AND stock>='" + amounts + "'");//根据输入的商品数量查询该商品数量是否充足
-                    int amount = Integer.parseInt(amounts);
-                    if (rs.next()) {
-                        Order order = new Order();
-                        order.setUserID(userid);
-                        order.setProductID(rs.getString("product_id"));
-                        order.setProductName(rs.getString("product_name"));
-                        order.setAmount(amount);
-                        order.setPrice(rs.getInt("price"));
-                        order.setTotalPrice(amount * rs.getInt("price"));
-                        list.add(order);//将Order对象加入List对象
-
-                        //显示table4内容
-                        DefaultTableModel tableModel = new DefaultTableModel(queryData4(list), head4) {
-                            public boolean isCellEditable(int row, int column) {
-                                return false;
-                            }
-                        };
-                        table4.setModel(tableModel);
-
-                        Error(label42);
-                        System.out.println("添加成功");
-                    } else {
-                        Error(label41);
-                        System.out.println("商品库存不足");
-                    }
-                }
-            } else {
-                System.out.println("商品号输入错误");
-                Error(label27);//调用方法进行错误提示
-            }
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (SQLException ex) {
-
-        } finally {
+        if (product_id.length()!=0&&amounts.length()!=0) {
+            Connection conn = null;
+            Statement stmt = null;
+            ResultSet rs = null;
             try {
-                conn.close();
-                stmt.close();
-                rs.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+                Class.forName(Driver);
+                conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
+                stmt = conn.createStatement();
+                rs = stmt.executeQuery("SELECT * FROM products WHERE product_id='" + product_id + "'");//根据输入的商品ID查询该商品是否存在
+                if (rs.next()) {
+                    rs = stmt.executeQuery("SELECT userid FROM users WHERE username='" + username + "'");//根据当前用户名查询此用户ID
+                    if (rs.next()) {
+                        int userid = rs.getInt("userid");
+                        rs = stmt.executeQuery("SELECT * FROM products WHERE product_id='" + product_id + "' AND stock>='" + amounts + "'");//根据输入的商品数量查询该商品数量是否充足
+                        int amount = Integer.parseInt(amounts);
+                        if (rs.next()) {
+                            Order order = new Order();
+                            order.setUserID(userid);
+                            order.setProductID(rs.getString("product_id"));
+                            order.setProductName(rs.getString("product_name"));
+                            order.setAmount(amount);
+                            order.setPrice(rs.getInt("price"));
+                            order.setTotalPrice(amount * rs.getInt("price"));
+                            list.add(order);//将Order对象加入List对象
 
+                            //显示table4内容
+                            DefaultTableModel tableModel = new DefaultTableModel(queryData4(list), head4) {
+                                public boolean isCellEditable(int row, int column) {
+                                    return false;
+                                }
+                            };
+                            table4.setModel(tableModel);
+
+                            Error(label42);
+                            System.out.println("添加成功");
+                        } else {
+                            Error(label41);
+                            System.out.println("商品库存不足");
+                        }
+                    }
+                } else {
+                    System.out.println("商品号输入错误");
+                    Error(label27);//调用方法进行错误提示
+                }
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (SQLException ex) {
+
+            } finally {
+                try {
+                    conn.close();
+                    stmt.close();
+                    rs.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+        }else{
+            Error(label47);
+            System.out.println("请输入商品和数量！！！");
         }
     }
 
@@ -609,16 +624,22 @@ public class MainFrom extends JFrame {
     }
 
     private void button20MouseClicked(MouseEvent e) {
-        int count = table4.getSelectedColumnCount();
-        list.remove(count);
+        int count = table4.getSelectedRow();
+        if(count!=-1){
+            list.remove(count);
 
-        //刷新表4
-        DefaultTableModel tableModel = new DefaultTableModel(queryData4(list), head4) {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        table4.setModel(tableModel);
+            //刷新表4
+            DefaultTableModel tableModel = new DefaultTableModel(queryData4(list), head4) {
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            table4.setModel(tableModel);
+        }else{
+            Error(label46);
+            System.out.println("请选中需要删除的商品");
+        }
+
     }
 
     private void button21MouseClicked(MouseEvent e) {
@@ -635,58 +656,94 @@ public class MainFrom extends JFrame {
 
     private void button22MouseClicked(MouseEvent e) {
         java.util.Date date = new java.util.Date();//定义日期
-        float ActualPayment = Float.parseFloat(textField20.getText());
-        if (ActualPayment >= payTotalPrice) {
-            textArea3.setText("" + (ActualPayment - payTotalPrice) + "");
+        String Actualpayments = textField20.getText();
 
-            //向数据库插入订单信息
-            Connection conn = null;
-            PreparedStatement pstmt = null;
-            String sql = "";
-            try {
-                Class.forName(Driver);
-                conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
-                pstmt = conn.prepareStatement("INSERT INTO sales values(?,?,?,?,?,?,?)");
-                for (int i = 0; i < list.size(); i++) {
-                    pstmt.setInt(1, list.get(i).getUserID());//获取用户ID
-                    pstmt.setString(2, list.get(i).getProductID());//获取商品ID
-                    pstmt.setString(3, list.get(i).getProductName());//获取商品名称
-                    pstmt.setInt(4, list.get(i).getAmount());//获取商品数量
-                    pstmt.setFloat(5, list.get(i).getPrice());//获取商品单价
-                    pstmt.setFloat(6, list.get(i).getTotalPrice());//获取此商品购物总价
-                    pstmt.setDate(7, new java.sql.Date(date.getTime()));//获取当前日期
-                    pstmt.executeUpdate();//执行插入数据SQL
-                }
-                Error(label44);
-                System.out.println("支付成功,数据插入成功");
-            } catch (ClassNotFoundException ee) {
-                ee.printStackTrace();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } finally {
-                //释放资源：数据库连接很昂贵
+        if (Actualpayments.length()!=0) {//确保输入付款金额
+            float ActualPayment = Float.parseFloat(Actualpayments);
+            if (ActualPayment >= payTotalPrice) {
+                textArea3.setText("" + (ActualPayment - payTotalPrice) + "");
+
+                //向数据库插入订单信息
+                Connection conn = null;
+                PreparedStatement pstmt = null;
+                Statement stmt = null;
+                String sql = "";
                 try {
-                    pstmt.close();
-                    conn.close();//关连接
+                    Class.forName(Driver);
+                    conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
+                    stmt = conn.createStatement();
+                    pstmt = conn.prepareStatement("INSERT INTO sales values(?,?,?,?,?,?,?)");
+                    for (int i = 0; i < list.size(); i++) {
+                        pstmt.setInt(1, list.get(i).getUserID());//获取用户ID
+                        pstmt.setString(2, list.get(i).getProductID());//获取商品ID
+                        pstmt.setString(3, list.get(i).getProductName());//获取商品名称
+                        pstmt.setInt(4, list.get(i).getAmount());//获取商品数量
+                        pstmt.setFloat(5, list.get(i).getPrice());//获取商品单价
+                        pstmt.setFloat(6, list.get(i).getTotalPrice());//获取此商品购物总价
+                        pstmt.setDate(7, new java.sql.Date(date.getTime()));//获取当前日期
+                        pstmt.executeUpdate();//执行插入数据SQL
+                        stmt.executeUpdate("UPDATE products set stock=stock-'" + list.get(i).getAmount() + "' where product_id='" + list.get(i).getProductID() + "'");
+                    }
+                    Error(label44);
+                    System.out.println("支付成功,数据已存入数据库");
+                } catch (ClassNotFoundException ee) {
+                    ee.printStackTrace();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
+                } finally {
+                    //释放资源：数据库连接很昂贵
+                    try {
+                        pstmt.close();
+                        stmt.close();
+                        conn.close();//关连接
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
                 }
+            } else {
+                Error(label43);
+                System.out.println("付款余额不足，无法支付");
             }
-
-        } else {
-            Error(label43);
-            System.out.println("付款余额不足，无法支付");
+        }else{
+            Error(label48);
+            System.out.println("请输入付款金额");
         }
     }
 
     private void button23MouseClicked(MouseEvent e) {
-        new PayForm();
-        Main main = new Main();
-        main.test_trade_precreate(payTotalPrice);
+        new PayForm().paying(payTotalPrice);
+
     }
 
     private void button24MouseClicked(MouseEvent e) {
         // TODO add your code here
+    }
+
+    public void comboBoxMonthItemStateChanged(ItemEvent e) {
+        Object obj = comboBoxMonth.getSelectedItem();// 取得选中月份
+        if (obj != null) {
+            comboBoxDay.removeAllItems();//清空日的下拉列表框
+            int month = Integer.valueOf(obj.toString());
+            int days = 32;
+            if (month == 4 || month == 6 || month == 9 || month == 11) {
+                days = 31;
+            } else if (month == 2) {//取得选中年份
+                int year = Integer.parseInt(comboBoxYear.getSelectedItem().toString());
+                if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) {//是闰年
+                    days = 30;
+                } else {//不是闰年
+                    days = 29;
+                }
+            }
+            for (int j = 0; j < days; j++) {
+                comboBoxDay.addItem(j);
+            }
+        }
+    }
+
+    private void menu5MousePressed(MouseEvent e) {
+        this.setVisible(false);
+        new LoginFrom();
     }
 
     private void initComponents() {
@@ -703,6 +760,7 @@ public class MainFrom extends JFrame {
         menu3 = new JMenu();
         menuItem8 = new JMenuItem();
         menuItem9 = new JMenuItem();
+        menu5 = new JMenu();
         panel1 = new JPanel();
         scrollPane1 = new JScrollPane();
         table1 = new JTable();
@@ -712,6 +770,7 @@ public class MainFrom extends JFrame {
         button4 = new JButton();
         label12 = new JLabel();
         label21 = new JLabel();
+        label49 = new JLabel();
         panel2 = new JPanel();
         label1 = new JLabel();
         label2 = new JLabel();
@@ -777,13 +836,13 @@ public class MainFrom extends JFrame {
         label16 = new JLabel();
         label17 = new JLabel();
         label18 = new JLabel();
-        textField15 = new JTextField();
-        textField16 = new JTextField();
-        textField17 = new JTextField();
         scrollPane3 = new JScrollPane();
         table3 = new JTable();
         button17 = new JButton();
         label28 = new JLabel();
+        comboBoxYear = new JComboBox();
+        comboBoxMonth = new JComboBox();
+        comboBoxDay = new JComboBox();
         panel9 = new JPanel();
         label19 = new JLabel();
         button18 = new JButton();
@@ -798,6 +857,8 @@ public class MainFrom extends JFrame {
         label27 = new JLabel();
         label41 = new JLabel();
         label42 = new JLabel();
+        label46 = new JLabel();
+        label47 = new JLabel();
         frame1 = new JFrame();
         label23 = new JLabel();
         label24 = new JLabel();
@@ -812,6 +873,7 @@ public class MainFrom extends JFrame {
         button24 = new JButton();
         label43 = new JLabel();
         label44 = new JLabel();
+        label48 = new JLabel();
         label26 = new JLabel();
 
         //======== this ========
@@ -910,6 +972,18 @@ public class MainFrom extends JFrame {
                 menu3.add(menuItem9);
             }
             menuBar1.add(menu3);
+
+            //======== menu5 ========
+            {
+                menu5.setText("\u9000\u51fa\u5f53\u524d\u7528\u6237");
+                menu5.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        menu5MousePressed(e);
+                    }
+                });
+            }
+            menuBar1.add(menu5);
         }
         setJMenuBar(menuBar1);
 
@@ -979,9 +1053,15 @@ public class MainFrom extends JFrame {
             label21.setForeground(Color.red);
             panel1.add(label21);
             label21.setBounds(new Rectangle(new Point(260, 10), label21.getPreferredSize()));
+
+            //---- label49 ----
+            label49.setText("\u5220\u9664\u6210\u529f");
+            label49.setForeground(Color.red);
+            panel1.add(label49);
+            label49.setBounds(new Rectangle(new Point(315, 10), label49.getPreferredSize()));
         }
         contentPane.add(panel1);
-        panel1.setBounds(0, 1000, 700, 400);
+        panel1.setBounds(0, 0, 700, 400);
 
         //======== panel2 ========
         {
@@ -1055,7 +1135,7 @@ public class MainFrom extends JFrame {
             label45.setBounds(new Rectangle(new Point(300, 10), label45.getPreferredSize()));
         }
         contentPane.add(panel2);
-        panel2.setBounds(0, 1000, 700, 400);
+        panel2.setBounds(0, 0, 700, 400);
 
         //======== panel3 ========
         {
@@ -1123,7 +1203,7 @@ public class MainFrom extends JFrame {
             label33.setBounds(new Rectangle(new Point(335, 15), label33.getPreferredSize()));
         }
         contentPane.add(panel3);
-        panel3.setBounds(0, 1000, 700, 400);
+        panel3.setBounds(0, 0, 700, 400);
 
         //======== panel4 ========
         {
@@ -1136,7 +1216,7 @@ public class MainFrom extends JFrame {
             label7.setBounds(205, 160, 320, 75);
         }
         contentPane.add(panel4);
-        panel4.setBounds(0, 1000, 700, 400);
+        panel4.setBounds(0, 0, 700, 400);
 
         //======== panel5 ========
         {
@@ -1206,7 +1286,7 @@ public class MainFrom extends JFrame {
             label35.setBounds(new Rectangle(new Point(255, 5), label35.getPreferredSize()));
         }
         contentPane.add(panel5);
-        panel5.setBounds(0, 1000, 700, 400);
+        panel5.setBounds(0, 0, 700, 400);
 
         //======== panel6 ========
         {
@@ -1281,7 +1361,7 @@ public class MainFrom extends JFrame {
             label38.setBounds(new Rectangle(new Point(290, 10), label38.getPreferredSize()));
         }
         contentPane.add(panel6);
-        panel6.setBounds(0, 1000, 700, 400);
+        panel6.setBounds(0, 0, 700, 400);
 
         //======== panel7 ========
         {
@@ -1343,32 +1423,26 @@ public class MainFrom extends JFrame {
             label40.setBounds(new Rectangle(new Point(325, 15), label40.getPreferredSize()));
         }
         contentPane.add(panel7);
-        panel7.setBounds(0, 1000, 700, 400);
+        panel7.setBounds(0, 0, 700, 400);
 
         //======== panel8 ========
         {
             panel8.setLayout(null);
 
             //---- label16 ----
-            label16.setText("\u8f93\u5165\u5e74\u4efd\uff1a");
+            label16.setText("\u5e74");
             panel8.add(label16);
-            label16.setBounds(50, 330, label16.getPreferredSize().width, 22);
+            label16.setBounds(190, 330, 25, 22);
 
             //---- label17 ----
-            label17.setText("\u8f93\u5165\u6708\u4efd\uff1a");
+            label17.setText("\u6708");
             panel8.add(label17);
-            label17.setBounds(new Rectangle(new Point(195, 335), label17.getPreferredSize()));
+            label17.setBounds(330, 335, 20, 17);
 
             //---- label18 ----
-            label18.setText("\u8f93\u5165\u65e5\u671f\uff1a");
+            label18.setText("\u65e5");
             panel8.add(label18);
-            label18.setBounds(new Rectangle(new Point(335, 335), label18.getPreferredSize()));
-            panel8.add(textField15);
-            textField15.setBounds(120, 330, 50, textField15.getPreferredSize().height);
-            panel8.add(textField16);
-            textField16.setBounds(260, 330, 55, textField16.getPreferredSize().height);
-            panel8.add(textField17);
-            textField17.setBounds(400, 330, 65, textField17.getPreferredSize().height);
+            label18.setBounds(new Rectangle(new Point(460, 335), label18.getPreferredSize()));
 
             //======== scrollPane3 ========
             {
@@ -1393,9 +1467,18 @@ public class MainFrom extends JFrame {
             label28.setFont(label28.getFont().deriveFont(label28.getFont().getSize() + 4f));
             panel8.add(label28);
             label28.setBounds(245, 290, 170, label28.getPreferredSize().height);
+            panel8.add(comboBoxYear);
+            comboBoxYear.setBounds(90, 330, 90, comboBoxYear.getPreferredSize().height);
+
+            //---- comboBoxMonth ----
+            comboBoxMonth.addItemListener(e -> comboBoxMonthItemStateChanged(e));
+            panel8.add(comboBoxMonth);
+            comboBoxMonth.setBounds(230, 330, 90, comboBoxMonth.getPreferredSize().height);
+            panel8.add(comboBoxDay);
+            comboBoxDay.setBounds(360, 330, 90, comboBoxDay.getPreferredSize().height);
         }
         contentPane.add(panel8);
-        panel8.setBounds(0, 1000, 700, 400);
+        panel8.setBounds(0, 0, 700, 400);
 
         //======== panel9 ========
         {
@@ -1483,6 +1566,18 @@ public class MainFrom extends JFrame {
             label42.setForeground(Color.red);
             panel9.add(label42);
             label42.setBounds(new Rectangle(new Point(270, 5), label42.getPreferredSize()));
+
+            //---- label46 ----
+            label46.setText("\u8bf7\u9009\u4e2d\u9700\u8981\u5220\u9664\u7684\u5546\u54c1\uff01\uff01\uff01");
+            label46.setForeground(Color.red);
+            panel9.add(label46);
+            label46.setBounds(new Rectangle(new Point(205, 5), label46.getPreferredSize()));
+
+            //---- label47 ----
+            label47.setText("\u8bf7\u8f93\u5165\u5546\u54c1\u548c\u6570\u91cf\uff01\uff01\uff01");
+            label47.setForeground(Color.red);
+            panel9.add(label47);
+            label47.setBounds(new Rectangle(new Point(210, 5), label47.getPreferredSize()));
         }
         contentPane.add(panel9);
         panel9.setBounds(0, 0, 700, 400);
@@ -1572,6 +1667,12 @@ public class MainFrom extends JFrame {
             frame1ContentPane.add(label44);
             label44.setBounds(new Rectangle(new Point(205, 10), label44.getPreferredSize()));
 
+            //---- label48 ----
+            label48.setText("\u8bf7\u8f93\u5165\u4ed8\u6b3e\u91d1\u989d\uff01\uff01\uff01");
+            label48.setForeground(Color.red);
+            frame1ContentPane.add(label48);
+            label48.setBounds(new Rectangle(new Point(220, 10), label48.getPreferredSize()));
+
             frame1ContentPane.setPreferredSize(new Dimension(520, 330));
             frame1.pack();
             frame1.setLocationRelativeTo(frame1.getOwner());
@@ -1580,6 +1681,8 @@ public class MainFrom extends JFrame {
         //---- label26 ----
         label26.setText("\u8bf7\u5b8c\u5584\u5546\u54c1\u4fe1\u606f\uff01");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+        AddDate();//调用此函数给下拉框输入日期
+
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel1.setVisible(false);
@@ -1613,6 +1716,10 @@ public class MainFrom extends JFrame {
         label42.setVisible(false);
         label43.setVisible(false);
         label44.setVisible(false);
+        label46.setVisible(false);
+        label47.setVisible(false);
+        label48.setVisible(false);
+        label49.setVisible(false);
     }
 
     //删除数据
@@ -1625,6 +1732,7 @@ public class MainFrom extends JFrame {
             conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
             stmt = conn.createStatement();
             stmt.executeUpdate(sql);
+            Error(label49);
             System.out.println("删除成功");
         } catch (ClassNotFoundException ee) {
             ee.printStackTrace();
@@ -1722,7 +1830,6 @@ public class MainFrom extends JFrame {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-
         }
         data = new Object[list.size()][head2.length];
         //把集合里的数据放入Obejct这个二维数组
@@ -1817,18 +1924,73 @@ public class MainFrom extends JFrame {
                     @Override
                     public void run() {
                         labelnum.setVisible(true);
-
                         try {
                             Thread.sleep(1500);
                         } catch (InterruptedException ex) {
                             ex.printStackTrace();
                         }
-
                         labelnum.setVisible(false);
                     }
                 }
         );
         thread.start();
+    }
+
+    //显示日期
+    private void AddDate() {
+        for (int i = STARTYEAR; i < ENDYEAR; i++) {//年下拉选择框
+            comboBoxYear.addItem(i);
+        }
+        for (int i = 0; i <= 12; i++) {//月下拉选择框
+            comboBoxMonth.addItem(i);
+        }
+        for (int j = 0; j <= 31; j++) { //日下拉选择框
+            comboBoxDay.addItem(j);
+        }
+    }
+
+    public void UPDATESQL() {
+        java.util.Date date = new java.util.Date();//定义日期
+        //向数据库插入订单信息
+        Connection conn = null;
+        PreparedStatement pstmtInsert = null;
+        PreparedStatement pstmtUpdate = null;
+        String sql = "";
+        try {
+            Class.forName(Driver);
+            conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
+            pstmtInsert = conn.prepareStatement("INSERT INTO sales values(?,?,?,?,?,?,?)");
+            pstmtUpdate = conn.prepareStatement("UPDATE products set stock = stock-? WHERE product_id = ?");
+            for (int i = 0; i < list.size(); i++) {
+                pstmtInsert.setInt(1, list.get(i).getUserID());//获取用户ID
+                pstmtInsert.setString(2, list.get(i).getProductID());//获取商品ID
+                pstmtInsert.setString(3, list.get(i).getProductName());//获取商品名称
+                pstmtInsert.setInt(4, list.get(i).getAmount());//获取商品数量
+                pstmtInsert.setFloat(5, list.get(i).getPrice());//获取商品单价
+                pstmtInsert.setFloat(6, list.get(i).getTotalPrice());//获取此商品购物总价
+                pstmtInsert.setDate(7, new java.sql.Date(date.getTime()));//获取当前日期
+                pstmtInsert.executeUpdate();//执行插入数据SQL,修改库存
+                pstmtUpdate.setInt(1, list.get(i).getAmount());
+                pstmtUpdate.setString(2, list.get(i).getProductID());
+                pstmtUpdate.executeUpdate();
+            }
+            System.out.println("数据插入成功");
+        } catch (ClassNotFoundException ee) {
+            ee.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            //释放资源：数据库连接很昂贵
+            try {
+                pstmtInsert.close();
+                pstmtUpdate.close();
+                conn.close();//关连接
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+
+
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
@@ -1843,6 +2005,7 @@ public class MainFrom extends JFrame {
     private JMenu menu3;
     private JMenuItem menuItem8;
     private JMenuItem menuItem9;
+    private JMenu menu5;
     private JPanel panel1;
     private JScrollPane scrollPane1;
     private JTable table1;
@@ -1852,6 +2015,7 @@ public class MainFrom extends JFrame {
     private JButton button4;
     private JLabel label12;
     private JLabel label21;
+    private JLabel label49;
     private JPanel panel2;
     private JLabel label1;
     private JLabel label2;
@@ -1917,13 +2081,13 @@ public class MainFrom extends JFrame {
     private JLabel label16;
     private JLabel label17;
     private JLabel label18;
-    private JTextField textField15;
-    private JTextField textField16;
-    private JTextField textField17;
     private JScrollPane scrollPane3;
     private JTable table3;
     private JButton button17;
     private JLabel label28;
+    private JComboBox comboBoxYear;
+    private JComboBox comboBoxMonth;
+    private JComboBox comboBoxDay;
     private JPanel panel9;
     private JLabel label19;
     private JButton button18;
@@ -1938,6 +2102,8 @@ public class MainFrom extends JFrame {
     private JLabel label27;
     private JLabel label41;
     private JLabel label42;
+    private JLabel label46;
+    private JLabel label47;
     private JFrame frame1;
     private JLabel label23;
     private JLabel label24;
@@ -1952,19 +2118,29 @@ public class MainFrom extends JFrame {
     private JButton button24;
     private JLabel label43;
     private JLabel label44;
+    private JLabel label48;
     private JLabel label26;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
+
+    //JDBC相关
     private String Driver = "oracle.jdbc.driver.OracleDriver";//驱动
     private String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";//Oracle的URL
     private String OracleUserName = "daming1";//数据库用户名
     private String OraclePassWord = "dm1234";//数据库密码
+
+    //变量
+    private final int STARTYEAR = 2020;//年份的开始值
+    private final int ENDYEAR = 2100;//年份的结束值
     private static double payTotalPrice;//订单的总价
     private static int overallUserId;
     private static String overallProductId;
     private static java.util.List<Order> list = new ArrayList<Order>();//定义一个存储Order类的List集合
+
+    //显示table相关
     private Object[][] data = null;
     private String head1[] = {"ID", "用户名", "密码"};
     private String head2[] = {"商品号", "商品名", "库存", "单价"};
     private String head3[] = {"商品号", "商品名", "数量", "总价"};
     private String head4[] = {"用户ID", "商品ID", "商品名称", "数量", "单价", "总价"};
 }
+

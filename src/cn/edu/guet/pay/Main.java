@@ -34,6 +34,9 @@ import java.util.*;
  * sdk和demo的意见和问题反馈请联系：liuyang.kly@alipay.com
  */
 public class Main {
+
+    public static int flag ;
+    public String outTradeNo = "";
     private static Log                  log = LogFactory.getLog(Main.class);
 
     // 支付宝当面付2.0服务
@@ -267,9 +270,10 @@ public class Main {
     }
 
     // 测试当面付2.0查询订单
-    public void test_trade_query() {
+    public void test_trade_query(String outTradeNo) {
+        flag = 0;
         // (必填) 商户订单号，通过此商户订单号查询当面付的交易状态
-        String outTradeNo = "tradepay14817938139942440181";
+        // String outTradeNo = "";
 
         // 创建查询请求builder，设置请求参数
         AlipayTradeQueryRequestBuilder builder = new AlipayTradeQueryRequestBuilder()
@@ -278,29 +282,29 @@ public class Main {
         AlipayF2FQueryResult result = tradeService.queryTradeResult(builder);
         switch (result.getTradeStatus()) {
             case SUCCESS:
-                log.info("查询返回该订单支付成功: )");
+                //log.info("查询返回该订单支付成功: )");
 
-                AlipayTradeQueryResponse response = result.getResponse();
-                dumpResponse(response);
-
-                log.info(response.getTradeStatus());
-                if (Utils.isListNotEmpty(response.getFundBillList())) {
-                    for (TradeFundBill bill : response.getFundBillList()) {
-                        log.info(bill.getFundChannel() + ":" + bill.getAmount());
-                    }
-                }
+                flag = 1;
+//                AlipayTradeQueryResponse response = result.getResponse();
+//                dumpResponse(response);
+//                log.info(response.getTradeStatus());
+//                if (Utils.isListNotEmpty(response.getFundBillList())) {
+//                    for (TradeFundBill bill : response.getFundBillList()) {
+//                        log.info(bill.getFundChannel() + ":" + bill.getAmount());
+//                    }
+//                }
                 break;
 
             case FAILED:
-                log.error("查询返回该订单支付失败或被关闭!!!");
+                //log.error("查询返回该订单支付失败或被关闭!!!");
                 break;
 
             case UNKNOWN:
-                log.error("系统异常，订单支付状态未知!!!");
+                //log.error("系统异常，订单支付状态未知!!!");
                 break;
 
             default:
-                log.error("不支持的交易状态，交易返回异常!!!");
+                //log.error("不支持的交易状态，交易返回异常!!!");
                 break;
         }
     }
@@ -355,6 +359,7 @@ public class Main {
         String outTradeNo = "tradeprecreate" + System.currentTimeMillis()
                             + (long) (Math.random() * 10000000L);
 
+        this.outTradeNo = outTradeNo;
         // (必填) 订单标题，粗略描述用户的支付目的。如“xxx品牌xxx门店当面付扫码消费”
         String subject = "啊七电子商铺";
 
@@ -435,4 +440,5 @@ public class Main {
                 break;
         }
     }
+
 }
