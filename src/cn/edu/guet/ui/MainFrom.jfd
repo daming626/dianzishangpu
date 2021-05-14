@@ -121,15 +121,15 @@ new FormModel {
 					"y": 80
 					"width": 145
 				} )
-				add( new FormComponent( "javax.swing.JTextField" ) {
-					name: "textField2"
+				add( new FormComponent( "javax.swing.JPasswordField" ) {
+					name: "passwordField3"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 290
 					"y": 135
 					"width": 145
 				} )
-				add( new FormComponent( "javax.swing.JTextField" ) {
-					name: "textField3"
+				add( new FormComponent( "javax.swing.JPasswordField" ) {
+					name: "passwordField4"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 290
 					"y": 195
@@ -225,15 +225,15 @@ new FormModel {
 					"y": 100
 					"width": 155
 				} )
-				add( new FormComponent( "javax.swing.JTextField" ) {
-					name: "textField5"
+				add( new FormComponent( "javax.swing.JPasswordField" ) {
+					name: "passwordField1"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 285
 					"y": 140
 					"width": 155
 				} )
-				add( new FormComponent( "javax.swing.JTextField" ) {
-					name: "textField6"
+				add( new FormComponent( "javax.swing.JPasswordField" ) {
+					name: "passwordField2"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 285
 					"y": 185
@@ -746,7 +746,7 @@ new FormModel {
 					"text": "删除商品"
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "button20MouseClicked", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 220
+					"x": 140
 					"y": 360
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
@@ -754,7 +754,7 @@ new FormModel {
 					"text": "清空购物车"
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "button21MouseClicked", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 385
+					"x": 460
 					"y": 360
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
@@ -799,9 +799,26 @@ new FormModel {
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 260
 				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "button25"
+					"text": "显示购物车"
+					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "button25MouseClicked", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 300
+					"y": 360
+				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 700
 				"height": 400
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+				"autoSize": false
+			} ) {
+				name: "panel10"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 700
+				"height": 500
+				"x": 0
 			} )
 			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
 				name: "menuBar1"
@@ -873,6 +890,7 @@ new FormModel {
 				"x": 135
 				"y": 50
 				"width": 45
+				"height": 20
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label24"
@@ -881,7 +899,7 @@ new FormModel {
 				"x": 135
 				"y": 95
 				"width": 45
-				"height": 25
+				"height": 20
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label25"
@@ -892,32 +910,29 @@ new FormModel {
 				"width": 45
 				"height": 20
 			} )
-			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-				name: "scrollPane6"
-				add( new FormComponent( "javax.swing.JTextArea" ) {
-					name: "textArea2"
-				} )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 205
-				"y": 50
-				"width": 165
-			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField20"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 205
 				"y": 95
 				"width": 165
+				"height": 20
 			} )
-			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-				name: "scrollPane7"
-				add( new FormComponent( "javax.swing.JTextArea" ) {
-					name: "textArea3"
-				} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField2"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 206
+				"y": 50
+				"width": 165
+				"height": 20
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField3"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 205
 				"y": 135
 				"width": 165
+				"height": 20
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button22"
@@ -968,8 +983,14 @@ new FormModel {
 				"x": 235
 				"y": 0
 			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+				name: "panel11"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 550
+				"height": 450
+			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 100, 480 )
+			"location": new java.awt.Point( 170, 605 )
 			"size": new java.awt.Dimension( 520, 330 )
 		} )
 	}

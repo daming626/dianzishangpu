@@ -1,15 +1,13 @@
 package cn.edu.guet.ui;
 
-import cn.edu.guet.pay.Main;
 import cn.edu.guet.pay.PayForm;
 import cn.edu.guet.printer.Test;
 import cn.edu.guet.util.*;
-import javafx.scene.text.Text;
-import oracle.jdbc.OracleDriver;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,21 +24,18 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MainFrom extends JFrame {
     public MainFrom() {
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        }catch(Exception e) {
-//            System.out.println(e);
-//        }
         initComponents();
+        setTitle("\u963f\u4e03\u5c0f\u5546\u94fa");
+
+
+        URL url1=MainFrom.class.getResource("iab.png");
+        ImageIcon imageIcon1 = new ImageIcon(url1);
+        Image image = imageIcon1.getImage();
+        this.setIconImage(image);//å·¦ä¸Šè§’å›¾æ ‡
     }
 
     private void thisWindowClosing(WindowEvent e) {
-        int option = JOptionPane.showConfirmDialog(this, "È·¶¨ÍË³ö?", "ÌáÊ¾", JOptionPane.YES_NO_OPTION);
+        int option = JOptionPane.showConfirmDialog(this, "ç¡®å®šé€€å‡º?", "æç¤º", JOptionPane.YES_NO_OPTION);
 
         if (option == JOptionPane.YES_OPTION)
         {
@@ -176,15 +171,15 @@ public class MainFrom extends JFrame {
     }
 
     private void button3MouseClicked(MouseEvent e) {
-        int count = table1.getSelectedRow();//Ñ¡ÖĞµÄĞĞÊı
+        int count = table1.getSelectedRow();//é€‰ä¸­çš„è¡Œæ•°
         if(count!=-1){
-            int option = JOptionPane.showConfirmDialog(this, "È·¶¨É¾³ı?", "ÌáÊ¾", JOptionPane.YES_NO_OPTION);
+            int option = JOptionPane.showConfirmDialog(this, "ç¡®å®šåˆ é™¤?", "æç¤º", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION)
             {
-                String userID = String.valueOf(table1.getValueAt(count, 0));//Ñ¡ÖĞĞĞÊıµÚÒ»ÁĞµÄÊı¾İ
-                deleteData("USERS", "USERID", userID);//µ÷ÓÃ×Ô¶¨ÒåµÄ·½·¨£¬É¾³ıÊı¾İ
+                String userID = String.valueOf(table1.getValueAt(count, 0));//é€‰ä¸­è¡Œæ•°ç¬¬ä¸€åˆ—çš„æ•°æ®
+                deleteData("USERS", "USERID", userID);//è°ƒç”¨è‡ªå®šä¹‰çš„æ–¹æ³•ï¼Œåˆ é™¤æ•°æ®
 
-                //Ë¢ĞÂ±í1
+                //åˆ·æ–°è¡¨1
                 DefaultTableModel tableModel = new DefaultTableModel(queryData1(), head1) {
                     public boolean isCellEditable(int row, int column) {
                         return false;
@@ -197,20 +192,20 @@ public class MainFrom extends JFrame {
             }
         }else{
             Error(label12);
-            System.out.println("ÇëÑ¡ÖĞĞèÒªÉ¾³ıµÄÓÃ»§ĞÅÏ¢");
+            System.out.println("\u8bf7\u9009\u4e2d\u9700\u8981\u5220\u9664\u7684\u7528\u6237\u4fe1\u606f");//è¯·é€‰ä¸­éœ€è¦åˆ é™¤çš„ç”¨æˆ·ä¿¡æ¯
         }
     }
 
     private void button4MouseClicked(MouseEvent e) {
-        overallUserId = 0;//È«¾Ö±äÁ¿£¬Ö¸ÓÃ»§id£¬Îªºó±ßĞŞ¸ÄÓÃ»§ĞÅÏ¢Ê¹ÓÃ
-        int count = table1.getSelectedRow();//Èç¹ûÃ»ÓĞÑ¡ÖĞÊı¾İÔò£¬countµÄÖµÎª-1
+        overallUserId = 0;//å…¨å±€å˜é‡ï¼ŒæŒ‡ç”¨æˆ·idï¼Œä¸ºåè¾¹ä¿®æ”¹ç”¨æˆ·ä¿¡æ¯ä½¿ç”¨
+        int count = table1.getSelectedRow();//å¦‚æœæ²¡æœ‰é€‰ä¸­æ•°æ®åˆ™ï¼Œcountçš„å€¼ä¸º-1
         if (count != -1) {
             overallUserId = (int) table1.getValueAt(count, 0);
             String username = String.valueOf(table1.getValueAt(count, 1));
             String password = String.valueOf(table1.getValueAt(count, 2));
             textField4.setText(username);
-            textField5.setText(password);
-            textField6.setText(password);
+            passwordField1.setText(password);
+            passwordField2.setText(password);
 
             panel1.setVisible(false);
             panel2.setVisible(false);
@@ -223,14 +218,14 @@ public class MainFrom extends JFrame {
             panel9.setVisible(false);
         } else {
             Error(label21);
-            System.out.println("ÇëÑ¡ÖĞĞèÒªĞŞ¸ÄµÄÊı¾İ");
+            System.out.println("\u8bf7\u9009\u4e2d\u9700\u8981\u4fee\u6539\u7684\u6570\u636e");//è¯·é€‰ä¸­éœ€è¦ä¿®æ”¹çš„æ•°æ®
         }
     }
 
     private void button5MouseClicked(MouseEvent e) {
         String userName = textField1.getText();
-        String passWord = textField2.getText();
-        String confirmPassWord = textField3.getText();
+        String passWord = new String(passwordField3.getPassword());
+        String confirmPassWord = new String(passwordField4.getPassword());
 
         if (userName.length()!=0) {
             if (passWord.length() != 0 && confirmPassWord.length() != 0) {
@@ -242,14 +237,14 @@ public class MainFrom extends JFrame {
                         Class.forName(Driver);
                         conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
                         stmt = conn.createStatement();
-                        rs = stmt.executeQuery("SELECT * FROM users WHERE rownum=1 ORDER BY userid DESC");//½«ÓÃ»§ID×î´óµÄÔª×éÑ¡³ö
+                        rs = stmt.executeQuery("SELECT * FROM users WHERE rownum=1 ORDER BY userid DESC");//å°†ç”¨æˆ·IDæœ€å¤§çš„å…ƒç»„é€‰å‡º
                         if (rs.next()) {
-                            int ID = rs.getInt("userid");//ÄÃµ½×î´óµÄÓÃ»§ID
-                            ID++;//ÓÃ»§ID+1£¬È»½«Æä×÷ÎªÌí¼ÓÓÃ»§µÄID
+                            int ID = rs.getInt("userid");//æ‹¿åˆ°æœ€å¤§çš„ç”¨æˆ·ID
+                            ID++;//ç”¨æˆ·ID+1ï¼Œç„¶å°†å…¶ä½œä¸ºæ·»åŠ ç”¨æˆ·çš„ID
                             try {
                                 stmt.executeUpdate("INSERT INTO users values('" + ID + "','" + userName + "','" + MD5.encoderByMd5(passWord) + "')");
                                 Error(label30);
-                                System.out.println("Ìí¼Ó³É¹¦");
+                                System.out.println("\u6dfb\u52a0\u6210\u529f");//æ·»åŠ æˆåŠŸ
                             } catch (NoSuchAlgorithmException ex) {
                                 ex.printStackTrace();
                             } catch (UnsupportedEncodingException ex) {
@@ -259,7 +254,7 @@ public class MainFrom extends JFrame {
                             try {
                                 stmt.executeUpdate("INSERT INTO users values('" + 1 + "','" + userName + "','" + MD5.encoderByMd5(passWord) + "')");
                                 Error(label30);
-                                System.out.println("Ìí¼Ó³É¹¦");
+                                System.out.println("\u6dfb\u52a0\u6210\u529f");//æ·»åŠ æˆåŠŸ
                             } catch (NoSuchAlgorithmException ex) {
                                 ex.printStackTrace();
                             } catch (UnsupportedEncodingException ex) {
@@ -280,15 +275,15 @@ public class MainFrom extends JFrame {
                     }
                 } else {
                     Error(label29);
-                    System.out.println("ÃÜÂëÊäÈë²»Ò»ÖÂ");
+                    System.out.println("\u5bc6\u7801\u8f93\u5165\u4e0d\u4e00\u81f4");//å¯†ç è¾“å…¥ä¸ä¸€è‡´
                 }
             } else {
                 Error(label22);
-                System.out.println("ÃÜÂë²»ÄÜÎª¿Õ");
+                System.out.println("\u5bc6\u7801\u4e0d\u80fd\u4e3a\u7a7a");//å¯†ç ä¸èƒ½ä¸ºç©º
             }
         }else{
             Error(label45);
-            System.out.println("ÇëÊäÈëÓÃ»§Ãû£¡£¡£¡");
+            System.out.println("\u8bf7\u8f93\u5165\u7528\u6237\u540d");//è¯·è¾“å…¥ç”¨æˆ·å
         }
     }
 
@@ -312,8 +307,8 @@ public class MainFrom extends JFrame {
 
     private void button7MouseClicked(MouseEvent e) {
         String userName = textField4.getText();
-        String newPassWord = textField5.getText();
-        String confirmNewPassWord = textField6.getText();
+        String newPassWord = new String(passwordField1.getPassword());
+        String confirmNewPassWord = new String(passwordField2.getPassword());
 
         if (newPassWord.length() != 0 && confirmNewPassWord.length() != 0) {
             if (newPassWord.equals(confirmNewPassWord)) {
@@ -325,7 +320,7 @@ public class MainFrom extends JFrame {
                     stmt = conn.createStatement();
                     stmt.executeUpdate("UPDATE users set username='" + userName + "', password='" + MD5.encoderByMd5(newPassWord) + "' WHERE userid='"+overallUserId+"'" );
                     Error(label33);
-                    System.out.println("ĞŞ¸Ä³É¹¦");
+                    System.out.println("\u4fee\u6539\u6210\u529f");//ä¿®æ”¹æˆåŠŸ
                 } catch (ClassNotFoundException ex) {
                     ex.printStackTrace();
                 } catch (SQLException ex) {
@@ -344,11 +339,11 @@ public class MainFrom extends JFrame {
                 }
             } else {
                 Error(label32);
-                System.out.println("ÃÜÂë´íÎó");
+                System.out.println("\u5bc6\u7801\u9519\u8bef");//å¯†ç é”™è¯¯
             }
         } else {
             Error(label31);
-            System.out.println("ÃÜÂë²»ÄÜÎª¿Õ");
+            System.out.println("\u5bc6\u7801\u4e0d\u80fd\u4e3a\u7a7a");//å¯†ç ä¸èƒ½ä¸ºç©º
         }
     }
 
@@ -380,15 +375,15 @@ public class MainFrom extends JFrame {
     }
 
     private void button10MouseClicked(MouseEvent e) {
-        int count = table2.getSelectedRow();//»ñÈ¡Ñ¡ÖĞĞĞÊı,Î´Ñ¡ÖĞÔòcountÎª-1
+        int count = table2.getSelectedRow();//è·å–é€‰ä¸­è¡Œæ•°,æœªé€‰ä¸­åˆ™countä¸º-1
         if (count!=-1){
-            int option = JOptionPane.showConfirmDialog(this, "È·¶¨É¾³ı?", "ÌáÊ¾", JOptionPane.YES_NO_OPTION);
+            int option = JOptionPane.showConfirmDialog(this, "\u786e\u5b9a\u5220\u9664?", "\u63d0\u793a", JOptionPane.YES_NO_OPTION);//ç¡®å®šåˆ é™¤,æç¤º
             if (option == JOptionPane.YES_OPTION)
             {
-                String product_id = (String) table2.getValueAt(count, 0);//»ñÈ¡Ñ¡ÖĞĞĞµÄµÚÒ»¸öÊı¾İ
-                deleteData("PRODUCTS", "product_id", product_id);//µ÷ÓÃ×Ô¶¨ÒåµÄÉ¾³ıÊı¾İµÄ·½·¨
+                String product_id = (String) table2.getValueAt(count, 0);//è·å–é€‰ä¸­è¡Œçš„ç¬¬ä¸€ä¸ªæ•°æ®
+                deleteData("PRODUCTS", "product_id", product_id);//è°ƒç”¨è‡ªå®šä¹‰çš„åˆ é™¤æ•°æ®çš„æ–¹æ³•
 
-                //Ë¢ĞÂ±í2
+                //åˆ·æ–°è¡¨2
                 DefaultTableModel tableModel = new DefaultTableModel(queryData2(), head2) {
                     public boolean isCellEditable(int row, int column) {
                         return false;
@@ -400,7 +395,7 @@ public class MainFrom extends JFrame {
             }
         }else{
             Error(label34);
-            System.out.println("ÇëÑ¡ÖĞĞèÒªÉ¾³ıµÄÊı¾İ");
+            System.out.println("\u8bf7\u9009\u4e2d\u9700\u8981\u5220\u9664\u7684\u6570\u636e");//è¯·é€‰ä¸­éœ€è¦åˆ é™¤çš„æ•°æ®
         }
     }
 
@@ -417,14 +412,14 @@ public class MainFrom extends JFrame {
     }
 
     private void button12MouseClicked(MouseEvent e) {
-        overallProductId = "";//È«¾Ö±äÁ¿£¬Ö¸ÉÌÆ·id£¬Îªºó±ßĞŞ¸ÄÉÌÆ·ĞÅÏ¢Ê¹ÓÃ
+        overallProductId = "";//å…¨å±€å˜é‡ï¼ŒæŒ‡å•†å“idï¼Œä¸ºåè¾¹ä¿®æ”¹å•†å“ä¿¡æ¯ä½¿ç”¨
         int count = table2.getSelectedRow();
         if (count!=-1){
             overallProductId = (String) table2.getValueAt(count,0);
             String product_name = String.valueOf(table2.getValueAt(count,1));
             int stock = (int) table2.getValueAt(count,2);
             float price = (float) table2.getValueAt(count,3);
-            textField12.setText(product_name);//½«ÉÌÆ·ĞÅÏ¢ÏÔÊ¾ÔÚĞÂ½çÃæµÄÕâ¼¸¸öÎÄ±¾¿òÄÚ
+            textField12.setText(product_name);//å°†å•†å“ä¿¡æ¯æ˜¾ç¤ºåœ¨æ–°ç•Œé¢çš„è¿™å‡ ä¸ªæ–‡æœ¬æ¡†å†…
             textField13.setText(String.valueOf(stock));
             textField14.setText(String.valueOf(price));
 
@@ -439,7 +434,7 @@ public class MainFrom extends JFrame {
             panel9.setVisible(false);
         }else{
             Error(label35);
-            System.out.println("ÇëÑ¡ÖĞĞèÒªĞŞ¸ÄµÄÊı¾İ");
+            System.out.println("\u8bf7\u9009\u4e2d\u9700\u8981\u4fee\u6539\u7684\u6570\u636e");//è¯·é€‰ä¸­éœ€è¦ä¿®æ”¹çš„æ•°æ®
         }
     }
 
@@ -466,12 +461,12 @@ public class MainFrom extends JFrame {
                             pstmt.setString(4, price);
                             pstmt.executeUpdate();
                             Error(label37);
-                            System.out.println("Ìí¼Ó³É¹¦");
+                            System.out.println("\u6dfb\u52a0\u6210\u529f");//æ·»åŠ æˆåŠŸ
                         } catch (ClassNotFoundException ee) {
                             ee.printStackTrace();
                         } catch (SQLIntegrityConstraintViolationException ee) {
                             Error(label38);
-                            System.out.println("¸ÃÉÌÆ·ºÅÒÑ´æÔÚ");
+                            System.out.println("\u8be5\u5546\u54c1\u53f7\u5df2\u5b58\u5728");//è¯¥å•†å“å·å·²å­˜åœ¨
                         } catch (SQLException ee) {
                             ee.printStackTrace();
                         } finally {
@@ -484,19 +479,19 @@ public class MainFrom extends JFrame {
                         }
                     }else{
                         Error(label51);
-                        System.out.println("ÇëÊäÈëÉÌÆ·µ¥¼Û");
+                        System.out.println("\u8bf7\u8f93\u5165\u5546\u54c1\u5355\u4ef7");//è¯·è¾“å…¥å•†å“å•ä»·
                     }
                 }else{
                     Error(label50);
-                    System.out.println("ÇëÊäÈë¿â´æÊıÁ¿");
+                    System.out.println("\u8bf7\u8f93\u5165\u5e93\u5b58\u6570\u91cf");//è¯·è¾“å…¥åº“å­˜æ•°é‡
                 }
             }else{
                 Error(label26);
-                System.out.println("ÇëÊäÈëÉÌÆ·Ãû³Æ");
+                System.out.println("\u8bf7\u8f93\u5165\u5546\u54c1\u540d\u79f0");//è¯·è¾“å…¥å•†å“åç§°
             }
         } else {
             Error(label36);
-            System.out.println("ÇëÊäÈëÉÌÆ·ºÅ");
+            System.out.println("\u8bf7\u8f93\u5165\u5546\u54c1\u53f7");//è¯·è¾“å…¥å•†å“å·
         }
     }
 
@@ -523,7 +518,7 @@ public class MainFrom extends JFrame {
         String stock = textField13.getText();
         String price = textField14.getText();
 
-        if(product_name.length()!=0&&stock.length()!=0&&price.length()!=0) {//ÅĞ¶ÏÊäÈëµÄÊı¾İ¶¼²»Îª¿Õ
+        if(product_name.length()!=0&&stock.length()!=0&&price.length()!=0) {//åˆ¤æ–­è¾“å…¥çš„æ•°æ®éƒ½ä¸ä¸ºç©º
             Connection conn = null;
             Statement stmt = null;
             try {
@@ -532,7 +527,7 @@ public class MainFrom extends JFrame {
                 stmt = conn.createStatement();
                 stmt.executeUpdate("UPDATE products SET product_name='" + product_name + "' ,stock='" + stock + "' , price='" + price + "' WHERE product_id='" + overallProductId + "'");
                 Error(label40);
-                System.out.println("ĞŞ¸Ä³É¹¦");
+                System.out.println("\u4fee\u6539\u6210\u529f");//ä¿®æ”¹æˆåŠŸ
             } catch (ClassNotFoundException ex) {
                 ex.printStackTrace();
             } catch (SQLException ex) {
@@ -547,7 +542,7 @@ public class MainFrom extends JFrame {
             }
         }else{
             Error(label39);
-            System.out.println("ÇëÊäÈëÉÌÆ·ĞÅÏ¢");
+            System.out.println("\u8bf7\u8f93\u5165\u5546\u54c1\u4fe1\u606f");//è¯·è¾“å…¥å•†å“ä¿¡æ¯
         }
     }
 
@@ -569,25 +564,25 @@ public class MainFrom extends JFrame {
         table2.setModel(tableModel);
     }
 
-    private void button17MouseClicked(MouseEvent e) {//°´ÄêÔÂÈÕ²éÑ¯Á÷Ë®
+    private void button17MouseClicked(MouseEvent e) {//æŒ‰å¹´æœˆæ—¥æŸ¥è¯¢æµæ°´
         String time = null;
         String date = null;
         int year = (int)comboBoxYear.getSelectedItem();
         int month = (int)comboBoxMonth.getSelectedItem();
         int day = (int)comboBoxDay.getSelectedItem();
-        if (year!= 0 && month == 0 && day == 0) {//ÊäÈëÄê·İ
+        if (year!= 0 && month == 0 && day == 0) {//è¾“å…¥å¹´ä»½
             time = String.valueOf(year);
             date = "yyyy";
-        } else if (year != 0 && month!= 0 && day == 0) {//ÊäÈëÄê·İ¡¢ÔÂ·İ
+        } else if (year != 0 && month!= 0 && day == 0) {//è¾“å…¥å¹´ä»½ã€æœˆä»½
             time = year + "/" + month;
             date = "yyyy-mm";
-        } else if (year != 0 && month!= 0 && day != 0) {//ÊäÈëÄêÔÂÈÕ
+        } else if (year != 0 && month!= 0 && day != 0) {//è¾“å…¥å¹´æœˆæ—¥
             time = year + "/" + month + "/" + day;
             date = "yyyy-mm-dd";
         } else {
-            System.out.println("ÇëÊäÈëÈÕÆÚ,ÓÉÄêÔÂÈÕµÄË³Ğò");
+            System.out.println("\u8bf7\u8f93\u5165\u65e5\u671f,\u7531\u5e74\u6708\u65e5\u7684\u987a\u5e8f");//è¯·è¾“å…¥æ—¥æœŸ,ç”±å¹´æœˆæ—¥çš„é¡ºåº
         }
-        DefaultTableModel tableModel = new DefaultTableModel(queryData3(time, date), head3) {//queryData3²ÎÊıÁĞ±íÎª»ñÈ¡ÊäÈëÊ±¼ätimeºÍÊ±¼ä¸ñÊ½date
+        DefaultTableModel tableModel = new DefaultTableModel(queryData3(time, date), head3) {//queryData3å‚æ•°åˆ—è¡¨ä¸ºè·å–è¾“å…¥æ—¶é—´timeå’Œæ—¶é—´æ ¼å¼date
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -596,9 +591,10 @@ public class MainFrom extends JFrame {
     }
 
     private void button18MouseClicked(MouseEvent e) {
-        String username = LoginFrom.getUserName();//»ñÈ¡µ±Ç°µÇÂ¼µÄÓÃ»§Ãû£¬ÓÃÓÚ²éÑ¯ÆäÓÃ»§ID
-        String product_id = textField18.getText();//»ñÈ¡ÉÌÆ·ID
-        String amounts = textField19.getText();//»ñÈ¡¹ºÂòÉÌÆ·ÊıÁ¿
+        String username = LoginFrom.getUserName();//è·å–å½“å‰ç™»å½•çš„ç”¨æˆ·åï¼Œç”¨äºæŸ¥è¯¢å…¶ç”¨æˆ·ID
+        String product_id = textField18.getText();//è·å–å•†å“ID
+        String amounts = textField19.getText();//è·å–è´­ä¹°å•†å“æ•°é‡
+        int sum=0;
 
         if (product_id.length()!=0&&amounts.length()!=0) {
             Connection conn = null;
@@ -608,13 +604,19 @@ public class MainFrom extends JFrame {
                 Class.forName(Driver);
                 conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
                 stmt = conn.createStatement();
-                rs = stmt.executeQuery("SELECT * FROM products WHERE product_id='" + product_id + "'");//¸ù¾İÊäÈëµÄÉÌÆ·ID²éÑ¯¸ÃÉÌÆ·ÊÇ·ñ´æÔÚ
+                rs = stmt.executeQuery("SELECT * FROM products WHERE product_id='" + product_id + "'");//æ ¹æ®è¾“å…¥çš„å•†å“IDæŸ¥è¯¢è¯¥å•†å“æ˜¯å¦å­˜åœ¨
                 if (rs.next()) {
-                    rs = stmt.executeQuery("SELECT userid FROM users WHERE username='" + username + "'");//¸ù¾İµ±Ç°ÓÃ»§Ãû²éÑ¯´ËÓÃ»§ID
+                    rs = stmt.executeQuery("SELECT userid FROM users WHERE username='" + username + "'");//æ ¹æ®å½“å‰ç”¨æˆ·åæŸ¥è¯¢æ­¤ç”¨æˆ·ID
                     if (rs.next()) {
+                        int amount = Integer.parseInt(amounts);//å°†è¾“å…¥çš„å•†å“æ•°é‡è½¬ä¸ºintå‹
                         int userid = rs.getInt("userid");
-                        rs = stmt.executeQuery("SELECT * FROM products WHERE product_id='" + product_id + "' AND stock>='" + amounts + "'");//¸ù¾İÊäÈëµÄÉÌÆ·ÊıÁ¿²éÑ¯¸ÃÉÌÆ·ÊıÁ¿ÊÇ·ñ³ä×ã
-                        int amount = Integer.parseInt(amounts);
+                        for(int i=0;i<list.size();i++){
+                            if (list.get(i).getProductID().equals(product_id)) {
+                                sum = list.get(i).getAmount();
+                            }
+                        }
+                        amounts=String.valueOf(Integer.parseInt(amounts)+sum);//å°†è¾“å…¥çš„æŸå•†å“æ•°é‡è·Ÿè´­ç‰©è½¦çš„æ­¤å•†å“æ•°é‡ç›¸åŠ ï¼Œè¦æ±‚å°äºåº“å­˜
+                        rs = stmt.executeQuery("SELECT * FROM products WHERE product_id='" + product_id + "' AND stock>='" + amounts + "'");//æ ¹æ®è¾“å…¥çš„å•†å“æ•°é‡æŸ¥è¯¢è¯¥å•†å“æ•°é‡æ˜¯å¦å……è¶³
                         if (rs.next()) {
                             Order order = new Order();
                             order.setUserID(userid);
@@ -622,10 +624,10 @@ public class MainFrom extends JFrame {
                             order.setProductName(rs.getString("product_name"));
                             order.setAmount(amount);
                             order.setPrice(rs.getFloat("price"));
-                            order.setTotalPrice(amount * rs.getFloat("price"));
-                            list.add(order);//½«Order¶ÔÏó¼ÓÈëList¶ÔÏó
+                            order.setTotalPrice((float) (amount * rs.getDouble("price")));
+                            list.add(order);//å°†Orderå¯¹è±¡åŠ å…¥Listå¯¹è±¡
 
-                            //ÏÔÊ¾table4ÄÚÈİ
+                            //æ˜¾ç¤ºtable4å†…å®¹
                             DefaultTableModel tableModel = new DefaultTableModel(queryData4(list), head4) {
                                 public boolean isCellEditable(int row, int column) {
                                     return false;
@@ -634,15 +636,15 @@ public class MainFrom extends JFrame {
                             table4.setModel(tableModel);
 
                             Error(label42);
-                            System.out.println("Ìí¼Ó³É¹¦");
+                            System.out.println("\u6dfb\u52a0\u6210\u529f");//æ·»åŠ æˆåŠŸ
                         } else {
                             Error(label41);
-                            System.out.println("ÉÌÆ·¿â´æ²»×ã");
+                            System.out.println("\u5546\u54c1\u5e93\u5b58\u4e0d\u8db3");//å•†å“åº“å­˜ä¸è¶³
                         }
                     }
                 } else {
-                    System.out.println("ÉÌÆ·ºÅÊäÈë´íÎó");
-                    Error(label27);//µ÷ÓÃ·½·¨½øĞĞ´íÎóÌáÊ¾
+                    System.out.println("\u5546\u54c1\u53f7\u8f93\u5165\u9519\u8bef");//å•†å“å·è¾“å…¥é”™è¯¯
+                    Error(label27);//è°ƒç”¨æ–¹æ³•è¿›è¡Œé”™è¯¯æç¤º
                 }
             } catch (ClassNotFoundException ex) {
                 ex.printStackTrace();
@@ -659,13 +661,13 @@ public class MainFrom extends JFrame {
             }
         }else{
             Error(label47);
-            System.out.println("ÇëÊäÈëÉÌÆ·ºÍÊıÁ¿£¡£¡£¡");
+            System.out.println("\u8bf7\u8f93\u5165\u5546\u54c1\u548c\u6570\u91cf");//è¯·è¾“å…¥å•†å“å’Œæ•°é‡
         }
     }
 
     private void button19MouseClicked(MouseEvent e) {
         frame1.setVisible(true);
-        textArea2.setText("" + payTotalPrice + "");
+        textField2.setText("" + payTotalPrice + "");
     }
 
     private void button20MouseClicked(MouseEvent e) {
@@ -673,7 +675,7 @@ public class MainFrom extends JFrame {
         if(count!=-1){
             list.remove(count);
 
-            //Ë¢ĞÂ±í4
+            //åˆ·æ–°è¡¨4
             DefaultTableModel tableModel = new DefaultTableModel(queryData4(list), head4) {
                 public boolean isCellEditable(int row, int column) {
                     return false;
@@ -682,15 +684,15 @@ public class MainFrom extends JFrame {
             table4.setModel(tableModel);
         }else{
             Error(label46);
-            System.out.println("ÇëÑ¡ÖĞĞèÒªÉ¾³ıµÄÉÌÆ·");
+            System.out.println("\u8bf7\u9009\u4e2d\u9700\u8981\u5220\u9664\u7684\u5546\u54c1");//è¯·é€‰ä¸­éœ€è¦åˆ é™¤çš„å•†å“
         }
 
     }
 
     private void button21MouseClicked(MouseEvent e) {
-        list.removeAll(list);//´ÓÁĞ±ílistÖĞÉ¾³ıÓëlistÁĞ±íÏàÍ¬µÄÔªËØ
+        list.removeAll(list);//ä»åˆ—è¡¨listä¸­åˆ é™¤ä¸liståˆ—è¡¨ç›¸åŒçš„å…ƒç´ 
 
-        //Ë¢ĞÂ±í4
+        //åˆ·æ–°è¡¨4
         DefaultTableModel tableModel = new DefaultTableModel(queryData4(list), head4) {
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -700,50 +702,50 @@ public class MainFrom extends JFrame {
     }
 
     private void button22MouseClicked(MouseEvent e) {
-        //java.util.Date date = new java.util.Date();//¶¨ÒåÈÕÆÚ
+        //java.util.Date date = new java.util.Date();//å®šä¹‰æ—¥æœŸ
         String Actualpayments = textField20.getText();
 
-        if (Actualpayments.length()!=0) {//È·±£ÊäÈë¸¶¿î½ğ¶î
+        if (Actualpayments.length()!=0) {//ç¡®ä¿è¾“å…¥ä»˜æ¬¾é‡‘é¢
             float ActualPayment = Float.parseFloat(Actualpayments);
             if (ActualPayment >= payTotalPrice) {
-                textArea3.setText("" + (ActualPayment - payTotalPrice) + "");
+                textField3.setText("" + (ActualPayment - payTotalPrice) + "");
 
                 Test.priter1(ActualPayment);
-               UPDATESQL();//ÏòÊı¾İ¿â²åÈë¶©µ¥ĞÅÏ¢
+               UPDATESQL();//å‘æ•°æ®åº“æ’å…¥è®¢å•ä¿¡æ¯
             } else {
                 Error(label43);
-                System.out.println("¸¶¿îÓà¶î²»×ã£¬ÎŞ·¨Ö§¸¶");
+                System.out.println("\u4ed8\u6b3e\u4f59\u989d\u4e0d\u8db3\uff0c\u65e0\u6cd5\u652f\u4ed8");//ä»˜æ¬¾ä½™é¢ä¸è¶³ï¼Œæ— æ³•æ”¯ä»˜
             }
         }else{
             Error(label48);
-            System.out.println("ÇëÊäÈë¸¶¿î½ğ¶î");
+            System.out.println("\u8bf7\u8f93\u5165\u4ed8\u6b3e\u91d1\u989d");//è¯·è¾“å…¥ä»˜æ¬¾é‡‘é¢
         }
     }
 
     private void button23MouseClicked(MouseEvent e) {
-        //¶şÎ¬ÂëÖ§¸¶
+        //äºŒç»´ç æ”¯ä»˜
         new PayForm(1).paying(payTotalPrice);
-        //UPDATESQL();//¸üĞÂÊı¾İ¿âĞÅÏ¢£º½«ÁÙÊ±¶©µ¥ĞÅÏ¢´æÈëÊı¾İ¿â
+        //UPDATESQL();//æ›´æ–°æ•°æ®åº“ä¿¡æ¯ï¼šå°†ä¸´æ—¶è®¢å•ä¿¡æ¯å­˜å…¥æ•°æ®åº“
     }
 
     private void button24MouseClicked(MouseEvent e) {
-        //É¨ÂëÖ§¸¶
+        //æ‰«ç æ”¯ä»˜
         new PayForm(2).paying2(payTotalPrice);
     }
 
     public void comboBoxMonthItemStateChanged(ItemEvent e) {
-        Object obj = comboBoxMonth.getSelectedItem();// È¡µÃÑ¡ÖĞÔÂ·İ
+        Object obj = comboBoxMonth.getSelectedItem();// å–å¾—é€‰ä¸­æœˆä»½
         if (obj != null) {
-            comboBoxDay.removeAllItems();//Çå¿ÕÈÕµÄÏÂÀ­ÁĞ±í¿ò
+            comboBoxDay.removeAllItems();//æ¸…ç©ºæ—¥çš„ä¸‹æ‹‰åˆ—è¡¨æ¡†
             int month = Integer.valueOf(obj.toString());
             int days = 32;
             if (month == 4 || month == 6 || month == 9 || month == 11) {
                 days = 31;
-            } else if (month == 2) {//È¡µÃÑ¡ÖĞÄê·İ
+            } else if (month == 2) {//å–å¾—é€‰ä¸­å¹´ä»½
                 int year = Integer.parseInt(comboBoxYear.getSelectedItem().toString());
-                if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) {//ÊÇÈòÄê
+                if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) {//æ˜¯é—°å¹´
                     days = 30;
-                } else {//²»ÊÇÈòÄê
+                } else {//ä¸æ˜¯é—°å¹´
                     days = 29;
                 }
             }
@@ -756,6 +758,15 @@ public class MainFrom extends JFrame {
     private void menu5MousePressed(MouseEvent e) {
         this.setVisible(false);
         new LoginFrom();
+    }
+
+    private void button25MouseClicked(MouseEvent e) {
+        DefaultTableModel tableModel = new DefaultTableModel(queryData4(list), head4) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table4.setModel(tableModel);
     }
 
     private void initComponents() {
@@ -788,8 +799,8 @@ public class MainFrom extends JFrame {
         label2 = new JLabel();
         label3 = new JLabel();
         textField1 = new JTextField();
-        textField2 = new JTextField();
-        textField3 = new JTextField();
+        passwordField3 = new JPasswordField();
+        passwordField4 = new JPasswordField();
         button5 = new JButton();
         button6 = new JButton();
         label22 = new JLabel();
@@ -801,8 +812,8 @@ public class MainFrom extends JFrame {
         label5 = new JLabel();
         label6 = new JLabel();
         textField4 = new JTextField();
-        textField5 = new JTextField();
-        textField6 = new JTextField();
+        passwordField1 = new JPasswordField();
+        passwordField2 = new JPasswordField();
         button7 = new JButton();
         button8 = new JButton();
         label31 = new JLabel();
@@ -874,21 +885,22 @@ public class MainFrom extends JFrame {
         label42 = new JLabel();
         label46 = new JLabel();
         label47 = new JLabel();
+        button25 = new JButton();
+        panel10 = new JPanel();
         frame1 = new JFrame();
         label23 = new JLabel();
         label24 = new JLabel();
         label25 = new JLabel();
-        scrollPane6 = new JScrollPane();
-        textArea2 = new JTextArea();
         textField20 = new JTextField();
-        scrollPane7 = new JScrollPane();
-        textArea3 = new JTextArea();
+        textField2 = new JTextField();
+        textField3 = new JTextField();
         button22 = new JButton();
         button23 = new JButton();
         button24 = new JButton();
         label43 = new JLabel();
         label44 = new JLabel();
         label48 = new JLabel();
+        panel11 = new JPanel();
 
         //======== this ========
         addWindowListener(new WindowAdapter() {
@@ -1106,10 +1118,10 @@ public class MainFrom extends JFrame {
             label3.setBounds(190, 195, 70, 30);
             panel2.add(textField1);
             textField1.setBounds(290, 80, 145, textField1.getPreferredSize().height);
-            panel2.add(textField2);
-            textField2.setBounds(290, 135, 145, textField2.getPreferredSize().height);
-            panel2.add(textField3);
-            textField3.setBounds(290, 195, 145, textField3.getPreferredSize().height);
+            panel2.add(passwordField3);
+            passwordField3.setBounds(290, 135, 145, passwordField3.getPreferredSize().height);
+            panel2.add(passwordField4);
+            passwordField4.setBounds(290, 195, 145, passwordField4.getPreferredSize().height);
 
             //---- button5 ----
             button5.setText("\u786e\u8ba4\u6dfb\u52a0");
@@ -1184,10 +1196,10 @@ public class MainFrom extends JFrame {
             label6.setBounds(185, 190, 80, label6.getPreferredSize().height);
             panel3.add(textField4);
             textField4.setBounds(285, 100, 155, textField4.getPreferredSize().height);
-            panel3.add(textField5);
-            textField5.setBounds(285, 140, 155, textField5.getPreferredSize().height);
-            panel3.add(textField6);
-            textField6.setBounds(285, 185, 155, textField6.getPreferredSize().height);
+            panel3.add(passwordField1);
+            passwordField1.setBounds(285, 140, 155, passwordField1.getPreferredSize().height);
+            panel3.add(passwordField2);
+            passwordField2.setBounds(285, 185, 155, passwordField2.getPreferredSize().height);
 
             //---- button7 ----
             button7.setText("\u786e\u8ba4\u4fee\u6539");
@@ -1594,7 +1606,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel9.add(button20);
-            button20.setBounds(new Rectangle(new Point(220, 360), button20.getPreferredSize()));
+            button20.setBounds(new Rectangle(new Point(140, 360), button20.getPreferredSize()));
 
             //---- button21 ----
             button21.setText("\u6e05\u7a7a\u8d2d\u7269\u8f66");
@@ -1605,7 +1617,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel9.add(button21);
-            button21.setBounds(new Rectangle(new Point(385, 360), button21.getPreferredSize()));
+            button21.setBounds(new Rectangle(new Point(460, 360), button21.getPreferredSize()));
 
             //---- label27 ----
             label27.setText("\u5546\u54c1\u53f7\u8f93\u5165\u9519\u8bef");
@@ -1641,9 +1653,27 @@ public class MainFrom extends JFrame {
             label47.setFont(label47.getFont().deriveFont(label47.getFont().getSize() + 2f));
             panel9.add(label47);
             label47.setBounds(new Rectangle(new Point(260, 0), label47.getPreferredSize()));
+
+            //---- button25 ----
+            button25.setText("\u663e\u793a\u8d2d\u7269\u8f66");
+            button25.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    button25MouseClicked(e);
+                }
+            });
+            panel9.add(button25);
+            button25.setBounds(new Rectangle(new Point(300, 360), button25.getPreferredSize()));
         }
         contentPane.add(panel9);
         panel9.setBounds(0, 0, 700, 400);
+
+        //======== panel10 ========
+        {
+            panel10.setLayout(null);
+        }
+        contentPane.add(panel10);
+        panel10.setBounds(0, 0, 700, 500);
 
         contentPane.setPreferredSize(new Dimension(700, 460));
         pack();
@@ -1657,33 +1687,23 @@ public class MainFrom extends JFrame {
             //---- label23 ----
             label23.setText("\u603b\u4ef7\uff1a");
             frame1ContentPane.add(label23);
-            label23.setBounds(135, 50, 45, label23.getPreferredSize().height);
+            label23.setBounds(135, 50, 45, 20);
 
             //---- label24 ----
             label24.setText("\u5b9e\u4ed8\uff1a");
             frame1ContentPane.add(label24);
-            label24.setBounds(135, 95, 45, 25);
+            label24.setBounds(135, 95, 45, 20);
 
             //---- label25 ----
             label25.setText("\u627e\u96f6\uff1a");
             frame1ContentPane.add(label25);
             label25.setBounds(135, 135, 45, 20);
-
-            //======== scrollPane6 ========
-            {
-                scrollPane6.setViewportView(textArea2);
-            }
-            frame1ContentPane.add(scrollPane6);
-            scrollPane6.setBounds(205, 50, 165, scrollPane6.getPreferredSize().height);
             frame1ContentPane.add(textField20);
-            textField20.setBounds(205, 95, 165, textField20.getPreferredSize().height);
-
-            //======== scrollPane7 ========
-            {
-                scrollPane7.setViewportView(textArea3);
-            }
-            frame1ContentPane.add(scrollPane7);
-            scrollPane7.setBounds(205, 135, 165, scrollPane7.getPreferredSize().height);
+            textField20.setBounds(205, 95, 165, 20);
+            frame1ContentPane.add(textField2);
+            textField2.setBounds(206, 50, 165, 20);
+            frame1ContentPane.add(textField3);
+            textField3.setBounds(205, 135, 165, 20);
 
             //---- button22 ----
             button22.setText("\u73b0\u91d1\u652f\u4ed8");
@@ -1739,12 +1759,34 @@ public class MainFrom extends JFrame {
             frame1ContentPane.add(label48);
             label48.setBounds(new Rectangle(new Point(235, 0), label48.getPreferredSize()));
 
+            //======== panel11 ========
+            {
+                panel11.setLayout(null);
+
+                {
+                    // compute preferred size
+                    Dimension preferredSize = new Dimension();
+                    for(int i = 0; i < panel11.getComponentCount(); i++) {
+                        Rectangle bounds = panel11.getComponent(i).getBounds();
+                        preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                        preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                    }
+                    Insets insets = panel11.getInsets();
+                    preferredSize.width += insets.right;
+                    preferredSize.height += insets.bottom;
+                    panel11.setMinimumSize(preferredSize);
+                    panel11.setPreferredSize(preferredSize);
+                }
+            }
+            frame1ContentPane.add(panel11);
+            panel11.setBounds(0, 0, 550, 450);
+
             frame1ContentPane.setPreferredSize(new Dimension(520, 330));
             frame1.pack();
             frame1.setLocationRelativeTo(frame1.getOwner());
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
-        AddDate();//µ÷ÓÃ´Ëº¯Êı¸øÏÂÀ­¿òÊäÈëÈÕÆÚ
+        AddDate();//è°ƒç”¨æ­¤å‡½æ•°ç»™ä¸‹æ‹‰æ¡†è¾“å…¥æ—¥æœŸ
 
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -1758,7 +1800,7 @@ public class MainFrom extends JFrame {
         panel8.setVisible(false);
         panel9.setVisible(false);
 
-        //´íÎóÌáÊ¾
+        //é”™è¯¯æç¤º
         label27.setVisible(false);
         label12.setVisible(false);
         label21.setVisible(false);
@@ -1789,10 +1831,10 @@ public class MainFrom extends JFrame {
         label51.setVisible(false);
     }
 
-    //É¾³ıÊı¾İ
+    //åˆ é™¤æ•°æ®
     public void deleteData(String tableName, String tableID, String ID) {
         Connection conn = null;
-        Statement stmt = null;//SQLÓï¾ä¶ÔÏó
+        Statement stmt = null;//SQLè¯­å¥å¯¹è±¡
         String sql = "DELETE FROM " + tableName + " WHERE " + tableID + "=" + ID;
         try {
             Class.forName(Driver);
@@ -1800,28 +1842,28 @@ public class MainFrom extends JFrame {
             stmt = conn.createStatement();
             stmt.executeUpdate(sql);
             Error(label49);
-            System.out.println("É¾³ı³É¹¦");
+            System.out.println("\u5220\u9664\u6210\u529f");//åˆ é™¤æˆåŠŸ
         } catch (ClassNotFoundException ee) {
             ee.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
-            //ÊÍ·Å×ÊÔ´£ºÊı¾İ¿âÁ¬½ÓºÜ°º¹ó
+            //é‡Šæ”¾èµ„æºï¼šæ•°æ®åº“è¿æ¥å¾ˆæ˜‚è´µ
             try {
                 stmt.close();
-                conn.close();//¹ØÁ¬½Ó
+                conn.close();//å…³è¿æ¥
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         }
     }
 
-    //tableÏÔÊ¾ÓÃ»§
+    //tableæ˜¾ç¤ºç”¨æˆ·
     public Object[][] queryData1() {
 
         java.util.List<Users> list = new ArrayList<Users>();
         Connection conn = null;
-        Statement stmt = null;//SQLÓï¾ä¶ÔÏó£¬Æ´SQL
+        Statement stmt = null;//SQLè¯­å¥å¯¹è±¡ï¼Œæ‹¼SQL
         String sql = "SELECT * FROM users ORDER BY userid";
         ResultSet rs = null;
         try {
@@ -1830,7 +1872,7 @@ public class MainFrom extends JFrame {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                //Ã¿Ñ­»·Ò»´Î¾ÍÊÇÒ»¸ö¶ÔÏó£¬°ÑÕâ¸ö¶ÔÏó·ÅÈëÈİÆ÷£¨List£¨ÓĞĞò¿ÉÖØ¸´£©¡¢Set£¨ÎŞĞò²»¿ÉÖØ¸´£©¡¢Map£¨key¡¢value½á¹¹£©
+                //æ¯å¾ªç¯ä¸€æ¬¡å°±æ˜¯ä¸€ä¸ªå¯¹è±¡ï¼ŒæŠŠè¿™ä¸ªå¯¹è±¡æ”¾å…¥å®¹å™¨ï¼ˆListï¼ˆæœ‰åºå¯é‡å¤ï¼‰ã€Setï¼ˆæ— åºä¸å¯é‡å¤ï¼‰ã€Mapï¼ˆkeyã€valueç»“æ„ï¼‰
                 Users user = new Users();
                 user.setUserid(rs.getInt("USERID"));
                 user.setUsername(rs.getString("USERNAME"));
@@ -1842,18 +1884,18 @@ public class MainFrom extends JFrame {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
-            //ÊÍ·Å×ÊÔ´£ºÊı¾İ¿âÁ¬½ÓºÜ°º¹ó
+            //é‡Šæ”¾èµ„æºï¼šæ•°æ®åº“è¿æ¥å¾ˆæ˜‚è´µ
             try {
                 rs.close();
                 stmt.close();
-                conn.close();//¹ØÁ¬½Ó
+                conn.close();//å…³è¿æ¥
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
 
         }
         data = new Object[list.size()][head1.length];
-        //°Ñ¼¯ºÏÀïµÄÊı¾İ·ÅÈëObejctÕâ¸ö¶şÎ¬Êı×é
+        //æŠŠé›†åˆé‡Œçš„æ•°æ®æ”¾å…¥Obejctè¿™ä¸ªäºŒç»´æ•°ç»„
         for (int i = 0; i < list.size(); i++) {
             data[i][0] = list.get(i).getUserid();
             data[i][1] = list.get(i).getUsername();
@@ -1862,12 +1904,12 @@ public class MainFrom extends JFrame {
         return data;
     }
 
-    //tableÏÔÊ¾ÉÌÆ·
+    //tableæ˜¾ç¤ºå•†å“
     public Object[][] queryData2() {
 
         java.util.List<Products> list = new ArrayList<Products>();
         Connection conn = null;
-        Statement stmt = null;//SQLÓï¾ä¶ÔÏó£¬Æ´SQL
+        Statement stmt = null;//SQLè¯­å¥å¯¹è±¡ï¼Œæ‹¼SQL
         String sql = "SELECT * FROM products ORDER BY product_id";
         ResultSet rs = null;
         try {
@@ -1876,7 +1918,7 @@ public class MainFrom extends JFrame {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                //Ã¿Ñ­»·Ò»´Î¾ÍÊÇÒ»¸ö¶ÔÏó£¬°ÑÕâ¸ö¶ÔÏó·ÅÈëÈİÆ÷£¨List£¨ÓĞĞò¿ÉÖØ¸´£©¡¢Set£¨ÎŞĞò²»¿ÉÖØ¸´£©¡¢Map£¨key¡¢value½á¹¹£©
+                //æ¯å¾ªç¯ä¸€æ¬¡å°±æ˜¯ä¸€ä¸ªå¯¹è±¡ï¼ŒæŠŠè¿™ä¸ªå¯¹è±¡æ”¾å…¥å®¹å™¨ï¼ˆListï¼ˆæœ‰åºå¯é‡å¤ï¼‰ã€Setï¼ˆæ— åºä¸å¯é‡å¤ï¼‰ã€Mapï¼ˆkeyã€valueç»“æ„ï¼‰
                 Products product = new Products();
                 product.setId(rs.getString("product_id"));
                 product.setName(rs.getString("product_name"));
@@ -1889,17 +1931,17 @@ public class MainFrom extends JFrame {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
-            //ÊÍ·Å×ÊÔ´£ºÊı¾İ¿âÁ¬½ÓºÜ°º¹ó
+            //é‡Šæ”¾èµ„æºï¼šæ•°æ®åº“è¿æ¥å¾ˆæ˜‚è´µ
             try {
                 rs.close();
                 stmt.close();
-                conn.close();//¹ØÁ¬½Ó
+                conn.close();//å…³è¿æ¥
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         }
         data = new Object[list.size()][head2.length];
-        //°Ñ¼¯ºÏÀïµÄÊı¾İ·ÅÈëObejctÕâ¸ö¶şÎ¬Êı×é
+        //æŠŠé›†åˆé‡Œçš„æ•°æ®æ”¾å…¥Obejctè¿™ä¸ªäºŒç»´æ•°ç»„
         for (int i = 0; i < list.size(); i++) {
             data[i][0] = list.get(i).getId();
             data[i][1] = list.get(i).getName();
@@ -1909,7 +1951,7 @@ public class MainFrom extends JFrame {
         return data;
     }
 
-    //tableÏÔÊ¾Á÷Ë®
+    //tableæ˜¾ç¤ºæµæ°´
     public Object[][] queryData3(String time, String date) {
         double sum = new Double(0);
 
@@ -1920,7 +1962,7 @@ public class MainFrom extends JFrame {
                 "FROM(SELECT p.product_id,p.product_name,s.amount,s.total_price\n" +
                 "FROM products p LEFT JOIN sales s ON p.product_id=s.product_id AND to_char(sale_date,?)=to_char(to_date(?,?),?)) \n" +
                 "GROUP BY product_id,product_name) ORDER BY totalprice desc\n";
-        PreparedStatement pstmt = null;//SQLÓï¾ä¶ÔÏó£¬Æ´SQL
+        PreparedStatement pstmt = null;//SQLè¯­å¥å¯¹è±¡ï¼Œæ‹¼SQL
         ResultSet rs = null;
         try {
             Class.forName(Driver);
@@ -1932,7 +1974,7 @@ public class MainFrom extends JFrame {
             pstmt.setString(4, date);
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                //Ã¿Ñ­»·Ò»´Î¾ÍÊÇÒ»¸ö¶ÔÏó£¬°ÑÕâ¸ö¶ÔÏó·ÅÈëÈİÆ÷£¨List£¨ÓĞĞò¿ÉÖØ¸´£©¡¢Set£¨ÎŞĞò²»¿ÉÖØ¸´£©¡¢Map£¨key¡¢value½á¹¹£©
+                //æ¯å¾ªç¯ä¸€æ¬¡å°±æ˜¯ä¸€ä¸ªå¯¹è±¡ï¼ŒæŠŠè¿™ä¸ªå¯¹è±¡æ”¾å…¥å®¹å™¨ï¼ˆListï¼ˆæœ‰åºå¯é‡å¤ï¼‰ã€Setï¼ˆæ— åºä¸å¯é‡å¤ï¼‰ã€Mapï¼ˆkeyã€valueç»“æ„ï¼‰
                 Sales sales = new Sales();
                 sales.setID(rs.getString("ID"));
                 sales.setName(rs.getString("NAME"));
@@ -1941,23 +1983,23 @@ public class MainFrom extends JFrame {
                 sum += rs.getFloat("TOTALPRICE");
                 list.add(sales);
             }
-            label28.setText("ÏúÊÛ¶îÎª" + sum + "Ôª");
+            label28.setText("\u9500\u552e\u989d\u4e3a" + sum + "\u5143");
         } catch (ClassNotFoundException ee) {
             ee.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
-            //ÊÍ·Å×ÊÔ´£ºÊı¾İ¿âÁ¬½ÓºÜ°º¹ó
+            //é‡Šæ”¾èµ„æºï¼šæ•°æ®åº“è¿æ¥å¾ˆæ˜‚è´µ
             try {
                 rs.close();
                 pstmt.close();
-                conn.close();//¹ØÁ¬½Ó
+                conn.close();//å…³è¿æ¥
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         }
         data = new Object[list.size()][head3.length];
-        //°Ñ¼¯ºÏÀïµÄÊı¾İ·ÅÈëObejctÕâ¸ö¶şÎ¬Êı×é
+        //æŠŠé›†åˆé‡Œçš„æ•°æ®æ”¾å…¥Obejctè¿™ä¸ªäºŒç»´æ•°ç»„
         for (int i = 0; i < list.size(); i++) {
             data[i][0] = list.get(i).getID();
             data[i][1] = list.get(i).getName();
@@ -1967,11 +2009,11 @@ public class MainFrom extends JFrame {
         return data;
     }
 
-    //ÏÔÊ¾¹ºÎïÇåµ¥
+    //æ˜¾ç¤ºè´­ç‰©æ¸…å•
     public Object[][] queryData4(List<Order> list) {
-        payTotalPrice = 0;//³õÊ¼»¯¶©µ¥×Ü¼Û
+        payTotalPrice = 0;//åˆå§‹åŒ–è®¢å•æ€»ä»·
         data = new Object[list.size()][head4.length];
-        //°Ñ¼¯ºÏÀïµÄÊı¾İ·ÅÈëObejctÕâ¸ö¶şÎ¬Êı×é
+        //æŠŠé›†åˆé‡Œçš„æ•°æ®æ”¾å…¥Obejctè¿™ä¸ªäºŒç»´æ•°ç»„
         for (int i = 0; i < list.size(); i++) {
             data[i][0] = list.get(i).getUserID();
             data[i][1] = list.get(i).getProductID();
@@ -1979,13 +2021,13 @@ public class MainFrom extends JFrame {
             data[i][3] = list.get(i).getAmount();
             data[i][4] = list.get(i).getPrice();
             data[i][5] = list.get(i).getTotalPrice();
-            payTotalPrice += list.get(i).getTotalPrice();//Í³¼Æ¶©µ¥×Ü¼Û
+            payTotalPrice += list.get(i).getTotalPrice();//ç»Ÿè®¡è®¢å•æ€»ä»·
         }
         return data;
     }
 
-    //Ïß³Ì¿ØÖÆ´íÎóµ¯´°
-    public void Error(JLabel labelnum) {
+    //çº¿ç¨‹æ§åˆ¶é”™è¯¯å¼¹çª—
+    public static void Error(JLabel labelnum) {
         Thread thread = new Thread(
                 new Runnable() {
                     @Override
@@ -2003,22 +2045,22 @@ public class MainFrom extends JFrame {
         thread.start();
     }
 
-    //ÏÔÊ¾ÈÕÆÚ
+    //æ˜¾ç¤ºæ—¥æœŸ
     private void AddDate() {
-        for (int i = STARTYEAR; i < ENDYEAR; i++) {//ÄêÏÂÀ­Ñ¡Ôñ¿ò
+        for (int i = STARTYEAR; i < ENDYEAR; i++) {//å¹´ä¸‹æ‹‰é€‰æ‹©æ¡†
             comboBoxYear.addItem(i);
         }
-        for (int i = 0; i <= 12; i++) {//ÔÂÏÂÀ­Ñ¡Ôñ¿ò
+        for (int i = 0; i <= 12; i++) {//æœˆä¸‹æ‹‰é€‰æ‹©æ¡†
             comboBoxMonth.addItem(i);
         }
-        for (int j = 0; j <= 31; j++) { //ÈÕÏÂÀ­Ñ¡Ôñ¿ò
+        for (int j = 0; j <= 31; j++) { //æ—¥ä¸‹æ‹‰é€‰æ‹©æ¡†
             comboBoxDay.addItem(j);
         }
     }
 
-    //ÏòÊı¾İ¿â²åÈë¶©µ¥ĞÅÏ¢
-    public void UPDATESQL() {
-        java.util.Date date = new java.util.Date();//¶¨ÒåÈÕÆÚ
+    //å‘æ•°æ®åº“æ’å…¥è®¢å•ä¿¡æ¯
+    public static void UPDATESQL() {
+        java.util.Date date = new java.util.Date();//å®šä¹‰æ—¥æœŸ
         Connection conn = null;
         PreparedStatement pstmt = null;
         Statement stmt = null;
@@ -2029,28 +2071,28 @@ public class MainFrom extends JFrame {
             stmt = conn.createStatement();
             pstmt = conn.prepareStatement("INSERT INTO sales values(?,?,?,?,?,?,?)");
             for (int i = 0; i < list.size(); i++) {
-                pstmt.setInt(1, list.get(i).getUserID());//»ñÈ¡ÓÃ»§ID
-                pstmt.setString(2, list.get(i).getProductID());//»ñÈ¡ÉÌÆ·ID
-                pstmt.setString(3, list.get(i).getProductName());//»ñÈ¡ÉÌÆ·Ãû³Æ
-                pstmt.setInt(4, list.get(i).getAmount());//»ñÈ¡ÉÌÆ·ÊıÁ¿
-                pstmt.setFloat(5, list.get(i).getPrice());//»ñÈ¡ÉÌÆ·µ¥¼Û
-                pstmt.setFloat(6, list.get(i).getTotalPrice());//»ñÈ¡´ËÉÌÆ·¹ºÎï×Ü¼Û
-                pstmt.setDate(7, new java.sql.Date(date.getTime()));//»ñÈ¡µ±Ç°ÈÕÆÚ
-                pstmt.executeUpdate();//Ö´ĞĞ²åÈëÊı¾İSQL
+                pstmt.setInt(1, list.get(i).getUserID());//è·å–ç”¨æˆ·ID
+                pstmt.setString(2, list.get(i).getProductID());//è·å–å•†å“ID
+                pstmt.setString(3, list.get(i).getProductName());//è·å–å•†å“åç§°
+                pstmt.setInt(4, list.get(i).getAmount());//è·å–å•†å“æ•°é‡
+                pstmt.setFloat(5, list.get(i).getPrice());//è·å–å•†å“å•ä»·
+                pstmt.setFloat(6, list.get(i).getTotalPrice());//è·å–æ­¤å•†å“è´­ç‰©æ€»ä»·
+                pstmt.setDate(7, new java.sql.Date(date.getTime()));//è·å–å½“å‰æ—¥æœŸ
+                pstmt.executeUpdate();//æ‰§è¡Œæ’å…¥æ•°æ®SQL
                 stmt.executeUpdate("UPDATE products set stock=stock-'" + list.get(i).getAmount() + "' where product_id='" + list.get(i).getProductID() + "'");
             }
             Error(label44);
-            System.out.println("Ö§¸¶³É¹¦,Êı¾İÒÑ´æÈëÊı¾İ¿â");
+            System.out.println("\u652f\u4ed8\u6210\u529f,\u6570\u636e\u5df2\u5b58\u5165\u6570\u636e\u5e93");//æ”¯ä»˜æˆåŠŸ,æ•°æ®å·²å­˜å…¥æ•°æ®åº“
         } catch (ClassNotFoundException ee) {
             ee.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
-            //ÊÍ·Å×ÊÔ´£ºÊı¾İ¿âÁ¬½ÓºÜ°º¹ó
+            //é‡Šæ”¾èµ„æºï¼šæ•°æ®åº“è¿æ¥å¾ˆæ˜‚è´µ
             try {
                 pstmt.close();
                 stmt.close();
-                conn.close();//¹ØÁ¬½Ó
+                conn.close();//å…³è¿æ¥
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -2085,8 +2127,8 @@ public class MainFrom extends JFrame {
     private JLabel label2;
     private JLabel label3;
     private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JPasswordField passwordField3;
+    private JPasswordField passwordField4;
     private JButton button5;
     private JButton button6;
     private JLabel label22;
@@ -2098,8 +2140,8 @@ public class MainFrom extends JFrame {
     private JLabel label5;
     private JLabel label6;
     private JTextField textField4;
-    private JTextField textField5;
-    private JTextField textField6;
+    private JPasswordField passwordField1;
+    private JPasswordField passwordField2;
     private JButton button7;
     private JButton button8;
     private JLabel label31;
@@ -2171,42 +2213,43 @@ public class MainFrom extends JFrame {
     private JLabel label42;
     private JLabel label46;
     private JLabel label47;
-    private JFrame frame1;
+    private JButton button25;
+    private JPanel panel10;
+    public static JFrame frame1;
     private JLabel label23;
     private JLabel label24;
     private JLabel label25;
-    private JScrollPane scrollPane6;
-    private JTextArea textArea2;
     private JTextField textField20;
-    private JScrollPane scrollPane7;
-    private JTextArea textArea3;
+    private JTextField textField2;
+    private JTextField textField3;
     private JButton button22;
     private JButton button23;
     private JButton button24;
     private JLabel label43;
-    private JLabel label44;
+    private static JLabel label44;
     private JLabel label48;
+    private JPanel panel11;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
-    //JDBCÏà¹Ø
-    private String Driver = "oracle.jdbc.driver.OracleDriver";//Çı¶¯
-    private String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";//OracleµÄURL
-    private String OracleUserName = "daming1";//Êı¾İ¿âÓÃ»§Ãû
-    private String OraclePassWord = "dm1234";//Êı¾İ¿âÃÜÂë
+    //JDBCç›¸å…³
+    private static String Driver = "oracle.jdbc.driver.OracleDriver";//é©±åŠ¨
+    private static String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";//Oracleçš„URL
+    private static String OracleUserName = "daming1";//æ•°æ®åº“ç”¨æˆ·å
+    private static String OraclePassWord = "dm1234";//æ•°æ®åº“å¯†ç 
 
-    //±äÁ¿
-    private final int STARTYEAR = 2020;//Äê·İµÄ¿ªÊ¼Öµ
-    private final int ENDYEAR = 2100;//Äê·İµÄ½áÊøÖµ
-    public static double payTotalPrice;//¶©µ¥µÄ×Ü¼Û
+    //å˜é‡
+    private final int STARTYEAR = 2020;//å¹´ä»½çš„å¼€å§‹å€¼
+    private final int ENDYEAR = 2100;//å¹´ä»½çš„ç»“æŸå€¼
+    public static double payTotalPrice;//è®¢å•çš„æ€»ä»·
     private static int overallUserId;
     private static String overallProductId;
-    public  static java.util.List<Order> list = new ArrayList<Order>();//¶¨ÒåÒ»¸ö´æ´¢OrderÀàµÄList¼¯ºÏ
+    public  static java.util.List<Order> list = new ArrayList<Order>();//å®šä¹‰ä¸€ä¸ªå­˜å‚¨Orderç±»çš„Listé›†åˆ
 
-    //ÏÔÊ¾tableÏà¹Ø
+    //æ˜¾ç¤ºtableç›¸å…³
     private Object[][] data = null;
-    private String head1[] = {"ID", "ÓÃ»§Ãû", "ÃÜÂë"};
-    private String head2[] = {"ÉÌÆ·ºÅ", "ÉÌÆ·Ãû", "¿â´æ", "µ¥¼Û"};
-    private String head3[] = {"ÉÌÆ·ºÅ", "ÉÌÆ·Ãû", "ÊıÁ¿", "×Ü¼Û"};
-    private String head4[] = {"ÓÃ»§ID", "ÉÌÆ·ID", "ÉÌÆ·Ãû³Æ", "ÊıÁ¿", "µ¥¼Û", "×Ü¼Û"};
+    private String head1[] = {"ç”¨æˆ·ID", "ç”¨æˆ·å", "å¯†ç "};//ç”¨æˆ·IDï¼Œç”¨æˆ·åï¼Œå¯†ç 
+    private String head2[] = {"å•†å“å·", "å•†å“å", "åº“å­˜", "å•ä»·"};//å•†å“å·ï¼Œå•†å“åï¼Œåº“å­˜ï¼Œå•ä»·
+    private String head3[] = {"å•†å“å·", "å•†å“å", "æ•°é‡", "æ€»ä»·"};//å•†å“å·ï¼Œå•†å“åï¼Œæ•°é‡ï¼Œæ€»ä»·
+    private String head4[] = {"ç”¨æˆ·ID", "å•†å“ID", "å•†å“åç§°", "æ•°é‡", "å•ä»·", "æ€»ä»·"};//ç”¨æˆ·ID,å•†å“ID,å•†å“åç§°,æ•°é‡,å•ä»·,æ€»ä»·
 }
 

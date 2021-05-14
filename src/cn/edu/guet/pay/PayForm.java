@@ -22,7 +22,7 @@ public class PayForm extends JFrame {
         initComponents();
         setTitle("\u652f\u4ed8");
         setLocationRelativeTo(null);
-        setSize(314, 340);//二维码弹窗框体大小
+        setSize(355, 375);//二维码弹窗框体大小
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -76,7 +76,7 @@ public class PayForm extends JFrame {
         jTextField1.setBorder(new EmptyBorder(0, 0, 0, 0));
         jTextField1.setBackground(getBackground());
         jTextField1.setForeground(getBackground());
-        //jTextField1.setCaretColor(getBackground());
+        jTextField1.setCaretColor(getBackground());
         panel2.setBounds(0, 0, 400, 350);
         panel2.add(label1,BorderLayout.CENTER);
         panel2.add(jTextField1);
@@ -106,59 +106,56 @@ public class PayForm extends JFrame {
 
         main.test_trade(payTotalPrice,authCode);
         Thread t1 = new Thread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        while (true) {
-                            main.test_trade_query(main.outTradeNo);
-                            if (Main.flag == 1) {
+            new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        main.test_trade_query(main.outTradeNo);
+                        if (Main.flag == 1) {
 
-                                //==============显示支付成功=====================
-                                Container contentPane1 = getContentPane();
-                                contentPane1.setLayout(null);
+                            //==============显示支付成功=====================
+                            Container contentPane1 = getContentPane();
+                            contentPane1.setLayout(null);
 
-                                panel1 = new JPanel();
-                                panel1.setLayout(null);
+                            panel1 = new JPanel();
+                            panel1.setLayout(null);
 
-                                label1 = new JLabel();
+                            label1 = new JLabel();
 
-                                label1.setText("\u652f\u4ed8\u6210\u529f\uff01");
-                                label1.setFont(label1.getFont().deriveFont(label1.getFont().getSize() + 10f));
-                                label1.setBounds(100, 130, 150, label1.getPreferredSize().height);
-                                panel1.add(label1);
-                                contentPane1.add(panel1);
-                                panel1.setBounds(0, 0, 400, 350);
+                            label1.setText("\u652f\u4ed8\u6210\u529f\uff01");
+                            label1.setFont(label1.getFont().deriveFont(label1.getFont().getSize() + 10f));
+                            label1.setBounds(100, 130, 150, label1.getPreferredSize().height);
+                            panel1.add(label1);
+                            contentPane1.add(panel1);
+                            panel1.setBounds(0, 0, 400, 350);
 
-                                label1.setVisible(true);
+                            label1.setVisible(true);//显示支付成功
 
-                                try {
-                                    Thread.sleep(2000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-
-                                label1.setVisible(false);
-                                setVisible(false);
-
-                                //=========================更新数据库============================
-                                Test.priter2();
-                                MainFrom mf = new MainFrom();
-                                mf.UPDATESQL();
-
-                                break;
-                            }
-                            if (t == 1) {
-                                //关闭窗口 停止循环
-                                break;
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
                             }
 
+                            label1.setVisible(false);
+                            setVisible(false);//显示支付成功的弹窗关闭
+                            MainFrom.frame1.setVisible(false);
+
+                            //打印小票
+                            Test.priter2();
+                            //=========================更新数据库============================
+                            MainFrom.UPDATESQL();
+                            //清空list(购物车)
+                            MainFrom.list.removeAll(MainFrom.list);
+
+                            break;
                         }
+                       // break;
                     }
                 }
+            }
         );
-
         t1.start();
-
     }
 
     private void initComponents() {
@@ -211,7 +208,7 @@ public class PayForm extends JFrame {
                             contentPane1.add(panel1);
                             panel1.setBounds(0, 0, 400, 350);
 
-                            label1.setVisible(true);
+                            label1.setVisible(true);//显示支付成功
 
                             try {
                                 Thread.sleep(2000);
@@ -220,12 +217,15 @@ public class PayForm extends JFrame {
                             }
 
                             label1.setVisible(false);
-                            setVisible(false);
+                            setVisible(false);//显示支付成功的弹窗关闭
+                            MainFrom.frame1.setVisible(false);
 
-                            //=========================更新数据库============================
+                            //打印小票
                             Test.priter2();
-                            MainFrom mf = new MainFrom();
-                            mf.UPDATESQL();
+                            //=========================更新数据库============================
+                            MainFrom.UPDATESQL();
+                            //清空list
+                            MainFrom.list.removeAll(MainFrom.list);
 
                             break;
                         }

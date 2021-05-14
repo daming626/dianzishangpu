@@ -31,8 +31,8 @@ new FormModel {
 				"y": 50
 				"width": 175
 			} )
-			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textField2"
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "passwordField1"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 95
 				"y": 90
@@ -72,6 +72,14 @@ new FormModel {
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 150
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+				name: "panel1"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 0
+				"y": 0
+				"width": 370
+				"height": 250
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )

@@ -109,6 +109,14 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 150
 			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+				"autoSize": false
+			} ) {
+				name: "panel1"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 380
+				"height": 480
+			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 35, 5 )
 			"size": new java.awt.Dimension( 375, 305 )

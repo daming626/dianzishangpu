@@ -19,21 +19,11 @@ import javax.swing.*;
  */
 public class RigisterFrom extends JFrame {
     public RigisterFrom() {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        }catch(Exception e) {
-            System.out.println(e);
-        }
         initComponents();
     }
 
     private void thisWindowClosing(WindowEvent e) {
-        int option = JOptionPane.showConfirmDialog(this, "确定退出?", "提示", JOptionPane.YES_NO_OPTION);
+        int option = JOptionPane.showConfirmDialog(this, "\u786e\u5b9a\u9000\u51fa?", "\u63d0\u793a", JOptionPane.YES_NO_OPTION);
 
         if (option == JOptionPane.YES_OPTION)
         {
@@ -73,7 +63,7 @@ public class RigisterFrom extends JFrame {
                             try {
                                 stmt.executeUpdate("INSERT INTO users values('" + ID + "','" + userName + "','" + MD5.encoderByMd5(passWord) + "')");
                                 Error(label6);
-                                System.out.println("注册成功");
+                                System.out.println("\\u6ce8\\u518c\\u6210\\u529f");//注册成功
                             } catch (NoSuchAlgorithmException ex) {
                                 ex.printStackTrace();
                             } catch (UnsupportedEncodingException ex) {
@@ -83,7 +73,7 @@ public class RigisterFrom extends JFrame {
                             try {
                                 stmt.executeUpdate("INSERT INTO users values('" + 1 + "','" + userName + "','" + MD5.encoderByMd5(passWord) + "')");
                                 Error(label6);
-                                System.out.println("注册成功");
+                                System.out.println("\\u6ce8\\u518c\\u6210\\u529f");//注册成功
                             } catch (NoSuchAlgorithmException ex) {
                                 ex.printStackTrace();
                             } catch (UnsupportedEncodingException ex) {
@@ -104,15 +94,15 @@ public class RigisterFrom extends JFrame {
                     }
                 } else {
                     Error(label5);
-                    System.out.println("密码错误");
+                    System.out.println("\\u5bc6\\u7801\\u9519\\u8bef");//密码错误
                 }
             } else {
                 Error(label4);
-                System.out.println("密码不能为空");
+                System.out.println("\\u5bc6\\u7801\\u4e0d\\u80fd\\u4e3a\\u7a7a");//密码不能为空
             }
         }else{
             Error(label7);
-            System.out.println("请输入用户名！！！");
+            System.out.println("\\u8bf7\\u8f93\\u5165\\u7528\\u6237\\u540d");//请输入用户名
         }
     }
 
@@ -135,6 +125,7 @@ public class RigisterFrom extends JFrame {
         label5 = new JLabel();
         label6 = new JLabel();
         label7 = new JLabel();
+        panel1 = new JPanel();
 
         //======== this ========
         setForeground(SystemColor.textHighlight);
@@ -225,6 +216,13 @@ public class RigisterFrom extends JFrame {
         contentPane.add(label7);
         label7.setBounds(new Rectangle(new Point(150, 0), label7.getPreferredSize()));
 
+        //======== panel1 ========
+        {
+            panel1.setLayout(null);
+        }
+        contentPane.add(panel1);
+        panel1.setBounds(0, 0, 380, 480);
+
         contentPane.setPreferredSize(new Dimension(375, 305));
         pack();
         setLocationRelativeTo(getOwner());
@@ -273,6 +271,7 @@ public class RigisterFrom extends JFrame {
     private JLabel label5;
     private JLabel label6;
     private JLabel label7;
+    private JPanel panel1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     private String Driver = "oracle.jdbc.driver.OracleDriver";//驱动
     private String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";//Oracle的URL
