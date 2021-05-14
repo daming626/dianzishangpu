@@ -19,7 +19,36 @@ import javax.swing.*;
  */
 public class RigisterFrom extends JFrame {
     public RigisterFrom() {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        }catch(Exception e) {
+            System.out.println(e);
+        }
         initComponents();
+    }
+
+    private void thisWindowClosing(WindowEvent e) {
+        int option = JOptionPane.showConfirmDialog(this, "ç¡®å®šé€€å‡º?", "æç¤º", JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION)
+        {
+            if (e.getWindow() == this) {
+                this.dispose();
+                System.exit(0);
+            } else {
+                return;
+            }
+        }
+        else if(option == JOptionPane.NO_OPTION){
+            if (e.getWindow() == this) {
+                return;
+            }
+        }
     }
 
     private void button1MouseClicked(MouseEvent e) {
@@ -37,14 +66,14 @@ public class RigisterFrom extends JFrame {
                         Class.forName(Driver);
                         conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
                         stmt = conn.createStatement();
-                        rs = stmt.executeQuery("SELECT * FROM users WHERE rownum=1 ORDER BY userid DESC");//½«ÓÃ»§ID×î´óµÄÔª×éÑ¡³ö
+                        rs = stmt.executeQuery("SELECT * FROM users WHERE rownum=1 ORDER BY userid DESC");//å°†ç”¨æˆ·IDæœ€å¤§çš„å…ƒç»„é€‰å‡º
                         if (rs.next()) {
-                            int ID = rs.getInt("userid");//ÄÃµ½×î´óµÄÓÃ»§ID
-                            ID++;//ÓÃ»§ID+1£¬È»½«Æä×÷ÎªÌí¼ÓÓÃ»§µÄID
+                            int ID = rs.getInt("userid");//æ‹¿åˆ°æœ€å¤§çš„ç”¨æˆ·ID
+                            ID++;//ç”¨æˆ·ID+1ï¼Œç„¶å°†å…¶ä½œä¸ºæ·»åŠ ç”¨æˆ·çš„ID
                             try {
                                 stmt.executeUpdate("INSERT INTO users values('" + ID + "','" + userName + "','" + MD5.encoderByMd5(passWord) + "')");
                                 Error(label6);
-                                System.out.println("×¢²á³É¹¦");
+                                System.out.println("æ³¨å†ŒæˆåŠŸ");
                             } catch (NoSuchAlgorithmException ex) {
                                 ex.printStackTrace();
                             } catch (UnsupportedEncodingException ex) {
@@ -54,7 +83,7 @@ public class RigisterFrom extends JFrame {
                             try {
                                 stmt.executeUpdate("INSERT INTO users values('" + 1 + "','" + userName + "','" + MD5.encoderByMd5(passWord) + "')");
                                 Error(label6);
-                                System.out.println("×¢²á³É¹¦");
+                                System.out.println("æ³¨å†ŒæˆåŠŸ");
                             } catch (NoSuchAlgorithmException ex) {
                                 ex.printStackTrace();
                             } catch (UnsupportedEncodingException ex) {
@@ -75,15 +104,15 @@ public class RigisterFrom extends JFrame {
                     }
                 } else {
                     Error(label5);
-                    System.out.println("ÃÜÂë´íÎó");
+                    System.out.println("å¯†ç é”™è¯¯");
                 }
             } else {
                 Error(label4);
-                System.out.println("ÃÜÂë²»ÄÜÎª¿Õ");
+                System.out.println("å¯†ç ä¸èƒ½ä¸ºç©º");
             }
         }else{
             Error(label7);
-            System.out.println("ÇëÊäÈëÓÃ»§Ãû£¡£¡£¡");
+            System.out.println("è¯·è¾“å…¥ç”¨æˆ·åï¼ï¼ï¼");
         }
     }
 
@@ -108,36 +137,46 @@ public class RigisterFrom extends JFrame {
         label7 = new JLabel();
 
         //======== this ========
+        setForeground(SystemColor.textHighlight);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                thisWindowClosing(e);
+            }
+        });
         Container contentPane = getContentPane();
         contentPane.setLayout(null);
+
+        //---- textField1 ----
+        textField1.setDisabledTextColor(new Color(204, 255, 255));
+        textField1.setBackground(Color.white);
         contentPane.add(textField1);
-        textField1.setBounds(150, 55, 195, textField1.getPreferredSize().height);
+        textField1.setBounds(125, 55, 140, textField1.getPreferredSize().height);
         contentPane.add(textField2);
-        textField2.setBounds(150, 105, 195, textField2.getPreferredSize().height);
+        textField2.setBounds(125, 105, 140, textField2.getPreferredSize().height);
         contentPane.add(textField3);
-        textField3.setBounds(150, 155, 195, textField3.getPreferredSize().height);
+        textField3.setBounds(125, 155, 140, textField3.getPreferredSize().height);
 
         //---- label1 ----
         label1.setText("\u7528\u6237\u540d\uff1a");
-        label1.setFont(label1.getFont().deriveFont(label1.getFont().getSize() + 7f));
+        label1.setFont(label1.getFont().deriveFont(label1.getFont().getSize() + 1f));
         contentPane.add(label1);
-        label1.setBounds(new Rectangle(new Point(65, 55), label1.getPreferredSize()));
+        label1.setBounds(new Rectangle(new Point(60, 55), label1.getPreferredSize()));
 
         //---- label2 ----
         label2.setText("\u5bc6\u7801\uff1a");
-        label2.setFont(label2.getFont().deriveFont(label2.getFont().getSize() + 7f));
+        label2.setFont(label2.getFont().deriveFont(label2.getFont().getSize() + 1f));
         contentPane.add(label2);
-        label2.setBounds(80, 100, label2.getPreferredSize().width, 30);
+        label2.setBounds(75, 100, label2.getPreferredSize().width, 30);
 
         //---- label3 ----
         label3.setText("\u786e\u8ba4\u5bc6\u7801\uff1a");
-        label3.setFont(label3.getFont().deriveFont(label3.getFont().getSize() + 7f));
+        label3.setFont(label3.getFont().deriveFont(label3.getFont().getSize() + 1f));
         contentPane.add(label3);
-        label3.setBounds(new Rectangle(new Point(50, 155), label3.getPreferredSize()));
+        label3.setBounds(50, 155, label3.getPreferredSize().width, 23);
 
         //---- button1 ----
         button1.setText("\u6ce8\u518c");
-        button1.setFont(button1.getFont().deriveFont(button1.getFont().getSize() + 6f));
         button1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -145,11 +184,10 @@ public class RigisterFrom extends JFrame {
             }
         });
         contentPane.add(button1);
-        button1.setBounds(new Rectangle(new Point(150, 235), button1.getPreferredSize()));
+        button1.setBounds(125, 200, 55, button1.getPreferredSize().height);
 
         //---- button2 ----
         button2.setText("\u8fd4\u56de\u767b\u9646");
-        button2.setFont(button2.getFont().deriveFont(button2.getFont().getSize() + 6f));
         button2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -157,47 +195,51 @@ public class RigisterFrom extends JFrame {
             }
         });
         contentPane.add(button2);
-        button2.setBounds(new Rectangle(new Point(240, 235), button2.getPreferredSize()));
+        button2.setBounds(185, 200, 80, button2.getPreferredSize().height);
 
         //---- label4 ----
-        label4.setText("\u5bc6\u7801\u4e0d\u80fd\u4e3a\u7a7a\uff01\uff01\uff01");
+        label4.setText("\u5bc6\u7801\u4e0d\u80fd\u4e3a\u7a7a");
         label4.setForeground(Color.red);
+        label4.setFont(label4.getFont().deriveFont(label4.getFont().getSize() + 2f));
         contentPane.add(label4);
-        label4.setBounds(new Rectangle(new Point(185, 10), label4.getPreferredSize()));
+        label4.setBounds(new Rectangle(new Point(145, 0), label4.getPreferredSize()));
 
         //---- label5 ----
-        label5.setText("\u5bc6\u7801\u9519\u8bef\uff01\uff01\uff01");
+        label5.setText("\u5bc6\u7801\u9519\u8bef");
         label5.setForeground(Color.red);
+        label5.setFont(label5.getFont().deriveFont(label5.getFont().getSize() + 2f));
         contentPane.add(label5);
-        label5.setBounds(new Rectangle(new Point(190, 10), label5.getPreferredSize()));
+        label5.setBounds(new Rectangle(new Point(160, 0), label5.getPreferredSize()));
 
         //---- label6 ----
         label6.setText("\u6ce8\u518c\u6210\u529f");
         label6.setForeground(Color.red);
+        label6.setFont(label6.getFont().deriveFont(label6.getFont().getSize() + 2f));
         contentPane.add(label6);
-        label6.setBounds(new Rectangle(new Point(205, 10), label6.getPreferredSize()));
+        label6.setBounds(new Rectangle(new Point(165, 0), label6.getPreferredSize()));
 
         //---- label7 ----
-        label7.setText("\u8bf7\u8f93\u5165\u7528\u6237\u540d\uff01\uff01\uff01");
+        label7.setText("\u8bf7\u8f93\u5165\u7528\u6237\u540d");
         label7.setForeground(Color.red);
+        label7.setFont(label7.getFont().deriveFont(label7.getFont().getSize() + 2f));
         contentPane.add(label7);
-        label7.setBounds(new Rectangle(new Point(180, 10), label7.getPreferredSize()));
+        label7.setBounds(new Rectangle(new Point(150, 0), label7.getPreferredSize()));
 
-        contentPane.setPreferredSize(new Dimension(500, 350));
+        contentPane.setPreferredSize(new Dimension(375, 305));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
         this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        //¿ØÖÆ´íÎóÌáÊ¾
+        //æ§åˆ¶é”™è¯¯æç¤º
         label4.setVisible(false);
         label5.setVisible(false);
         label6.setVisible(false);
         label7.setVisible(false);
     }
 
-    //Ïß³Ì¿ØÖÆ´íÎóµ¯´°
+    //çº¿ç¨‹æ§åˆ¶é”™è¯¯å¼¹çª—
     public void Error(JLabel labelnum) {
         Thread thread = new Thread(
                 new Runnable() {
@@ -232,8 +274,8 @@ public class RigisterFrom extends JFrame {
     private JLabel label6;
     private JLabel label7;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
-    private String Driver = "oracle.jdbc.driver.OracleDriver";//Çı¶¯
-    private String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";//OracleµÄURL
+    private String Driver = "oracle.jdbc.driver.OracleDriver";//é©±åŠ¨
+    private String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";//Oracleçš„URL
     private String OracleUserName = "daming1";
     private String OraclePassWord = "dm1234";
 }

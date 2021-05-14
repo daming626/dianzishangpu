@@ -7,6 +7,7 @@ new FormModel {
 			"autoSize": false
 		} ) {
 			name: "this"
+			addEvent( new FormEvent( "java.awt.event.WindowListener", "windowClosing", "thisWindowClosing", true ) )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
 				"autoSize": false
 			} ) {
@@ -56,32 +57,31 @@ new FormModel {
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label12"
-					"text": "请选中需要删除的用户信息！！！"
+					"text": "请选中需要删除的用户信息"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 255
-					"y": 10
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label21"
-					"text": "请选中需要修改的数据！！！"
+					"text": "请选中需要修改的数据"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"y": 10
 					"x": 260
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label49"
 					"text": "删除成功"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 315
-					"y": 10
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"height": 400
 				"width": 700
-				"x": 0
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
 				"autoSize": false
@@ -156,40 +156,39 @@ new FormModel {
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label22"
-					"text": "密码不能为空！！！"
+					"text": "密码不能为空"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 300
-					"y": 10
+					"x": 320
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label29"
-					"text": "密码错误！！！"
+					"text": "密码输入不一致"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 300
-					"y": 10
+					"x": 310
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label30"
 					"text": "添加成功"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 310
-					"y": 10
+					"x": 330
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label45"
-					"text": "请输入用户名！！！"
+					"text": "请输入用户名"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 300
-					"y": 10
+					"x": 320
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 700
 				"height": 400
-				"x": 0
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
 				"autoSize": false
@@ -199,7 +198,7 @@ new FormModel {
 					name: "label4"
 					"text": "用户名："
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 205
+					"x": 210
 					"y": 100
 					"height": 25
 				} )
@@ -207,36 +206,36 @@ new FormModel {
 					name: "label5"
 					"text": "密码："
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 205
+					"x": 220
 					"y": 145
-					"width": 55
+					"width": 40
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label6"
 					"text": "确认新密码："
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 180
+					"x": 185
 					"y": 190
 					"width": 80
 				} )
 				add( new FormComponent( "javax.swing.JTextField" ) {
 					name: "textField4"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 295
+					"x": 285
 					"y": 100
 					"width": 155
 				} )
 				add( new FormComponent( "javax.swing.JTextField" ) {
 					name: "textField5"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 295
+					"x": 285
 					"y": 140
 					"width": 155
 				} )
 				add( new FormComponent( "javax.swing.JTextField" ) {
 					name: "textField6"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 295
+					"x": 285
 					"y": 185
 					"width": 155
 				} )
@@ -245,7 +244,7 @@ new FormModel {
 					"text": "确认修改"
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "button7MouseClicked", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 295
+					"x": 285
 					"y": 240
 					"width": 155
 				} )
@@ -254,33 +253,33 @@ new FormModel {
 					"text": "查看用户"
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "button8MouseClicked", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 295
+					"x": 285
 					"y": 295
 					"width": 155
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label31"
-					"text": "密码不能为空！！！"
+					"text": "密码不能为空"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 315
-					"y": 15
+					"x": 320
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label32"
-					"text": "密码错误！！！"
+					"text": "密码错误"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 310
-					"y": 15
+					"x": 320
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label33"
 					"text": "修改成功"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 335
-					"y": 15
+					"x": 320
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 700
@@ -353,19 +352,19 @@ new FormModel {
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label34"
-					"text": "请选中需要删除的数据！！！"
+					"text": "请选中需要删除的数据"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 255
-					"y": 5
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label35"
-					"text": "请选中需要修改的数据！！！"
+					"text": "请选中需要修改的数据"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 255
-					"y": 5
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 700
@@ -379,57 +378,57 @@ new FormModel {
 					name: "label8"
 					"text": "商品号："
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 210
-					"y": 55
+					"x": 205
+					"y": 75
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label9"
 					"text": "商品名："
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 210
-					"y": 95
+					"x": 205
+					"y": 115
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label10"
 					"text": "库存："
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 220
-					"y": 140
-					"width": 45
+					"x": 215
+					"y": 160
+					"width": 40
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label11"
 					"text": "单价："
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 220
-					"y": 180
+					"x": 215
+					"y": 205
 				} )
 				add( new FormComponent( "javax.swing.JTextField" ) {
 					name: "textField7"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 290
-					"y": 50
+					"x": 280
+					"y": 70
 					"width": 140
 				} )
 				add( new FormComponent( "javax.swing.JTextField" ) {
 					name: "textField8"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 290
-					"y": 90
+					"x": 280
+					"y": 115
 					"width": 140
 				} )
 				add( new FormComponent( "javax.swing.JTextField" ) {
 					name: "textField9"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 290
-					"y": 135
+					"x": 280
+					"y": 160
 					"width": 140
 				} )
 				add( new FormComponent( "javax.swing.JTextField" ) {
 					name: "textField10"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 290
-					"y": 175
+					"x": 280
+					"y": 205
 					"width": 140
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
@@ -437,8 +436,8 @@ new FormModel {
 					"text": "确认添加"
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "button13MouseClicked", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 290
-					"y": 225
+					"x": 280
+					"y": 250
 					"width": 140
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
@@ -446,33 +445,61 @@ new FormModel {
 					"text": "查看商品"
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "button14MouseClicked", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 290
-					"y": 275
+					"x": 280
+					"y": 295
 					"width": 140
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label36"
-					"text": "请输入商品信息！！！"
+					"text": "请输入商品号"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 295
-					"y": 10
+					"x": 305
+					"y": 0
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label37"
 					"text": "添加成功"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 315
-					"y": 10
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label38"
-					"text": "该商品号已存在！！！"
+					"text": "该商品号已存在"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 290
-					"y": 10
+					"x": 300
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label26"
+					"text": "请输入商品名称"
+					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 295
+					"y": 0
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label50"
+					"text": "请输入库存数量"
+					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 300
+					"y": 0
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label51"
+					"text": "请输入商品单价"
+					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 295
+					"y": 0
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 700
@@ -547,19 +574,20 @@ new FormModel {
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label39"
-					"text": "请输入商品信息！！！"
+					"text": "请输入商品信息"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 300
-					"y": 15
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label40"
 					"text": "修改成功"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 325
-					"y": 15
+					"y": 0
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 700
@@ -616,12 +644,12 @@ new FormModel {
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label28"
-					"text": "销售额"
-					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 4, false )
+					"text": "销售额:"
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 65538, 3, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 245
+					"x": 265
 					"y": 290
-					"width": 170
+					"width": 155
 				} )
 				add( new FormComponent( "javax.swing.JComboBox" ) {
 					name: "comboBoxYear"
@@ -658,24 +686,24 @@ new FormModel {
 					"text": "商品号："
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 40
-					"y": 35
+					"y": 50
 					"height": 20
 					"width": 60
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "button18"
-					"text": "添加商品"
+					"text": "添加购物车"
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "button18MouseClicked", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 380
-					"y": 35
+					"y": 50
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label20"
 					"text": "数量："
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 210
-					"y": 35
+					"y": 50
 					"width": 40
 					"height": 22
 				} )
@@ -685,7 +713,7 @@ new FormModel {
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "button19MouseClicked", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 505
-					"y": 35
+					"y": 50
 					"width": 85
 				} )
 				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
@@ -695,7 +723,7 @@ new FormModel {
 					} )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 35
-					"y": 80
+					"y": 90
 					"width": 635
 					"height": 260
 				} )
@@ -703,14 +731,14 @@ new FormModel {
 					name: "textField18"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 105
-					"y": 35
+					"y": 50
 					"width": 84
 				} )
 				add( new FormComponent( "javax.swing.JTextField" ) {
 					name: "textField19"
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 260
-					"y": 35
+					"y": 50
 					"width": 80
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
@@ -719,57 +747,57 @@ new FormModel {
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "button20MouseClicked", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 220
-					"y": 350
+					"y": 360
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "button21"
-					"text": "清空商品"
+					"text": "清空购物车"
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "button21MouseClicked", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 385
-					"y": 350
+					"y": 360
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label27"
-					"text": "商品号输入错误！！！"
+					"text": "商品号输入错误"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"width": 155
+					"width": 115
 					"height": 17
-					"y": 5
-					"x": 215
+					"x": 250
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label41"
-					"text": "商品库存不足！！！"
+					"text": "商品库存不足"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 245
-					"y": 5
+					"x": 260
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label42"
 					"text": "添加成功"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 270
-					"y": 5
+					"x": 285
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label46"
-					"text": "请选中需要删除的商品！！！"
+					"text": "请选中需要删除的商品"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"y": 5
-					"x": 205
+					"x": 230
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label47"
-					"text": "请输入商品和数量！！！"
+					"text": "请输入商品和数量"
 					"foreground": sfield java.awt.Color red
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 210
-					"y": 5
+					"x": 260
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 700
@@ -831,7 +859,7 @@ new FormModel {
 				} )
 			}
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 10, 5 )
+			"location": new java.awt.Point( 0, 0 )
 			"size": new java.awt.Dimension( 700, 460 )
 		} )
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
@@ -917,38 +945,32 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label43"
-				"text": "付款余额不足，无法支付！！！"
+				"text": "付款余额不足，无法支付"
 				"foreground": sfield java.awt.Color red
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 205
-				"y": 10
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label44"
 				"text": "支付成功,数据已存入数据库"
 				"foreground": sfield java.awt.Color red
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 205
-				"y": 10
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label48"
-				"text": "请输入付款金额！！！"
+				"text": "请输入付款金额"
 				"foreground": sfield java.awt.Color red
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 2, false )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 220
-				"y": 10
+				"x": 235
+				"y": 0
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 90, 470 )
+			"location": new java.awt.Point( 100, 480 )
 			"size": new java.awt.Dimension( 520, 330 )
-		} )
-		add( new FormComponent( "javax.swing.JLabel" ) {
-			name: "label26"
-			"text": "请完善商品信息！"
-		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 635, 85 )
-			"size": new java.awt.Dimension( 115, 25 )
 		} )
 	}
 }

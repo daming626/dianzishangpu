@@ -22,6 +22,16 @@ public class LoginFrom extends JFrame {
     }
 
     public LoginFrom() {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        }catch(Exception e) {
+            System.out.println(e);
+        }
         initComponents();
     }
 
@@ -39,12 +49,12 @@ public class LoginFrom extends JFrame {
             rs = stmt.executeQuery("SELECT * FROM USERS WHERE USERNAME='" + username + "' AND PASSWORD='" + MD5.encoderByMd5(password) + "'");
             if (rs.next()) {
                 Error(label4);
-                System.out.println("µ«¬Ω≥…π¶");
+                System.out.println("ÁôªÈôÜÊàêÂäü");
                 new MainFrom();
                 this.setVisible(false);
             } else {
                 Error(label3);
-                System.out.println("µ«¬º ß∞‹£¨”√ªß√˚ªÚ√‹¬Î¥ÌŒÛ£°£°£°");
+                System.out.println("ÁôªÂΩïÂ§±Ë¥•ÔºåÁî®Êà∑ÂêçÊàñÂØÜÁ†ÅÈîôËØØÔºÅÔºÅÔºÅ");
             }
         } catch (ClassNotFoundException ee) {
             ee.printStackTrace();
@@ -70,13 +80,12 @@ public class LoginFrom extends JFrame {
         new RigisterFrom();
     }
 
-    public static String getUserID() {
+    public static String getUserName() {
         return textField1.getText();
     }
 
     private void thisWindowClosing(WindowEvent e) {
-        int option = JOptionPane.showConfirmDialog(this, "»∑∂®ÕÀ≥ˆ?", "Ã· æ",
-                JOptionPane.YES_NO_OPTION);
+        int option = JOptionPane.showConfirmDialog(this, "Á°ÆÂÆöÈÄÄÂá∫?", "ÊèêÁ§∫", JOptionPane.YES_NO_OPTION);
 
         if (option == JOptionPane.YES_OPTION)
         {
@@ -118,16 +127,16 @@ public class LoginFrom extends JFrame {
         //---- label1 ----
         label1.setText("\u7528\u6237\u540d\uff1a");
         contentPane.add(label1);
-        label1.setBounds(new Rectangle(new Point(40, 40), label1.getPreferredSize()));
+        label1.setBounds(40, 50, label1.getPreferredSize().width, 22);
 
         //---- label2 ----
         label2.setText("\u5bc6\u7801\uff1a");
         contentPane.add(label2);
-        label2.setBounds(45, 70, label2.getPreferredSize().width, 20);
+        label2.setBounds(50, 90, label2.getPreferredSize().width, 20);
         contentPane.add(textField1);
-        textField1.setBounds(95, 40, 175, textField1.getPreferredSize().height);
+        textField1.setBounds(95, 50, 175, textField1.getPreferredSize().height);
         contentPane.add(textField2);
-        textField2.setBounds(95, 75, 175, textField2.getPreferredSize().height);
+        textField2.setBounds(95, 90, 175, textField2.getPreferredSize().height);
 
         //---- button1 ----
         button1.setText("\u767b\u5f55");
@@ -138,7 +147,7 @@ public class LoginFrom extends JFrame {
             }
         });
         contentPane.add(button1);
-        button1.setBounds(new Rectangle(new Point(100, 135), button1.getPreferredSize()));
+        button1.setBounds(95, 130, 175, button1.getPreferredSize().height);
 
         //---- button2 ----
         button2.setText("\u6ce8\u518c\u8d26\u6237");
@@ -149,19 +158,21 @@ public class LoginFrom extends JFrame {
             }
         });
         contentPane.add(button2);
-        button2.setBounds(new Rectangle(new Point(185, 135), button2.getPreferredSize()));
+        button2.setBounds(95, 165, 175, button2.getPreferredSize().height);
 
         //---- label3 ----
-        label3.setText("\u767b\u5f55\u5931\u8d25\uff0c\u7528\u6237\u540d\u6216\u5bc6\u7801\u9519\u8bef\uff01\uff01\uff01");
+        label3.setText("\u767b\u5f55\u5931\u8d25\uff0c\u7528\u6237\u540d\u6216\u5bc6\u7801\u9519\u8bef");
         label3.setForeground(Color.red);
+        label3.setFont(label3.getFont().deriveFont(label3.getFont().getSize() + 2f));
         contentPane.add(label3);
-        label3.setBounds(new Rectangle(new Point(80, 10), label3.getPreferredSize()));
+        label3.setBounds(new Rectangle(new Point(90, 0), label3.getPreferredSize()));
 
         //---- label4 ----
         label4.setText("\u767b\u9646\u6210\u529f");
         label4.setForeground(Color.red);
+        label4.setFont(label4.getFont().deriveFont(label4.getFont().getSize() + 2f));
         contentPane.add(label4);
-        label4.setBounds(new Rectangle(new Point(150, 10), label4.getPreferredSize()));
+        label4.setBounds(new Rectangle(new Point(150, 0), label4.getPreferredSize()));
 
         contentPane.setPreferredSize(new Dimension(370, 240));
         pack();
@@ -170,12 +181,11 @@ public class LoginFrom extends JFrame {
         this.setVisible(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-
         label3.setVisible(false);
         label4.setVisible(false);
     }
 
-    //œﬂ≥Ãøÿ÷∆¥ÌŒÛµØ¥∞
+    //Á∫øÁ®ãÊéßÂà∂ÈîôËØØÂºπÁ™ó
     public void Error(JLabel labelnum) {
         Thread thread = new Thread(
                 new Runnable() {
@@ -204,8 +214,8 @@ public class LoginFrom extends JFrame {
     private JLabel label3;
     private JLabel label4;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
-    private String Driver="oracle.jdbc.driver.OracleDriver";//«˝∂Ø
-    private String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";//OracleµƒURL
+    private String Driver="oracle.jdbc.driver.OracleDriver";//È©±Âä®
+    private String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";//OracleÁöÑURL
     private String OracleUserName = "daming1";
     private String OraclePassWord = "dm1234";
 }
