@@ -3,7 +3,8 @@
     <output-path>$PROJECT_DIR$/out/artifacts/dianzishangpu_jar</output-path>
     <root id="archive" name="dianzishangpu.jar">
       <element id="module-output" name="dianzishangpu" />
-      <element id="extracted-dir" path="E:/jar包/beautyeye_lnf.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/jar包/commons-codec-1.15-bin/commons-codec-1.15/commons-codec-1.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/app/product/11.2.0/client_1/jdbc/lib/ojdbc6.jar" path-in-jar="/" />
       <element id="extracted-dir" path="E:/jar包/lib/alipay-sdk-java-3.3.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="E:/jar包/lib/alipay-trade-sdk-20161215.jar" path-in-jar="/" />
       <element id="extracted-dir" path="E:/jar包/lib/commons-codec-1.10.jar" path-in-jar="/" />
@@ -13,8 +14,7 @@
       <element id="extracted-dir" path="E:/jar包/lib/core-2.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="E:/jar包/lib/gson-2.3.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="E:/jar包/lib/hamcrest-core-1.3.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="E:/jar包/commons-codec-1.15-bin/commons-codec-1.15/commons-codec-1.15.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="C:/app/product/11.2.0/client_1/jdbc/lib/ojdbc6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/jar包/beautyeye_lnf.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

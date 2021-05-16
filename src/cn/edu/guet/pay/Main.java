@@ -22,6 +22,7 @@ import com.alipay.demo.trade.service.impl.AlipayTradeServiceImpl;
 import com.alipay.demo.trade.service.impl.AlipayTradeWithHBServiceImpl;
 import com.alipay.demo.trade.utils.Utils;
 import com.alipay.demo.trade.utils.ZxingUtils;
+import com.sun.org.apache.bcel.internal.util.ClassPath;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -36,9 +37,18 @@ import java.util.*;
 public class Main {
 
     public static String QRcodepath = "D:/QR code";
+
+    /*static {
+        try {
+            QRcodepath = Class.forName("cn.edu.guet.pay.Main").getResource("QR code").getPath();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }*/
+
     public static int flag ;
     public static String outTradeNo = "";
-    private static Log                  log = LogFactory.getLog(Main.class);
+    private static Log log = LogFactory.getLog(Main.class);
 
     // 支付宝当面付2.0服务
     private static AlipayTradeService   tradeService;
@@ -295,14 +305,14 @@ public class Main {
             case SUCCESS:
                 //log.info("查询返回该订单支付成功: )");
                 flag = 1;
-//                AlipayTradeQueryResponse response = result.getResponse();
-//                dumpResponse(response);
-//                log.info(response.getTradeStatus());
-//                if (Utils.isListNotEmpty(response.getFundBillList())) {
-//                    for (TradeFundBill bill : response.getFundBillList()) {
-//                        log.info(bill.getFundChannel() + ":" + bill.getAmount());
-//                    }
-//                }
+                /*AlipayTradeQueryResponse response = result.getResponse();
+                dumpResponse(response);
+                log.info(response.getTradeStatus());
+                if (Utils.isListNotEmpty(response.getFundBillList())) {
+                    for (TradeFundBill bill : response.getFundBillList()) {
+                        log.info(bill.getFundChannel() + ":" + bill.getAmount());
+                    }
+                }*/
                 break;
 
             case FAILED:

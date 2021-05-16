@@ -142,7 +142,7 @@ public class PayForm extends JFrame {
                             MainFrom.frame1.setVisible(false);
 
                             //打印小票
-                            Test.priter2();
+                            //Test.priter2();//调用打印机
                             //=========================更新数据库============================
                             MainFrom.UPDATESQL();
                             //清空list(购物车)
@@ -150,7 +150,9 @@ public class PayForm extends JFrame {
 
                             break;
                         }
-                       // break;
+                        if (t==1){
+                            break;
+                        }
                     }
                 }
             }
@@ -221,7 +223,7 @@ public class PayForm extends JFrame {
                             MainFrom.frame1.setVisible(false);
 
                             //打印小票
-                            Test.priter2();
+                            //Test.priter2();//调用打印机
                             //=========================更新数据库============================
                             MainFrom.UPDATESQL();
                             //清空list
@@ -246,7 +248,7 @@ public class PayForm extends JFrame {
         t2.start();
     }
 
-    public void paying2(Double payTotalPrice) {
+    public void paying2(double payTotalPrice) {
 
         this.payTotalPrice = payTotalPrice;
         System.out.println("1234");

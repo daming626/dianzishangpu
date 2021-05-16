@@ -20,7 +20,7 @@ import javax.swing.*;
  */
 public class LoginFrom extends JFrame {
     public static void main(String[] args) {
-        FormOptimization();
+        FormOptimization();//调用优化方法
         new LoginFrom();
     }
 
@@ -59,10 +59,9 @@ public class LoginFrom extends JFrame {
         BeautyEyeLNFHelper.translucencyAtFrameInactive = false;
     }
 
-    private void button1MouseClicked(MouseEvent e) {
+    private void button1MouseClicked(MouseEvent e) {//登录
         String username = textField1.getText();
         String password = new String(passwordField1.getPassword());
-
 
         Connection conn = null;
         Statement stmt = null;
@@ -100,7 +99,7 @@ public class LoginFrom extends JFrame {
         }
     }
 
-    private void button2MousePressed(MouseEvent e) {
+    private void button2MousePressed(MouseEvent e) {//登录
         this.setVisible(false);
         new RigisterFrom();
     }

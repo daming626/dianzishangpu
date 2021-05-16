@@ -6,6 +6,13 @@ import cn.edu.guet.ui.MainFrom;
 
 import java.util.*;
 
+/**
+ * 打印机的执行入口
+ * 若使用则到
+ * MainFrom的button22MouseClicked(MouseEvent e)取消Test.priter1(ActualPayment)注释
+ * PayForm的jTextField1ActionListener(ActionEvent e)取消Test.priter2()注释
+ * payFrom的paying(Double payTotalPrice)取消Test.priter2()注释
+ */
 public class Test {
 	static String name = "";
 	static String price = "";
@@ -20,6 +27,7 @@ public class Test {
 
         for (int i = 0; i < MainFrom.list.size(); i++) {
         	name = MainFrom.list.get(i).getProductName();
+			System.out.println(name);
         	price = String.valueOf(MainFrom.list.get(i).getPrice());
             amount = String.valueOf(MainFrom.list.get(i).getAmount());
             totalPrice = String.valueOf(MainFrom.list.get(i).getTotalPrice());

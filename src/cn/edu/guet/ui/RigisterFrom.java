@@ -41,10 +41,10 @@ public class RigisterFrom extends JFrame {
         }
     }
 
-    private void button1MouseClicked(MouseEvent e) {
+    private void button1MouseClicked(MouseEvent e) {//注册
         String userName = textField1.getText();
-        String passWord = textField2.getText();
-        String confirmPassWord = textField3.getText();
+        String passWord = new String(passwordField1.getPassword());
+        String confirmPassWord = new String(passwordField2.getPassword());
 
         if (userName.length() != 0) {
             if (passWord.length() != 0 && confirmPassWord.length() != 0) {
@@ -106,7 +106,7 @@ public class RigisterFrom extends JFrame {
         }
     }
 
-    private void button2MouseClicked(MouseEvent e) {
+    private void button2MouseClicked(MouseEvent e) {//返回登录
         this.setVisible(false);
         new LoginFrom();
     }
@@ -114,8 +114,8 @@ public class RigisterFrom extends JFrame {
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         textField1 = new JTextField();
-        textField2 = new JTextField();
-        textField3 = new JTextField();
+        passwordField1 = new JPasswordField();
+        passwordField2 = new JPasswordField();
         label1 = new JLabel();
         label2 = new JLabel();
         label3 = new JLabel();
@@ -143,10 +143,10 @@ public class RigisterFrom extends JFrame {
         textField1.setBackground(Color.white);
         contentPane.add(textField1);
         textField1.setBounds(125, 55, 140, textField1.getPreferredSize().height);
-        contentPane.add(textField2);
-        textField2.setBounds(125, 105, 140, textField2.getPreferredSize().height);
-        contentPane.add(textField3);
-        textField3.setBounds(125, 155, 140, textField3.getPreferredSize().height);
+        contentPane.add(passwordField1);
+        passwordField1.setBounds(125, 105, 140, passwordField1.getPreferredSize().height);
+        contentPane.add(passwordField2);
+        passwordField2.setBounds(125, 155, 140, passwordField2.getPreferredSize().height);
 
         //---- label1 ----
         label1.setText("\u7528\u6237\u540d\uff1a");
@@ -260,8 +260,8 @@ public class RigisterFrom extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JPasswordField passwordField1;
+    private JPasswordField passwordField2;
     private JLabel label1;
     private JLabel label2;
     private JLabel label3;
