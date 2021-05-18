@@ -53,7 +53,7 @@ public class RigisterFrom extends JFrame {
                     Statement stmt = null;
                     ResultSet rs = null;
                     try {
-                        Class.forName(Driver);
+                        //Class.forName(Driver);
                         conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
                         stmt = conn.createStatement();
                         rs = stmt.executeQuery("SELECT * FROM users WHERE rownum=1 ORDER BY userid DESC");//将用户ID最大的元组选出
@@ -80,8 +80,6 @@ public class RigisterFrom extends JFrame {
                                 ex.printStackTrace();
                             }
                         }
-                    } catch (ClassNotFoundException ee) {
-                        ee.printStackTrace();
                     } catch (SQLException ee) {
                         ee.printStackTrace();
                     } finally {
@@ -273,8 +271,8 @@ public class RigisterFrom extends JFrame {
     private JLabel label7;
     private JPanel panel1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
-    private String Driver = "oracle.jdbc.driver.OracleDriver";//驱动
-    private String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";//Oracle的URL
-    private String OracleUserName = "daming1";
-    private String OraclePassWord = "dm1234";
+    private static String Driver = "oracle.jdbc.driver.OracleDriver";//驱动
+    private static String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";//Oracle的URL
+    private static String OracleUserName = "daming1";
+    private static String OraclePassWord = "dm1234";
 }

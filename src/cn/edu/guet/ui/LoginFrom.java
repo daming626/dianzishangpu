@@ -20,6 +20,13 @@ import javax.swing.*;
  */
 public class LoginFrom extends JFrame {
     public static void main(String[] args) {
+        //加载一次驱动
+        try {
+            Class.forName(Driver);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         FormOptimization();//调用优化方法
         new LoginFrom();
     }
@@ -67,7 +74,7 @@ public class LoginFrom extends JFrame {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName(Driver);
+            //Class.forName(Driver);
             conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT * FROM USERS WHERE USERNAME='" + username + "' AND PASSWORD='" + MD5.encoderByMd5(password) + "'");
@@ -80,9 +87,7 @@ public class LoginFrom extends JFrame {
                 Error(label3);
                 System.out.println("\u767b\u5f55\u5931\u8d25\uff0c\u7528\u6237\u540d\u6216\u5bc6\u7801\u9519\u8bef");//登录失败，用户名或密码错误
             }
-        } catch (ClassNotFoundException ee) {
-            ee.printStackTrace();
-        } catch (SQLException ee) {
+        }  catch (SQLException ee) {
             ee.printStackTrace();
         } catch (NoSuchAlgorithmException ex) {
             ex.printStackTrace();
@@ -262,8 +267,8 @@ public class LoginFrom extends JFrame {
     private JLabel label4;
     private JPanel panel1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
-    private String Driver="oracle.jdbc.driver.OracleDriver";//驱动
-    private String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";//Oracle的URL
-    private String OracleUserName = "daming1";
-    private String OraclePassWord = "dm1234";
+    private static String Driver="oracle.jdbc.driver.OracleDriver";//驱动
+    private static String url = "jdbc:oracle:thin:@120.77.203.216:1521:orcl";//Oracle的URL
+    private static String OracleUserName = "daming1";
+    private static String OraclePassWord = "dm1234";
 }

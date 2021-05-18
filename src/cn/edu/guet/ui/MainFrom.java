@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
 public class MainFrom extends JFrame {
     public MainFrom() {
         initComponents();
-        setTitle("\u963f\u4e03\u5c0f\u5546\u94fa");
+        setTitle("\u963f\u4e03\u5c0f\u5546\u94fa");//阿七小商铺
 
 
         URL url1 = MainFrom.class.getResource("iab.png");
@@ -235,7 +235,7 @@ public class MainFrom extends JFrame {
                     Statement stmt = null;
                     ResultSet rs = null;
                     try {
-                        Class.forName(Driver);
+                        //Class.forName(Driver);
                         conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
                         stmt = conn.createStatement();
                         rs = stmt.executeQuery("SELECT * FROM users WHERE rownum=1 ORDER BY userid DESC");//将用户ID最大的元组选出
@@ -262,8 +262,6 @@ public class MainFrom extends JFrame {
                                 ex.printStackTrace();
                             }
                         }
-                    } catch (ClassNotFoundException ee) {
-                        ee.printStackTrace();
                     } catch (SQLException ee) {
                         ee.printStackTrace();
                     } finally {
@@ -316,14 +314,12 @@ public class MainFrom extends JFrame {
                 Connection conn = null;
                 Statement stmt = null;
                 try {
-                    Class.forName(Driver);
+                    //Class.forName(Driver);
                     conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
                     stmt = conn.createStatement();
                     stmt.executeUpdate("UPDATE users set username='" + userName + "', password='" + MD5.encoderByMd5(newPassWord) + "' WHERE userid='" + overallUserId + "'");
                     Error(label33);
                     System.out.println("\u4fee\u6539\u6210\u529f");//修改成功
-                } catch (ClassNotFoundException ex) {
-                    ex.printStackTrace();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 } catch (NoSuchAlgorithmException ex) {
@@ -450,7 +446,7 @@ public class MainFrom extends JFrame {
                         Connection conn = null;
                         PreparedStatement pstmt = null;
                         try {
-                            Class.forName(Driver);
+                            //Class.forName(Driver);
                             conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
                             pstmt = conn.prepareStatement("INSERT INTO products VALUES(?,?,?,?)");
                             pstmt.setString(1, product_id);
@@ -460,9 +456,7 @@ public class MainFrom extends JFrame {
                             pstmt.executeUpdate();
                             Error(label37);
                             System.out.println("\u6dfb\u52a0\u6210\u529f");//添加成功
-                        } catch (ClassNotFoundException ee) {
-                            ee.printStackTrace();
-                        } catch (SQLIntegrityConstraintViolationException ee) {
+                        }  catch (SQLIntegrityConstraintViolationException ee) {
                             Error(label38);
                             System.out.println("\u8be5\u5546\u54c1\u53f7\u5df2\u5b58\u5728");//该商品号已存在
                         } catch (SQLException ee) {
@@ -520,14 +514,12 @@ public class MainFrom extends JFrame {
             Connection conn = null;
             Statement stmt = null;
             try {
-                Class.forName(Driver);
+                //Class.forName(Driver);
                 conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
                 stmt = conn.createStatement();
                 stmt.executeUpdate("UPDATE products SET product_name='" + product_name + "' ,stock='" + stock + "' , price='" + price + "' WHERE product_id='" + overallProductId + "'");
                 Error(label40);
                 System.out.println("\u4fee\u6539\u6210\u529f");//修改成功
-            } catch (ClassNotFoundException ex) {
-                ex.printStackTrace();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             } finally {
@@ -600,7 +592,7 @@ public class MainFrom extends JFrame {
             Statement stmt = null;
             ResultSet rs = null;
             try {
-                Class.forName(Driver);
+                //Class.forName(Driver);
                 conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
                 stmt = conn.createStatement();
                 rs = stmt.executeQuery("SELECT * FROM products WHERE product_id='" + product_id + "'");//根据输入的商品ID查询该商品是否存在
@@ -645,8 +637,6 @@ public class MainFrom extends JFrame {
                     System.out.println("\u5546\u54c1\u53f7\u8f93\u5165\u9519\u8bef");//商品号输入错误
                     Error(label27);//调用方法进行错误提示
                 }
-            } catch (ClassNotFoundException ex) {
-                ex.printStackTrace();
             } catch (SQLException ex) {
 
             } finally {
@@ -1885,14 +1875,12 @@ public class MainFrom extends JFrame {
         Statement stmt = null;//SQL语句对象
         String sql = "DELETE FROM " + tableName + " WHERE " + tableID + "=" + ID;
         try {
-            Class.forName(Driver);
+            //Class.forName(Driver);
             conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
             stmt = conn.createStatement();
             stmt.executeUpdate(sql);
             Error(label49);
             System.out.println("\u5220\u9664\u6210\u529f");//删除成功
-        } catch (ClassNotFoundException ee) {
-            ee.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
@@ -1915,7 +1903,7 @@ public class MainFrom extends JFrame {
         String sql = "SELECT * FROM users ORDER BY userid";
         ResultSet rs = null;
         try {
-            Class.forName(Driver);//
+            //Class.forName(Driver);//
             conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
@@ -1927,8 +1915,6 @@ public class MainFrom extends JFrame {
                 user.setPassword(rs.getString("PASSWORD"));
                 list.add(user);
             }
-        } catch (ClassNotFoundException ee) {
-            ee.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
@@ -1961,7 +1947,7 @@ public class MainFrom extends JFrame {
         String sql = "SELECT * FROM products ORDER BY product_id";
         ResultSet rs = null;
         try {
-            Class.forName(Driver);//
+            //Class.forName(Driver);//
             conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
@@ -1974,8 +1960,6 @@ public class MainFrom extends JFrame {
                 product.setPrice(rs.getFloat("price"));
                 list.add(product);
             }
-        } catch (ClassNotFoundException ee) {
-            ee.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
@@ -2013,7 +1997,7 @@ public class MainFrom extends JFrame {
         PreparedStatement pstmt = null;//SQL语句对象，拼SQL
         ResultSet rs = null;
         try {
-            Class.forName(Driver);
+            //Class.forName(Driver);
             conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, date);
@@ -2032,8 +2016,6 @@ public class MainFrom extends JFrame {
                 list.add(sales);
             }
             label28.setText("\u9500\u552e\u989d\u4e3a" + sum + "\u5143");
-        } catch (ClassNotFoundException ee) {
-            ee.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
@@ -2114,7 +2096,7 @@ public class MainFrom extends JFrame {
         Statement stmt = null;
         String sql = "";
         try {
-            Class.forName(Driver);
+            //Class.forName(Driver);
             conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
             stmt = conn.createStatement();
             pstmt = conn.prepareStatement("INSERT INTO sales values(?,?,?,?,?,?,?)");
@@ -2131,8 +2113,6 @@ public class MainFrom extends JFrame {
             }
             Error(label44);
             System.out.println("\u652f\u4ed8\u6210\u529f");//支付成功
-        } catch (ClassNotFoundException ee) {
-            ee.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
@@ -2298,9 +2278,9 @@ public class MainFrom extends JFrame {
 
     //显示table相关
     private Object[][] data = null;
-    private String head1[] = {"用户ID", "用户名", "密码"};//用户ID，用户名，密码
-    private String head2[] = {"商品号", "商品名", "库存", "单价"};//商品号，商品名，库存，单价
-    private String head3[] = {"商品号", "商品名", "数量", "总价"};//商品号，商品名，数量，总价
-    private String head4[] = {"用户ID", "商品ID", "商品名称", "数量", "单价", "总价"};//用户ID,商品ID,商品名称,数量,单价,总价
+    private String head1[] = {"\u7528\u6237\u0049\u0044", "\u7528\u6237\u540d", "\u5bc6\u7801"};//用户ID，用户名，密码
+    private String head2[] = {"\u5546\u54c1\u53f7", "\u5546\u54c1\u540d", "\u5e93\u5b58", "\u5355\u4ef7"};//商品号，商品名，库存，单价
+    private String head3[] = {"\u5546\u54c1\u53f7", "\u5546\u54c1\u540d", "\u6570\u91cf", "\u603b\u4ef7"};//商品号，商品名，数量，总价
+    private String head4[] = {"\u7528\u6237\u0049\u0044", "\u5546\u54c1\u0049\u0044", "\u5546\u54c1\u540d\u79f0", "\u6570\u91cf", "\u5355\u4ef7", "\u603b\u4ef7"};//用户ID,商品ID,商品名称,数量,单价,总价
 }
 

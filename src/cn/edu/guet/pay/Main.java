@@ -27,6 +27,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -36,15 +37,7 @@ import java.util.*;
  */
 public class Main {
 
-    public static String QRcodepath = "D:/QR code";
-
-    /*static {
-        try {
-            QRcodepath = Class.forName("cn.edu.guet.pay.Main").getResource("QR code").getPath();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }*/
+    public static String QRcodepath = new File("QR code").getAbsolutePath();
 
     public static int flag ;
     public static String outTradeNo = "";
