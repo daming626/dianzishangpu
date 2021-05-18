@@ -103,7 +103,7 @@ public class MainFrom extends JFrame {
         panel7.setVisible(false);
         panel8.setVisible(false);
         panel9.setVisible(false);
-        DefaultTableModel tableModel = new DefaultTableModel(queryData2(), head2) {
+        DefaultTableModel tableModel = new DefaultTableModel(queryData2(""), head2) {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -363,7 +363,7 @@ public class MainFrom extends JFrame {
     }
 
     private void button9MouseClicked(MouseEvent e) {//刷新商品表
-        DefaultTableModel tableModel = new DefaultTableModel(queryData2(), head2) {
+        DefaultTableModel tableModel = new DefaultTableModel(queryData2(""), head2) {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -380,7 +380,7 @@ public class MainFrom extends JFrame {
                 deleteData("PRODUCTS", "product_id", product_id);//调用自定义的删除数据的方法
 
                 //刷新表2
-                DefaultTableModel tableModel = new DefaultTableModel(queryData2(), head2) {
+                DefaultTableModel tableModel = new DefaultTableModel(queryData2(""), head2) {
                     public boolean isCellEditable(int row, int column) {
                         return false;
                     }
@@ -456,7 +456,7 @@ public class MainFrom extends JFrame {
                             pstmt.executeUpdate();
                             Error(label37);
                             System.out.println("\u6dfb\u52a0\u6210\u529f");//添加成功
-                        }  catch (SQLIntegrityConstraintViolationException ee) {
+                        } catch (SQLIntegrityConstraintViolationException ee) {
                             Error(label38);
                             System.out.println("\u8be5\u5546\u54c1\u53f7\u5df2\u5b58\u5728");//该商品号已存在
                         } catch (SQLException ee) {
@@ -497,7 +497,7 @@ public class MainFrom extends JFrame {
         panel7.setVisible(false);
         panel8.setVisible(false);
         panel9.setVisible(false);
-        DefaultTableModel tableModel = new DefaultTableModel(queryData2(), head2) {
+        DefaultTableModel tableModel = new DefaultTableModel(queryData2(""), head2) {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -546,7 +546,7 @@ public class MainFrom extends JFrame {
         panel7.setVisible(false);
         panel8.setVisible(false);
         panel9.setVisible(false);
-        DefaultTableModel tableModel = new DefaultTableModel(queryData2(), head2) {
+        DefaultTableModel tableModel = new DefaultTableModel(queryData2(""), head2) {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -663,12 +663,12 @@ public class MainFrom extends JFrame {
         };
         table4.setModel(tableModel);
 
-        if (list.size()!=0) {
+        if (list.size() != 0) {
             frame1.setVisible(true);
             textField2.setText("" + payTotalPrice + "");
             textField20.setText(null);
             textField3.setText(null);
-        }else{
+        } else {
             Error(label54);//无法支付,请先选取商品
             System.out.println("\u65e0\u6cd5\u652f\u4ed8\uff0c\u8bf7\u5148\u9009\u53d6\u5546\u54c1");
         }
@@ -782,6 +782,21 @@ public class MainFrom extends JFrame {
         table4.setModel(tableModel);
     }
 
+    private void button26MouseClicked(MouseEvent e) {
+        String codition = textField5.getText();
+        if (codition.length() != 0) {
+            DefaultTableModel tableModel = new DefaultTableModel(queryData2(codition), head2) {
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            table2.setModel(tableModel);
+        } else {
+            Error(label56);
+            System.out.println("请输入商品号或商品名");
+        }
+    }
+
     private void initComponents() {
 
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -843,6 +858,11 @@ public class MainFrom extends JFrame {
         button12 = new JButton();
         label34 = new JLabel();
         label35 = new JLabel();
+        label55 = new JLabel();
+        textField5 = new JTextField();
+        button26 = new JButton();
+        label56 = new JLabel();
+        label57 = new JLabel();
         panel6 = new JPanel();
         label8 = new JLabel();
         label9 = new JLabel();
@@ -1044,7 +1064,7 @@ public class MainFrom extends JFrame {
                 scrollPane1.setViewportView(table1);
             }
             panel1.add(scrollPane1);
-            scrollPane1.setBounds(35, 35, 630, 235);
+            scrollPane1.setBounds(35, 35, 630, 270);
 
             //---- button1 ----
             button1.setText("\u5237\u65b0");
@@ -1055,7 +1075,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel1.add(button1);
-            button1.setBounds(new Rectangle(new Point(80, 305), button1.getPreferredSize()));
+            button1.setBounds(new Rectangle(new Point(80, 325), button1.getPreferredSize()));
 
             //---- button2 ----
             button2.setText("\u6dfb\u52a0\u7528\u6237");
@@ -1066,7 +1086,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel1.add(button2);
-            button2.setBounds(new Rectangle(new Point(380, 305), button2.getPreferredSize()));
+            button2.setBounds(new Rectangle(new Point(380, 325), button2.getPreferredSize()));
 
             //---- button3 ----
             button3.setText("\u5220\u9664\u7528\u6237");
@@ -1077,7 +1097,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel1.add(button3);
-            button3.setBounds(new Rectangle(new Point(230, 305), button3.getPreferredSize()));
+            button3.setBounds(new Rectangle(new Point(230, 325), button3.getPreferredSize()));
 
             //---- button4 ----
             button4.setText("\u4fee\u6539\u7528\u6237");
@@ -1088,7 +1108,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel1.add(button4);
-            button4.setBounds(new Rectangle(new Point(535, 305), button4.getPreferredSize()));
+            button4.setBounds(new Rectangle(new Point(535, 325), button4.getPreferredSize()));
 
             //---- label12 ----
             label12.setText("\u8bf7\u9009\u4e2d\u9700\u8981\u5220\u9664\u7684\u7528\u6237\u4fe1\u606f");
@@ -1285,7 +1305,7 @@ public class MainFrom extends JFrame {
                 scrollPane2.setViewportView(table2);
             }
             panel5.add(scrollPane2);
-            scrollPane2.setBounds(30, 35, 640, 305);
+            scrollPane2.setBounds(30, 70, 640, 280);
 
             //---- button9 ----
             button9.setText("\u5237\u65b0");
@@ -1296,7 +1316,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel5.add(button9);
-            button9.setBounds(new Rectangle(new Point(75, 350), button9.getPreferredSize()));
+            button9.setBounds(new Rectangle(new Point(80, 365), button9.getPreferredSize()));
 
             //---- button10 ----
             button10.setText("\u5220\u9664\u5546\u54c1");
@@ -1307,7 +1327,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel5.add(button10);
-            button10.setBounds(new Rectangle(new Point(210, 350), button10.getPreferredSize()));
+            button10.setBounds(new Rectangle(new Point(230, 365), button10.getPreferredSize()));
 
             //---- button11 ----
             button11.setText("\u6dfb\u52a0\u5546\u54c1");
@@ -1318,7 +1338,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel5.add(button11);
-            button11.setBounds(new Rectangle(new Point(350, 350), button11.getPreferredSize()));
+            button11.setBounds(new Rectangle(new Point(380, 365), button11.getPreferredSize()));
 
             //---- button12 ----
             button12.setText("\u4fee\u6539\u5546\u54c1");
@@ -1329,7 +1349,7 @@ public class MainFrom extends JFrame {
                 }
             });
             panel5.add(button12);
-            button12.setBounds(new Rectangle(new Point(510, 350), button12.getPreferredSize()));
+            button12.setBounds(530, 365, button12.getPreferredSize().width, 25);
 
             //---- label34 ----
             label34.setText("\u8bf7\u9009\u4e2d\u9700\u8981\u5220\u9664\u7684\u6570\u636e");
@@ -1344,6 +1364,38 @@ public class MainFrom extends JFrame {
             label35.setFont(label35.getFont().deriveFont(label35.getFont().getSize() + 2f));
             panel5.add(label35);
             label35.setBounds(new Rectangle(new Point(255, 0), label35.getPreferredSize()));
+
+            //---- label55 ----
+            label55.setText("\u8bf7\u8f93\u5165\u5546\u54c1\u53f7\u6216\u5546\u54c1\u540d\uff1a");
+            panel5.add(label55);
+            label55.setBounds(135, 40, label55.getPreferredSize().width, 22);
+            panel5.add(textField5);
+            textField5.setBounds(285, 40, 100, textField5.getPreferredSize().height);
+
+            //---- button26 ----
+            button26.setText("\u67e5\u8be2");
+            button26.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    button26MouseClicked(e);
+                }
+            });
+            panel5.add(button26);
+            button26.setBounds(415, 40, button26.getPreferredSize().width, 24);
+
+            //---- label56 ----
+            label56.setText("\u8bf7\u8f93\u5165\u5546\u54c1\u53f7\u6216\u5546\u54c1\u540d");
+            label56.setForeground(Color.red);
+            label56.setFont(label56.getFont().deriveFont(label56.getFont().getSize() + 2f));
+            panel5.add(label56);
+            label56.setBounds(260, 0, 160, 20);
+
+            //---- label57 ----
+            label57.setText("\u8f93\u5165\u9519\u8bef");
+            label57.setForeground(Color.red);
+            label57.setFont(label57.getFont().deriveFont(label57.getFont().getSize() + 2f));
+            panel5.add(label57);
+            label57.setBounds(new Rectangle(new Point(305, 0), label57.getPreferredSize()));
         }
         contentPane.add(panel5);
         panel5.setBounds(0, 0, 700, 400);
@@ -1867,6 +1919,8 @@ public class MainFrom extends JFrame {
         label51.setVisible(false);
         label53.setVisible(false);
         label54.setVisible(false);
+        label56.setVisible(false);
+        label57.setVisible(false);
     }
 
     //删除数据
@@ -1939,26 +1993,34 @@ public class MainFrom extends JFrame {
     }
 
     //table显示商品
-    public Object[][] queryData2() {
-
+    public Object[][] queryData2(String condition) {
         java.util.List<Products> list = new ArrayList<Products>();
+        String sql = "SELECT * FROM products ORDER BY product_id";
+        if (condition.length() != 0) {
+            sql = "SELECT * FROM products WHERE product_id='" + condition + "' OR product_name='" + condition + "' ORDER BY product_id";
+        }
         Connection conn = null;
         Statement stmt = null;//SQL语句对象，拼SQL
-        String sql = "SELECT * FROM products ORDER BY product_id";
         ResultSet rs = null;
         try {
             //Class.forName(Driver);//
             conn = DriverManager.getConnection(url, OracleUserName, OraclePassWord);
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                //每循环一次就是一个对象，把这个对象放入容器（List（有序可重复）、Set（无序不可重复）、Map（key、value结构）
-                Products product = new Products();
-                product.setId(rs.getString("product_id"));
-                product.setName(rs.getString("product_name"));
-                product.setStock(rs.getInt("stock"));
-                product.setPrice(rs.getFloat("price"));
-                list.add(product);
+            if (rs.next()) {
+                rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    //每循环一次就是一个对象，把这个对象放入容器（List（有序可重复）、Set（无序不可重复）、Map（key、value结构）
+                    Products product = new Products();
+                    product.setId(rs.getString("product_id"));
+                    product.setName(rs.getString("product_name"));
+                    product.setStock(rs.getInt("stock"));
+                    product.setPrice(rs.getFloat("price"));
+                    list.add(product);
+                }
+            }else{
+                Error(label57);
+                System.out.println("输入错误");
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -2186,6 +2248,11 @@ public class MainFrom extends JFrame {
     private JButton button12;
     private JLabel label34;
     private JLabel label35;
+    private JLabel label55;
+    private JTextField textField5;
+    private JButton button26;
+    private JLabel label56;
+    private JLabel label57;
     private JPanel panel6;
     private JLabel label8;
     private JLabel label9;
